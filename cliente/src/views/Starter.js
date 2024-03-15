@@ -49,52 +49,43 @@ const Starter = () => {
     <div>
       {/***Top Cards***/}
       <Row>
-        <Col sm="6" lg="3">
+        <Col sm="12" lg="4">
           <TopCards
             bg="bg-light-success text-success"
             title="Profit"
-            subtitle="Yearly Earning"
+            subtitle="Total Clientes"
             earning="$21k"
             icon="bi bi-wallet"
           />
         </Col>
-        <Col sm="6" lg="3">
+        <Col sm="12" lg="4">
           <TopCards
             bg="bg-light-danger text-danger"
             title="Refunds"
-            subtitle="Refund given"
+            subtitle="Encuestados"
             earning="$1k"
             icon="bi bi-coin"
           />
         </Col>
-        <Col sm="6" lg="3">
+        <Col sm="12" lg="4">
           <TopCards
             bg="bg-light-warning text-warning"
             title="New Project"
-            subtitle="Yearly Project"
+            subtitle="Sin Encuestar"
             earning="456"
             icon="bi bi-basket3"
           />
         </Col>
-        <Col sm="6" lg="3">
-          <TopCards
-            bg="bg-light-info text-into"
-            title="Sales"
-            subtitle="Weekly Sales"
-            earning="210"
-            icon="bi bi-bag"
-          />
-        </Col>
       </Row>
       {/***Sales & Feed***/}
-      <Row>
+      {/* <Row>
         <Col sm="6" lg="6" xl="7" xxl="8">
           <SalesChart />
         </Col>
         <Col sm="6" lg="6" xl="5" xxl="4">
           <Feeds />
         </Col>
-      </Row>
+      </Row> */}
       {/***Table ***/}
       <Row>
         <Col lg="12">
@@ -102,7 +93,7 @@ const Starter = () => {
         </Col>
       </Row>
       {/***Blog Cards***/}
-      <Row>
+      {/* <Row>
         {BlogData.map((blg, index) => (
           <Col sm="6" lg="6" xl="3" key={index}>
             <Blog
@@ -114,7 +105,7 @@ const Starter = () => {
             />
           </Col>
         ))}
-      </Row>
+      </Row> */}
     </div>
   );
 };

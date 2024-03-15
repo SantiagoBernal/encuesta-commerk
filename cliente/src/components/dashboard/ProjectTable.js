@@ -7,20 +7,13 @@ import {
 import React, {
   useState,
   useEffect,
-  // useContext,
-  // useRef
 } from 'react';
-// import { Link } from 'react-router'
+
 import {
-  //  BrowserRouter, Route ,Switch,
   useNavigate
 } from 'react-router-dom'
-// import { useHistory } from "react-router-dom";
-
 
 import axios from 'axios';
-
-
 
 const ProjectTables = (props) => {
 
@@ -39,7 +32,7 @@ const ProjectTables = (props) => {
 
 
   const getTask = () => {
-    axios.get(`http://localhost:5000/cliente/lista`)
+    axios.get(`http://localhost:5000/cliente/listaF`)
       .then((response) => {
         if (response.data) {
           setClientes(response.data)
@@ -53,7 +46,7 @@ const ProjectTables = (props) => {
 
   const deleteData = (val) => {
     navigate('/encuesta', { state: { val: val } });
-    console.log("val", val)
+    //console.log("val", val)
   }
 
   useEffect(() => {
@@ -62,9 +55,9 @@ const ProjectTables = (props) => {
       setPageState(Math.ceil(clientes?.length / pageSize));
     }
   }, [clientes]);
-  console.log("newsState", newsState);
+  //console.log("newsState", newsState);
 
-  console.log(clientes);
+  //console.log(clientes);
 
   return (
     <div>
@@ -125,7 +118,7 @@ const ProjectTables = (props) => {
                       )}
                     </td>
                     <td>
-                      <button onClick={() => deleteData(tdata)} href={`/forms`}>
+                      <button disabled={tdata.estado_encuesta === true ? true: false} onClick={() => deleteData(tdata)} href={`/forms`}>
                         {"Encuestar"}
                       </button>
                     </td>

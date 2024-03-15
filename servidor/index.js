@@ -71,10 +71,30 @@ app.post("/cliente/nuevo", async (req, res) => {
   }
 });
 
-//Lista clientes
+//Lista clientes 
 app.get("/cliente/lista", async (req, res) => {
   try {
     const allTodos = await pool.query("SELECT * FROM cliente");
+    res.json(allTodos.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+//Lista clientes false
+app.get("/cliente/listaF", async (req, res) => {
+  try {
+    const allTodos = await pool.query("SELECT * FROM cliente WHERE estado_encuesta = false");
+    res.json(allTodos.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+//Lista clientes true
+app.get("/cliente/listaV", async (req, res) => {
+  try {
+    const allTodos = await pool.query("SELECT * FROM cliente WHERE estado_encuesta = true");
     res.json(allTodos.rows);
   } catch (err) {
     console.error(err.message);
@@ -115,7 +135,51 @@ app.delete(`/cliente/eliminar`, async (req, res) => {
 });
 
 
-
+//Agregar encuesta
+app.post("/encuesta", async (req, res) => {
+  console.log("encuesta req.body", req.body);
+  try {
+    const {
+      pregunta_1,
+      pregunta_2,
+      pregunta_3,
+      pregunta_4,
+      comentario,
+      encuestador,
+      id_cliente
+    } = req.body;
+    const newTodo = await pool.query(
+      'INSERT INTO encuesta (pregunta_1, pregunta_2, pregunta_3, pregunta_4, comentario, encuestador, id_cliente) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
+      [
+        pregunta_1,
+        pregunta_2,
+        pregunta_3,
+        pregunta_4,
+        comentario,
+        encuestador,
+        id_cliente
+      ],
+    );
+    if (newTodo.rows[0].id_cliente) {
+      try {
+        const { id_cliente } = req.body;
+        const query = `
+          UPDATE cliente
+          SET estado_encuesta = true
+          WHERE id_cliente = ${id_cliente};
+        `;
+        const allEstado = await pool.query(query);
+        res.json(allEstado.rows);
+      } catch (err) {
+        console.error(err);
+        res.status(500).send('Some error has occured failed');
+      }
+    }
+    res.json(newTodo.rows[0]);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
 
 
 

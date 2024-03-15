@@ -10,18 +10,11 @@ import {
     // useContext,
     // useRef
   } from 'react';
-  // import { Link } from 'react-router'
   import {
-    //  BrowserRouter, Route ,Switch,
     useNavigate
   } from 'react-router-dom'
-  // import { useHistory } from "react-router-dom";
-  
-  
   import axios from 'axios';
-  
-  
-  
+
   const ProjectTables = (props) => {
   
     const [clientes, setClientes] = useState();
@@ -39,7 +32,7 @@ import {
   
   
     const getTask = () => {
-      axios.get(`http://localhost:5000/cliente/lista`)
+      axios.get(`http://localhost:5000/cliente/listaV`)
         .then((response) => {
           if (response.data) {
             setClientes(response.data)
@@ -53,7 +46,7 @@ import {
   
     const deleteData = (val) => {
       navigate('/encuesta', { state: { val: val } });
-      console.log("val", val)
+      //console.log("val", val)
     }
   
     useEffect(() => {
@@ -62,19 +55,16 @@ import {
         setPageState(Math.ceil(clientes?.length / pageSize));
       }
     }, [clientes]);
-    console.log("newsState", newsState);
-  
-    console.log(clientes);
+
+    //console.log("newsState", newsState);
+    //console.log(clientes);
   
     return (
       <div>
         <Card>
           <CardBody>
-            <CardTitle tag="h5">Lista de clientes</CardTitle>
-            <CardSubtitle className="mb-2 text-muted" tag="h6">
-              Seleccione un cliente para realizar encuesta
-            </CardSubtitle>
-  
+            <CardTitle tag="h5">Clientes encuestados</CardTitle>
+           
             <Table className="no-wrap mt-3 align-middle" responsive borderless>
               <thead>
                 <tr>
@@ -85,7 +75,7 @@ import {
                   <th>Telefono 2</th>
                   <th>Grupo</th>
                   <th>Estado</th>
-                  <th>Acción</th>
+                  {/* <th>Acción</th> */}
                   {/* <th>Budget</th> */}
                 </tr>
               </thead>
@@ -124,11 +114,11 @@ import {
                           <span className="p-2 bg-success rounded-circle d-inline-block ms-3"></span>
                         )}
                       </td>
-                      <td>
+                      {/* <td>
                         <button onClick={() => deleteData(tdata)} href={`/forms`}>
                           {"Encuesta"}
                         </button>
-                      </td>
+                      </td> */}
                     </tr>
                   ))}
               </tbody>

@@ -3,11 +3,7 @@ import Logo from "./Logo";
 import { Link, useLocation } from "react-router-dom";
 
 const navigation = [
-  // {
-  //   title: "Dashboard",
-  //   href: "/starter",
-  //   icon: "bi bi-speedometer2",
-  // },
+ 
   // {
   //   title: "Alert",
   //   href: "/alerts",
@@ -35,9 +31,14 @@ const navigation = [
   // },
   {
     title: "Clientes",
-    href: "/clientes",
+    href: "/seguimiento",
     icon: "bi bi-layout-split",
   },
+  // {
+  //   title: "Clientes",
+  //   href: "/clientes",
+  //   icon: "bi bi-layout-split",
+  // },
   {
     title: "Clientes Encuestados",
     href: "/clientesEncuestados",
@@ -48,6 +49,7 @@ const navigation = [
     href: "/agregar",
     icon: "bi bi-layout-split",
   },
+ 
  
   // {
   //   title: "Encuesta",

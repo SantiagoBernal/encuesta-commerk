@@ -39,6 +39,19 @@ CREATE TABLE IF NOT EXISTS respuesta (
     ON UPDATE NO ACTION
 );
 
-
+-- -----------------------------------------------------
+-- Table `encuesta`.`encuesta`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS encuesta (
+  id_encuesta SERIAL PRIMARY KEY,
+  fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  pregunta_1 VARCHAR(255) NOT NULL,
+  pregunta_2 VARCHAR(255) NOT NULL,
+  pregunta_3 VARCHAR(255) NOT NULL,
+  pregunta_4 VARCHAR(255) NOT NULL,
+  comentario VARCHAR(255) NOT NULL,
+  encuestador VARCHAR(255) NOT NULL,
+  id_cliente INT REFERENCES cliente(id_cliente)
+);
 
 
