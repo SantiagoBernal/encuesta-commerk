@@ -183,6 +183,10 @@ app.post("/encuesta", async (req, res) => {
 
 
 
+app.get('/ping', async (req, res) => {
+ const result = await pool.query('SELECT NOW()');
+  return res.json(result.rows[0]);
+})
 
 
 
