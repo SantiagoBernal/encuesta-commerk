@@ -9,7 +9,7 @@ import React, {
   useState,
   useEffect,
 } from 'react';
-
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import CircularLoading from "./CircularLoading";
 import PollIcon from '@mui/icons-material/Poll';
@@ -259,7 +259,7 @@ const ProjectTables = (props) => {
   // const pageSize = 5;
   // const [currentState, setCurrentState] = useState(0);
   // const [pageState, setPageState] = useState(0);
-
+  const navigate = useNavigate();
 
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
