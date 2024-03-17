@@ -30,7 +30,7 @@ const navigation = [
   //   icon: "bi bi-columns",
   // },
   {
-    title: "Clientes",
+    title: "Encuestas",
     href: "/seguimiento",
     icon: "bi bi-layout-split",
   },
@@ -45,10 +45,16 @@ const navigation = [
     icon: "bi bi-layout-split",
   },
   {
+    title: "Todos los Clientes",
+    href: "/todos",
+    icon: "bi bi-layout-split",
+  },
+  {
     title: "Agregar Clientes",
     href: "/agregar",
     icon: "bi bi-layout-split",
   },
+  
  
  
   // {

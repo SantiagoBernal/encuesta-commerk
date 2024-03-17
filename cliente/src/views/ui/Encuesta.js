@@ -76,7 +76,7 @@ const Forms = () => {
               label: 'Ok',
               onClick: () =>
                 setTimeout(() => {
-                  navigate('/clientes')
+                  navigate('/seguimiento')
                 }, 500)
             }
           ]

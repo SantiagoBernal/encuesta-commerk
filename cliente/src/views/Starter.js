@@ -1,50 +1,57 @@
 import { Col, Row } from "reactstrap";
-import SalesChart from "../components/dashboard/SalesChart";
-import Feeds from "../components/dashboard/Feeds";
 import ProjectTables from "../components/dashboard/ProjectTable";
 import TopCards from "../components/dashboard/TopCards";
-import Blog from "../components/dashboard/Blog";
-import bg1 from "../assets/images/bg/bg1.jpg";
-import bg2 from "../assets/images/bg/bg2.jpg";
-import bg3 from "../assets/images/bg/bg3.jpg";
-import bg4 from "../assets/images/bg/bg4.jpg";
 
-const BlogData = [
-  {
-    image: bg1,
-    title: "This is simple blog",
-    subtitle: "2 comments, 1 Like",
-    description:
-      "This is a wider card with supporting text below as a natural lead-in to additional content.",
-    btnbg: "primary",
-  },
-  {
-    image: bg2,
-    title: "Lets be simple blog",
-    subtitle: "2 comments, 1 Like",
-    description:
-      "This is a wider card with supporting text below as a natural lead-in to additional content.",
-    btnbg: "primary",
-  },
-  {
-    image: bg3,
-    title: "Don't Lamp blog",
-    subtitle: "2 comments, 1 Like",
-    description:
-      "This is a wider card with supporting text below as a natural lead-in to additional content.",
-    btnbg: "primary",
-  },
-  {
-    image: bg4,
-    title: "Simple is beautiful",
-    subtitle: "2 comments, 1 Like",
-    description:
-      "This is a wider card with supporting text below as a natural lead-in to additional content.",
-    btnbg: "primary",
-  },
-];
+import React, {
+  // useState,
+  useEffect,
+} from 'react';
+import axios from 'axios';
+
 
 const Starter = () => {
+
+  const [total, setTotal] = React.useState([]);
+  const [totalf, setTotalf] = React.useState([]);
+  const [totalv, setTotalv] = React.useState([]);
+
+
+  const fetchUserData = async () => {
+
+
+    await axios({
+      method: "GET",
+      withCredentials: true,
+      url: "http://localhost:5000/cliente/lista",
+    }).then((res) => {
+      setTotal(res.data);
+    });
+
+    await axios({
+      method: "GET",
+      withCredentials: true,
+      url: "http://localhost:5000/cliente/listaF",
+    }).then((res) => {
+      setTotalf(res.data);
+    });
+
+    await axios({
+      method: "GET",
+      withCredentials: true,
+      url: "http://localhost:5000/cliente/listaV",
+    }).then((res) => {
+      setTotalv(res.data);
+    });
+
+  };
+
+  useEffect(() => {
+    fetchUserData();
+  }, [])
+
+
+
+
   return (
     <div>
       {/***Top Cards***/}
@@ -54,8 +61,8 @@ const Starter = () => {
             bg="bg-light-success text-success"
             title="Profit"
             subtitle="Total Clientes"
-            earning="$21k"
-            icon="bi bi-wallet"
+            earning={total.length}
+            icon="bi bi-journal-text"
           />
         </Col>
         <Col sm="12" lg="4">
@@ -63,8 +70,8 @@ const Starter = () => {
             bg="bg-light-danger text-danger"
             title="Refunds"
             subtitle="Encuestados"
-            earning="$1k"
-            icon="bi bi-coin"
+            earning={totalv.length}
+            icon="bi bi-journal-check"
           />
         </Col>
         <Col sm="12" lg="4">
@@ -72,8 +79,8 @@ const Starter = () => {
             bg="bg-light-warning text-warning"
             title="New Project"
             subtitle="Sin Encuestar"
-            earning="456"
-            icon="bi bi-basket3"
+            earning={totalf.length}
+            icon="bi bi-journal-x"
           />
         </Col>
       </Row>

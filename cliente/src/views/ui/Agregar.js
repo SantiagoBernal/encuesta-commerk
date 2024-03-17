@@ -1,5 +1,6 @@
+
 import {
-    Button,
+    // Button,
     // ButtonGroup,
     Card,
     CardBody,
@@ -7,21 +8,49 @@ import {
     Row,
     Col,
 } from "reactstrap";
+import Button from '@mui/material/Button';
 // import Grid from "@mui/material/Grid";
 import React, {
     useState,
-    // useEffect,
-    // useContext,
-    // useRef
+    useEffect,
 } from 'react';
-
+import DeleteIcon from '@mui/icons-material/Delete';
+import SendIcon from '@mui/icons-material/Send';
+import Stack from '@mui/material/Stack';
+import SaveIcon from '@mui/icons-material/Save';
+import FileUploadIcon from '@mui/icons-material/FileUpload';
 import * as XLSX from 'xlsx/xlsx.mjs';
+import { styled } from '@mui/material/styles';
+import axios from 'axios';
+import Alert from '@mui/material/Alert';
+import CheckIcon from '@mui/icons-material/Check';
+import Snackbar from '@mui/material/Snackbar';
+import AlertTitle from '@mui/material/AlertTitle';
+import CardMedia from '@mui/material/CardMedia';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+
+const Div = styled('div')(({ theme }) => ({
+    ...theme.typography.button,
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(0),
+}));
+
 
 const EXTENSIONS = ['xlsx', 'xls', 'csv']
 
+
 const Agregar = () => {
 
-    const [clientes, setClientes] = useState();
+    const [clientes, setClientes] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [clientesListos, setClientesListos] = useState();
+    const [response, setResponse] = useState();
+    const [alert, setAlert] = useState(false);
+    const [alertContent, setAlertContent] = useState('');
+
+
 
     const getExention = (file) => {
         const parts = file.name.split('.')
@@ -56,23 +85,24 @@ const Agregar = () => {
             const workSheetName = workBook.SheetNames[0]
             const workSheet = workBook.Sheets[workSheetName]
             const fileData = XLSX.utils.sheet_to_json(workSheet, { header: 1 })
-            console.log(fileData)
+            //console.log(fileData)
             const headers = fileData[0]
             fileData.splice(0, 1)
             const dataUsers = convertToJson(headers, fileData)
             const users = [];
             if (dataUsers.length > 0) {
                 for (let i = 0; i < dataUsers.length; i++) {
-                    const Telefono = dataUsers[i].Telefono;
-                    dataUsers[i].telefono = String(dataUsers[i].Telefono);
-                    if (Telefono) {
-                        users.push(dataUsers[i])
+                    if (!dataUsers[i].telefono_1) {
+                        dataUsers[i].telefono_1 = "0";
                     }
+                    if (!dataUsers[i].telefono_2) {
+                        dataUsers[i].telefono_2 = "0";
+                    }
+                    const estado_encuesta = false;
+                    dataUsers[i].estado_encuesta = estado_encuesta;
+                    users.push(dataUsers[i])
                 }
-                // dispatch(addUserList(dataUsers));
                 setClientes(dataUsers)
-                // console.log(" users ", users)
-                console.log("dataUsers ", dataUsers)
             }
             // console.log("convertToJson(headers, fileData) ", convertToJson(headers, fileData))
         }
@@ -87,47 +117,77 @@ const Agregar = () => {
         }
     }
 
-    console.log("clientes ", clientes)
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        for (let i = 0; i < clientes.length; i++) {
+            try {
+                const response = await axios.post("http://localhost:5000/cliente/nuevo", clientes[i]);
+                //console.log("Post created:", response);
+                if (response.status === 200) {
+                    //console.log("cliente guardado");
+                    setAlertContent(response.data.result);
+                    setAlert(true);
+                    setClientes([]);
+                    //console.log("response.data", response.config.data);
+                }
+            } catch (error) {
+                console.error("Error creating post:", error);
+            }
+        }
+
+    };
+
+    //console.log("clientes ", clientes)
 
     return (
-
         <Row>
+            <Card sx={{ maxWidth: 345 }}>
+                <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                        <Div>{clientes && clientes.length > 0 ? "Se cargaron " : "Cargar "} <b>  {clientes && clientes.length > 0 ? clientes.length : ""}  </b>  {" Clientes"}</Div>
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                        Seleccione un archivo de Excel para cargar los clientes.
+                    </Typography>
+                </CardContent>
+                <CardActions>
+                    <div className="button-group">
+                        <label>
+                            <input
+                                type="file"
+                                style={{ display: 'none' }}
+                                onChange={importExcel}
+                                ref={hiddenFileInput}
+                            />
 
-            <Col xs="6" md="12">
-                {/* --------------------------------------------------------------------------------*/}
-                {/* Card-5*/}
-                {/* --------------------------------------------------------------------------------*/}
-                <Card>
-                    <CardTitle tag="h6" className="border-bottom p-3 mb-0">
-                        Importar Clientes
-                    </CardTitle>
-                    <CardBody className="">
-                        <div className="button-group">
-                            <label>
-                                <input
-                                    type="file"
-                                    style={{ display: 'none' }}
-                                    onChange={importExcel}
-                                    ref={hiddenFileInput}
-                                />
-                                <Button className="btn" color="secondary" size="lg" block
-                                    onClick={handleClick}
-                                    variant="contained"
-                                >
-                                    {'Importar Clientes'}
+                            <Stack alignContent="contained" direction="row" spacing={5}>
+                                <Button onClick={handleClick}
+                                    variant="outlined" size="large" startIcon={<FileUploadIcon />}>
+                                    Cargar
                                 </Button>
-
-                                <Button className="btn" color="secondary" size="lg" block>
-                                    Guardar Clientes
+                                <Button onClick={handleSubmit}
+                                    variant="contained" size="large" endIcon={<SaveIcon />}>
+                                    Guardar
                                 </Button>
-                            </label>
-                        </div>
+                            </Stack>
 
-                    </CardBody>
-                </Card>
-            </Col>
 
+
+                        </label>
+                    </div>
+                </CardActions>
+                {alert ?
+                    <Stack sx={{ width: '100%' }} spacing={2}>
+                        <Alert severity="success">
+                            <AlertTitle>Exito!</AlertTitle>
+                            Se guardaron los clientes correctamente.
+                        </Alert>
+                    </Stack>
+                    : <></>}
+            </Card>
         </Row>
+
+
 
 
     );

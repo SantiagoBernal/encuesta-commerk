@@ -15,6 +15,7 @@ const Buttons = lazy(() => import("../views/ui/Buttons"));
 const Grid = lazy(() => import("../views/ui/Grid"));
 const Clientes = lazy(() => import("../views/ui/Tables"));
 const ClientesEncuestados = lazy(() => import("../views/ui/Encuestados"));
+const Todos = lazy(() => import("../views/ui/Todos"));
 const Agregar = lazy(() => import("../views/ui/Agregar"));
 const Encuesta = lazy(() => import("../views/ui/Encuesta"));
 const Breadcrumbs = lazy(() => import("../views/ui/Breadcrumbs"));
@@ -26,7 +27,7 @@ const ThemeRoutes = [
     path: "/",
     element: <FullLayout />,
     children: [
-      { path: "/", element: <Navigate to="/clientes" /> },
+      { path: "/", element: <Navigate to="/seguimiento" /> },
       { path: "/seguimiento", exact: true, element: <Starter /> },
       { path: "/about", exact: true, element: <About /> },
       { path: "/alerts", exact: true, element: <Alerts /> },
@@ -35,6 +36,7 @@ const ThemeRoutes = [
       // { path: "/cards", exact: true, element: <Cards /> },
       { path: "/grid", exact: true, element: <Grid /> },
       { path: "/clientes", exact: true, element: <Clientes /> },
+      { path: "/todos", exact: true, element: <Todos /> },
       { path: "/clientesEncuestados", exact: true, element: <ClientesEncuestados /> },
       { path: "/agregar", exact: true, element: <Agregar /> },
       { path: "/encuesta", exact: true, element: <Encuesta /> },
