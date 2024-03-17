@@ -1,21 +1,12 @@
 
 import {
-    // Button,
-    // ButtonGroup,
     Card,
-    CardBody,
-    CardTitle,
-    Row,
-    Col,
+    Row
 } from "reactstrap";
 import Button from '@mui/material/Button';
-// import Grid from "@mui/material/Grid";
 import React, {
-    useState,
-    useEffect,
+    useState
 } from 'react';
-import DeleteIcon from '@mui/icons-material/Delete';
-import SendIcon from '@mui/icons-material/Send';
 import Stack from '@mui/material/Stack';
 import SaveIcon from '@mui/icons-material/Save';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
@@ -23,10 +14,7 @@ import * as XLSX from 'xlsx/xlsx.mjs';
 import { styled } from '@mui/material/styles';
 import axios from 'axios';
 import Alert from '@mui/material/Alert';
-import CheckIcon from '@mui/icons-material/Check';
-import Snackbar from '@mui/material/Snackbar';
 import AlertTitle from '@mui/material/AlertTitle';
-import CardMedia from '@mui/material/CardMedia';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -44,11 +32,9 @@ const EXTENSIONS = ['xlsx', 'xls', 'csv']
 const Agregar = () => {
 
     const [clientes, setClientes] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [clientesListos, setClientesListos] = useState();
-    const [response, setResponse] = useState();
+  
     const [alert, setAlert] = useState(false);
-    const [alertContent, setAlertContent] = useState('');
+  
 
 
 
@@ -121,11 +107,10 @@ const Agregar = () => {
         e.preventDefault();
         for (let i = 0; i < clientes.length; i++) {
             try {
-                const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/nuevo`, clientes[i]);
+                const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/cliente/nuevo`, clientes[i]);
                 //console.log("Post created:", response);
                 if (response.status === 200) {
                     //console.log("cliente guardado");
-                    setAlertContent(response.data.result);
                     setAlert(true);
                     setClientes([]);
                     //console.log("response.data", response.config.data);

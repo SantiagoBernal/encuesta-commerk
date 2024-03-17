@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS cliente (
   telefono_movil BIGINT NOT NULL,
   telefono_1 BIGINT,
   telefono_2 BIGINT,
-  estado_encuesta BOOLEAN NOT NULL
+  estado_encuesta BOOLEAN NOT NULL,
   nombre_grupo VARCHAR(255) NOT NULL,
   codigo_proyecto INT NOT NULL
 );
