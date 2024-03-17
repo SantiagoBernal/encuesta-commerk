@@ -9,7 +9,7 @@ import React, {
   useState,
   useEffect,
 } from 'react';
-import { useNavigate } from 'react-router-dom'
+
 import axios from 'axios';
 import CircularLoading from "./CircularLoading";
 import PollIcon from '@mui/icons-material/Poll';
@@ -255,7 +255,7 @@ EnhancedTableToolbar.propTypes = {
 const ProjectTables = (props) => {
 
   // const [clientes, setClientes] = useState();
-  const navigate = useNavigate();
+
   // const pageSize = 5;
   // const [currentState, setCurrentState] = useState(0);
   // const [pageState, setPageState] = useState(0);
@@ -265,7 +265,6 @@ const ProjectTables = (props) => {
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   // const [rowsNew, setRowsNew] = React.useState(list);
 
@@ -445,7 +444,7 @@ const ProjectTables = (props) => {
                   {emptyRows > 0 && (
                     <TableRow
                       style={{
-                        height: (dense ? 33 : 33) * emptyRows,
+                        height: (33) * emptyRows,
                       }}
                     >
                       <TableCell colSpan={6} />
