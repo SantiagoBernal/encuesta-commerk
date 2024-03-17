@@ -121,7 +121,7 @@ const Agregar = () => {
         e.preventDefault();
         for (let i = 0; i < clientes.length; i++) {
             try {
-                const response = await axios.post("http://localhost:5000/cliente/nuevo", clientes[i]);
+                const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/nuevo`, clientes[i]);
                 //console.log("Post created:", response);
                 if (response.status === 200) {
                     //console.log("cliente guardado");

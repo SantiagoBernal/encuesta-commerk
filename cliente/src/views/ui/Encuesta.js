@@ -65,7 +65,7 @@ const Forms = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/encuesta", encuesta);
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/encuesta`, encuesta);
       //console.log("Post created:", response.data);
       if (response.data) {
         confirmAlert({
