@@ -9,7 +9,7 @@ import React, {
   useState,
   useEffect,
 } from 'react';
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import CircularLoading from "./CircularLoading";
 
@@ -255,7 +255,7 @@ const ProjectTables = (props) => {
   const [selected, setSelected] = React.useState([]);
  
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
+  // const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   // const [rowsNew, setRowsNew] = React.useState(list);
 
@@ -330,10 +330,10 @@ const ProjectTables = (props) => {
     setPage(0);
   };
 
-  const handleChangeDense = (event) => {
-    // setDense(event.target.checked);
-    setDense(true);
-  };
+  // const handleChangeDense = (event) => {
+  //   // setDense(event.target.checked);
+  //   setDense(true);
+  // };
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
 
@@ -363,7 +363,7 @@ const ProjectTables = (props) => {
               <Table
                 sx={{ minWidth: 750 }}
                 aria-labelledby="tableTitle"
-                size={dense ? 'small' : 'medium'}
+                size={'small'}
               >
                 <EnhancedTableHead
                   numSelected={selected.length}
@@ -427,7 +427,7 @@ const ProjectTables = (props) => {
                   {emptyRows > 0 && (
                     <TableRow
                       style={{
-                        height: (dense ? 33 : 33) * emptyRows,
+                        height: (33) * emptyRows,
                       }}
                     >
                       <TableCell colSpan={6} />
