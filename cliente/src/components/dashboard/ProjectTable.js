@@ -264,7 +264,6 @@ const ProjectTables = (props) => {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
-  const [selectedcliente, setSelectedcliente] = React.useState();
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -273,14 +272,13 @@ const ProjectTables = (props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [rows, setRowse] = React.useState([]);
-  const [anchorEl, setAnchorEl] = React.useState(null);
+ 
 
 
 
   const handleShowPopover = (event) => {
     navigate('/encuesta', { state: { val: event } });
     //console.log("event", event)
-    setAnchorEl(event)
   };
 
   //console.log("anchorEl", anchorEl)
@@ -312,8 +310,6 @@ const ProjectTables = (props) => {
   const handleSelectAllClick = (event) => {
     if (event.target.checked && rows.length > 0) {
       const newSelected = rows?.map((n) => n.id_cliente);
-      const newSelectedcliente = rows?.map((n) => n);
-      setSelectedcliente(newSelectedcliente);
       setSelected(newSelected);
       return;
     }
