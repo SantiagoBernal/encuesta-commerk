@@ -261,7 +261,6 @@ const ProjectTables = (props) => {
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
     const [selected, setSelected] = React.useState([]);
-    const [selectedcliente, setSelectedcliente] = React.useState();
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -337,10 +336,6 @@ const ProjectTables = (props) => {
         setPage(0);
     };
 
-    const handleChangeDense = (event) => {
-        // setDense(event.target.checked);
-        setDense(true);
-    };
 
     const isSelected = (id) => selected.indexOf(id) !== -1;
 

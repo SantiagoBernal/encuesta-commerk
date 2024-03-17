@@ -248,12 +248,7 @@ EnhancedTableToolbar.propTypes = {
 
 const ProjectTables = (props) => {
 
-  // const [clientes, setClientes] = useState();
-  const navigate = useNavigate();
-  // const pageSize = 5;
-  // const [currentState, setCurrentState] = useState(0);
-  // const [pageState, setPageState] = useState(0);
-
+ 
 
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');

@@ -346,10 +346,6 @@ const ProjectTables = (props) => {
     setPage(0);
   };
 
-  const handleChangeDense = (event) => {
-    // setDense(event.target.checked);
-    setDense(true);
-  };
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
 

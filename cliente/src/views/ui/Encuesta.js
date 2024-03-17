@@ -35,13 +35,13 @@ const Forms = () => {
   const navigate = useNavigate();
 
   const location = useLocation();
-  const [cliente, setCliente] = useState();
+  // const [cliente, setCliente] = useState();
 
-  useEffect(() => {
-    if (location && location.state) {
-      setCliente(location.state.val);
-    }
-  }, [location, location.state]);
+  // useEffect(() => {
+  //   if (location && location.state) {
+  //     setCliente(location.state.val);
+  //   }
+  // }, [location, location.state]);
 
   //console.log("cliente", cliente);
   const [encuesta, setEncuesta] = useState({
