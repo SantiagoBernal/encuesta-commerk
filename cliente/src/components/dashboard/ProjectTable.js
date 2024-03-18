@@ -286,7 +286,6 @@ const ProjectTables = (props) => {
     setIsLoading(true);
     await axios({
       method: "GET",
-      withCredentials: true,
       url: `${process.env.REACT_APP_BACKEND_URL}/cliente/listaF`,
     }).then((res) => {
       setRowse(res.data);

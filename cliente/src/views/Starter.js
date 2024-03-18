@@ -21,7 +21,6 @@ const Starter = () => {
 
     await axios({
       method: "GET",
-      withCredentials: true,
       url: `${process.env.REACT_APP_BACKEND_URL}/cliente/lista`,
     }).then((res) => {
       setTotal(res.data);
@@ -29,7 +28,6 @@ const Starter = () => {
 
     await axios({
       method: "GET",
-      withCredentials: true,
       url: `${process.env.REACT_APP_BACKEND_URL}/cliente/listaF`,
     }).then((res) => {
       setTotalf(res.data);
@@ -37,7 +35,6 @@ const Starter = () => {
 
     await axios({
       method: "GET",
-      withCredentials: true,
       url: `${process.env.REACT_APP_BACKEND_URL}/cliente/listaV`,
     }).then((res) => {
       setTotalv(res.data);
