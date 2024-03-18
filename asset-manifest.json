@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/encuesta-commerk/static/css/main.a7b42993.css",
-    "main.js": "/encuesta-commerk/static/js/main.2b60b890.js",
+    "main.js": "/encuesta-commerk/static/js/main.4aafce8e.js",
     "static/js/17.f4e687e0.chunk.js": "/encuesta-commerk/static/js/17.f4e687e0.chunk.js",
-    "static/js/109.fc54c615.chunk.js": "/encuesta-commerk/static/js/109.fc54c615.chunk.js",
+    "static/js/109.031cbaf0.chunk.js": "/encuesta-commerk/static/js/109.031cbaf0.chunk.js",
     "static/js/894.706d7e74.chunk.js": "/encuesta-commerk/static/js/894.706d7e74.chunk.js",
     "static/js/123.058098a4.chunk.js": "/encuesta-commerk/static/js/123.058098a4.chunk.js",
     "static/js/800.1efdbc97.chunk.js": "/encuesta-commerk/static/js/800.1efdbc97.chunk.js",
     "static/js/136.aa8dc51a.chunk.js": "/encuesta-commerk/static/js/136.aa8dc51a.chunk.js",
     "static/js/418.ca9ae4f0.chunk.js": "/encuesta-commerk/static/js/418.ca9ae4f0.chunk.js",
-    "static/js/395.fe57d316.chunk.js": "/encuesta-commerk/static/js/395.fe57d316.chunk.js",
-    "static/js/460.f16836cc.chunk.js": "/encuesta-commerk/static/js/460.f16836cc.chunk.js",
-    "static/js/851.ca3c35a2.chunk.js": "/encuesta-commerk/static/js/851.ca3c35a2.chunk.js",
+    "static/js/395.821a3d14.chunk.js": "/encuesta-commerk/static/js/395.821a3d14.chunk.js",
+    "static/js/460.561bf593.chunk.js": "/encuesta-commerk/static/js/460.561bf593.chunk.js",
+    "static/js/851.40e790ee.chunk.js": "/encuesta-commerk/static/js/851.40e790ee.chunk.js",
     "static/js/57.b3060883.chunk.js": "/encuesta-commerk/static/js/57.b3060883.chunk.js",
     "static/css/150.0ba5c183.chunk.css": "/encuesta-commerk/static/css/150.0ba5c183.chunk.css",
     "static/js/150.9bd2046c.chunk.js": "/encuesta-commerk/static/js/150.9bd2046c.chunk.js",
@@ -27,17 +27,17 @@
     "static/media/logo-commerk.png": "/encuesta-commerk/static/media/logo-commerk.6c74bec7b788ac0661cc.png",
     "index.html": "/encuesta-commerk/index.html",
     "main.a7b42993.css.map": "/encuesta-commerk/static/css/main.a7b42993.css.map",
-    "main.2b60b890.js.map": "/encuesta-commerk/static/js/main.2b60b890.js.map",
+    "main.4aafce8e.js.map": "/encuesta-commerk/static/js/main.4aafce8e.js.map",
     "17.f4e687e0.chunk.js.map": "/encuesta-commerk/static/js/17.f4e687e0.chunk.js.map",
-    "109.fc54c615.chunk.js.map": "/encuesta-commerk/static/js/109.fc54c615.chunk.js.map",
+    "109.031cbaf0.chunk.js.map": "/encuesta-commerk/static/js/109.031cbaf0.chunk.js.map",
     "894.706d7e74.chunk.js.map": "/encuesta-commerk/static/js/894.706d7e74.chunk.js.map",
     "123.058098a4.chunk.js.map": "/encuesta-commerk/static/js/123.058098a4.chunk.js.map",
     "800.1efdbc97.chunk.js.map": "/encuesta-commerk/static/js/800.1efdbc97.chunk.js.map",
     "136.aa8dc51a.chunk.js.map": "/encuesta-commerk/static/js/136.aa8dc51a.chunk.js.map",
     "418.ca9ae4f0.chunk.js.map": "/encuesta-commerk/static/js/418.ca9ae4f0.chunk.js.map",
-    "395.fe57d316.chunk.js.map": "/encuesta-commerk/static/js/395.fe57d316.chunk.js.map",
-    "460.f16836cc.chunk.js.map": "/encuesta-commerk/static/js/460.f16836cc.chunk.js.map",
-    "851.ca3c35a2.chunk.js.map": "/encuesta-commerk/static/js/851.ca3c35a2.chunk.js.map",
+    "395.821a3d14.chunk.js.map": "/encuesta-commerk/static/js/395.821a3d14.chunk.js.map",
+    "460.561bf593.chunk.js.map": "/encuesta-commerk/static/js/460.561bf593.chunk.js.map",
+    "851.40e790ee.chunk.js.map": "/encuesta-commerk/static/js/851.40e790ee.chunk.js.map",
     "57.b3060883.chunk.js.map": "/encuesta-commerk/static/js/57.b3060883.chunk.js.map",
     "150.0ba5c183.chunk.css.map": "/encuesta-commerk/static/css/150.0ba5c183.chunk.css.map",
     "150.9bd2046c.chunk.js.map": "/encuesta-commerk/static/js/150.9bd2046c.chunk.js.map",
@@ -51,6 +51,6 @@
   },
   "entrypoints": [
     "static/css/main.a7b42993.css",
-    "static/js/main.2b60b890.js"
+    "static/js/main.4aafce8e.js"
   ]
 }
