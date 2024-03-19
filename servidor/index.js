@@ -166,7 +166,7 @@ app.post("/encuesta", async (req, res) => {
     console.log("newTodo.rows[0]", newTodo.rows[0]);
     if (newTodo.rows[0].id_cliente) {
       try {
-        const { id_cliente } = req.body;
+        const { id_cliente } = req.body.encuesta;
         console.log(" req.body update",  req.body);
         const query = `
           UPDATE cliente
