@@ -140,7 +140,7 @@ app.delete(`/cliente/eliminar`, async (req, res) => {
 //Agregar encuesta
 app.post("/encuesta", async (req, res) => {
   console.log("encuesta req.body", req.body);
-  console.log("encuesta req.body", req.body.pregunta_1);
+  console.log("encuesta req.body.encuesta", req.body.encuesta);
   try {
     const {
       pregunta_1,
