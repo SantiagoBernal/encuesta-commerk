@@ -38,6 +38,8 @@ app.use('/auth', require('./Routers/auth/passport'));
 
 //Agregar cliente
 app.post("/cliente/nuevo", async (req, res) => {
+  console.log("encuesta req.body", req.body);
+  //console.log("encuesta req.body.encuesta", req.body.encuesta);
   try {
     const {
       codigo_sn,
@@ -166,7 +168,7 @@ app.post("/encuesta", async (req, res) => {
     console.log("newTodo.rows[0]", newTodo.rows[0]);
     if (newTodo.rows[0].id_cliente) {
       try {
-        const { id_cliente } = req.body.encuesta;
+        const { id_cliente } = req.body;
         console.log(" req.body update",  req.body);
         const query = `
           UPDATE cliente
