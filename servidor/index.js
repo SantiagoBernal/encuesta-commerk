@@ -52,7 +52,7 @@ app.post("/cliente/nuevo", async (req, res) => {
       estado_encuesta,
       nombre_grupo,
       codigo_proyecto
-    } = req.body;
+    } = req.body.data;
     const newTodo = await pool.query(
       'INSERT INTO cliente (codigo_sn, nombre_sn, correo_electronico, correo_recepcion, telefono_movil, telefono_1, telefono_2, estado_encuesta, nombre_grupo, codigo_proyecto ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *',
       [
