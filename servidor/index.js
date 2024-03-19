@@ -142,7 +142,7 @@ app.delete(`/cliente/eliminar`, async (req, res) => {
 //Agregar encuesta
 app.post("/encuesta", async (req, res) => {
   console.log("encuesta req.body", req.body);
-  console.log("encuesta req.body.encuesta", req.body.encuesta);
+  console.log("encuesta req.body.encuesta", req.body.data);
   try {
     const {
       pregunta_1,
@@ -166,7 +166,7 @@ app.post("/encuesta", async (req, res) => {
       ],
     );
     console.log("newTodo.rows[0]", newTodo.rows[0]);
-    if (newTodo.rows[0].id_cliente) {
+    if (newTodo.rows[0].data.id_cliente) {
       try {
         const { id_cliente } = req.body;
         console.log(" req.body update",  req.body);
@@ -188,7 +188,15 @@ app.post("/encuesta", async (req, res) => {
   }
 });
 
-
+//Lista encuestas 
+app.get("/encuesta/lista", async (req, res) => {
+  try {
+    const allTodos = await pool.query("SELECT * FROM encuesta");
+    res.json(allTodos.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
 
 app.get('/ping', async (req, res) => {
   const result = await pool.query('SELECT NOW()');
