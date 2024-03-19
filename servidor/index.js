@@ -166,7 +166,7 @@ app.post("/encuesta", async (req, res) => {
       ],
     );
     console.log("newTodo.rows[0]", newTodo.rows[0]);
-    if (newTodo.rows[0].data.id_cliente) {
+    if (newTodo.rows[0].id_cliente) {
       try {
         const { id_cliente } = req.body.data;
         console.log(" req.body update",  req.body.data);
