@@ -167,6 +167,7 @@ app.post("/encuesta", async (req, res) => {
     if (newTodo.rows[0].id_cliente) {
       try {
         const { id_cliente } = req.body;
+        console.log(" req.body update",  req.body);
         const query = `
           UPDATE cliente
           SET estado_encuesta = true
