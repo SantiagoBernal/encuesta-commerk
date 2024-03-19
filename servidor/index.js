@@ -163,6 +163,7 @@ app.post("/encuesta", async (req, res) => {
         id_cliente
       ],
     );
+    console.log("newTodo.rows[0]", newTodo.rows[0]);
     if (newTodo.rows[0].id_cliente) {
       try {
         const { id_cliente } = req.body;
