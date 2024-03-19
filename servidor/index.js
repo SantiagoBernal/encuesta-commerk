@@ -22,11 +22,11 @@ app.use(cookieSession({
 
 // CORS - Cross Origin Resource Sharing, our Frontend will be runing on different port (3000) and our Backend will run of 5000, it so how can frontend access backend, so we need to connect it, thats the reason we are using CORS.
 app.use(express.json());
-app.use(cors()); //req.body
-// app.use(cors({
-//   origin: "http://localhost:3000",  //only localhost:3000 can access this server
-//   credentials: true  //Responding with this header to true means that the server allows cookies (or other user credentials) to be included on cross-origin requests. 
-// }))
+// app.use(cors()); //req.body
+app.use(cors({
+  origin: "http://localhost:3000",  //only localhost:3000 can access this server
+  credentials: true  //Responding with this header to true means that the server allows cookies (or other user credentials) to be included on cross-origin requests. 
+}))
 
 
 app.use(passport.initialize())
