@@ -150,7 +150,7 @@ app.post("/encuesta", async (req, res) => {
       comentario,
       encuestador,
       id_cliente
-    } = req.body.encuesta;
+    } = req.body;
     const newTodo = await pool.query(
       'INSERT INTO encuesta (pregunta_1, pregunta_2, pregunta_3, pregunta_4, comentario, encuestador, id_cliente) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
       [
