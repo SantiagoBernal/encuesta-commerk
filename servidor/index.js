@@ -138,17 +138,6 @@ app.put("/cliente/editar", async (req, res) => {
   }
 });
 
-//Eliminar cliente
-app.delete(`/cliente/eliminar`, async (req, res) => {
-  try {
-    const { id_tipo_usuario } = req.body;
-    await pool.query("DELETE FROM tipo_usuario WHERE id_tipo_usuario = $1",
-      [id_tipo_usuario]);
-    res.json("Tipo de usuario eliminado");
-  } catch (err) {
-    console.log(err.message);
-  }
-});
 
 
 //Agregar encuesta
