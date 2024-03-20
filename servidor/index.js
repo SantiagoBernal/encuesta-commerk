@@ -20,7 +20,7 @@ app.use(cookieSession({
   maxAge: 24 * 60 * 60 * 100
 }))
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "https://commerk-encuesta.netlify.app/");
+  res.setHeader("Access-Control-Allow-Origin", "https://example.com");
   res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   next();
@@ -234,20 +234,6 @@ app.get('/ping', async (req, res) => {
   const result = await pool.query('SELECT NOW()');
   return res.json(result.rows[0]);
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //get all users
 
