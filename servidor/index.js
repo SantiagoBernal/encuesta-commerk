@@ -291,6 +291,54 @@ app.get("/usuarios/lista", async (req, res) => {
 });
 
 
+
+app.post("/login", async (req, res) => {
+  try {
+    const { useremail, password } = req.body;
+    const users = await pool.query('SELECT * FROM usuario WHERE useremail = $1', [useremail]);
+    if (users.rows.length === 0) return res.status(401).json({ error: "Email is incorrect" });
+    //PASSWORD CHECK
+    const match = await bcrypt.compare(password, users.rows[0].password);
+    if (match) {
+      //create a jwt token
+      const serviceToken = jwt.sign({ id_usuario: users.rows[0].id }, 'my_secret_key', { expiresIn: '12h' });
+      res.json({ user: users.rows[0], serviceToken, })
+    } else {
+      res.status(401).json({ message: 'Invalid Password' })
+    }
+  } catch (error) {
+    res.status(401).json({ error: error.message });
+  }
+
+});
+
+
+//Authentication Middleware using JWT
+const authenticate = (req, res, next) => {
+  const token = req.header('Authorization');
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized" })
+  }
+  const extractedToken = token.split(' ')[1];
+  try {
+    const decoded = jwt.verify(extractedToken, 'my_secret_key')
+    req.id_usuario = decoded.id_usuario;
+    next();
+
+  } catch (err) {
+    res.status(401).json({ message: "Invalid Token" })
+  }
+}
+
+app.get('/profile', authenticate, async (req, res) => {
+  try {
+    const users = await pool.query('SELECT * FROM usuario');
+    res.json({ user: users.rows });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 //ROUTES//
 
 app.get('/', (req, res) => {
