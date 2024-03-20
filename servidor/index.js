@@ -200,6 +200,20 @@ app.get("/encuesta/lista", async (req, res) => {
   }
 });
 
+
+//Borrar encuestas
+app.delete(`/encuesta/eliminar`, async (req, res) => {
+  try {
+    const { id_encuesta } = req.body;
+    console.log("encuesta/eliminar req.body", req.body);
+    await pool.query("DELETE FROM encuesta WHERE id_encuesta = $1",
+      [id_encuesta]);
+    res.json("cliente eliminado");
+  } catch (err) {
+    console.log(err.message);
+  }
+});
+
 app.get('/ping', async (req, res) => {
   const result = await pool.query('SELECT NOW()');
   return res.json(result.rows[0]);
