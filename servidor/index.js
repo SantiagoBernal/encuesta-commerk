@@ -75,6 +75,18 @@ app.post("/cliente/nuevo", async (req, res) => {
   }
 });
 
+//Borrar clientes
+app.delete(`/cliente/eliminar`, async (req, res) => {
+  try {
+    const { id_cliente } = req.body;
+    await pool.query("DELETE FROM cliente WHERE id_cliente = $1",
+      [id_cliente]);
+    res.json("Tipo de usuario eliminado");
+  } catch (err) {
+    console.log(err.message);
+  }
+});
+
 //Lista clientes 
 app.get("/cliente/lista", async (req, res) => {
   try {
