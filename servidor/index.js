@@ -76,6 +76,17 @@ app.post("/cliente/nuevo", async (req, res) => {
 });
 
 //Borrar clientes
+app.delete(`/cliente/borrar/todos`, async (req, res) => {
+  try {
+    await pool.query("DELETE FROM cliente");
+    res.json("clientes eliminados en total");
+  } catch (err) {
+    console.log(err.message);
+  }
+});
+
+
+//Borrar clientes
 app.delete(`/cliente/eliminar`, async (req, res) => {
   try {
     const { id_cliente } = req.body;
