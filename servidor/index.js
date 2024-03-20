@@ -79,7 +79,7 @@ app.post("/cliente/nuevo", async (req, res) => {
 app.delete(`/cliente/eliminar`, async (req, res) => {
   try {
     const { id_cliente } = req.body;
-    console.log("cliente/eliminar", req.body);
+    console.log("cliente/eliminar req.body", req.body);
     await pool.query("DELETE FROM cliente WHERE id_cliente = $1",
       [id_cliente]);
     res.json("cliente eliminado");
