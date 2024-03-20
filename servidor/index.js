@@ -232,14 +232,15 @@ app.post("/register", async (req, res) => {
       disponibilidad_usuario,
       telefono_usuario,
       documento_usuario,
+      estado_usuario,
       tipo_usuario_id_tipo_usuario,
-      estado_id_estado,
+      proyecto_id_proyecto,
     } = req.body;
 
     const hashedPassword = await bcrypt.hash(password, 10)
     //console.log("hashedPassword",hashedPassword);
     const nuevoUsuario = await pool.query(
-      'INSERT INTO usuario (password, nombre_usuario, apellidos_usuario, googleid, useremail, userimg, username, disponibilidad_usuario, telefono_usuario, documento_usuario, tipo_usuario_id_tipo_usuario, estado_id_estado ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *',
+      'INSERT INTO usuario (password, nombre_usuario, apellidos_usuario, googleid, useremail, userimg, username, disponibilidad_usuario, telefono_usuario, documento_usuario, estado_usuario, tipo_usuario_id_tipo_usuario, proyecto_id_proyecto ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *',
       [
         `${hashedPassword}`,
         `${nombre_usuario}`,
@@ -251,8 +252,9 @@ app.post("/register", async (req, res) => {
         `${disponibilidad_usuario}`,
         `${telefono_usuario}`,
         `${documento_usuario}`,
+        `${estado_usuario}`,
         `${tipo_usuario_id_tipo_usuario}`,
-        `${estado_id_estado}`,
+        `${proyecto_id_proyecto}`,
       ],
     );
     res.json(nuevoUsuario.rows[0]);
