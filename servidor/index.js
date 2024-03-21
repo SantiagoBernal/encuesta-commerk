@@ -355,13 +355,13 @@ const authenticate = (req, res, next) => {
 
 app.get('/profile', authenticate, async (req, res) => {
   try {
-    const id_usuario = req.id_usuario;
-    //console.log("req", req);
-    console.log("id_usuario", id_usuario);
-    const user = await pool.query('SELECT * FROM usuario WHERE id_usuario = $1',
-      [id_usuario]);
-    console.log("user.rows[0]", user.rows[0])
-    res.json({ user: user.rows[0] });
+    // const id_usuario = req.id_usuario;
+    // //console.log("req", req);
+    // console.log("id_usuario", id_usuario);
+    // const user = await pool.query('SELECT * FROM usuario WHERE id_usuario = $1',
+    //   [id_usuario]);
+    // console.log("user.rows[0]", user.rows[0])
+    res.json({ user: req.user });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
