@@ -345,7 +345,10 @@ const authenticate = (req, res, next) => {
   const extractedToken = token.split(' ')[1];
   try {
     const decoded = jwt.verify(extractedToken, 'my_secret_key')
-    req.user = decoded.user;
+    req.user = decoded;
+    console.log("decoded",  decoded);
+    console.log("req",  req);
+    console.log("res",  res);
     next();
 
   } catch (err) {
