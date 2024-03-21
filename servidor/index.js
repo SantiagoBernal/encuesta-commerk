@@ -352,9 +352,8 @@ const authenticate = (req, res, next) => {
 
 app.get('/profile', authenticate, async (req, res) => {
   try {
-    const { id_usuario } = req.body;
+    const id_usuario = req.id_usuario;
     console.log("id_usuario", id_usuario);
-    console.log("req.body", req);
     const user = await pool.query('SELECT * FROM usuario WHERE id_usuario = $1',
       [id_usuario]);
     console.log("user", user)
