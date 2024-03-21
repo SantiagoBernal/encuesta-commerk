@@ -207,7 +207,7 @@ app.post("/encuesta", async (req, res) => {
     if (newTodo.rows[0].id_cliente) {
       try {
         const { id_cliente } = req.body.data;
-        console.log(" req.body update",  req.body.data);
+        console.log(" req.body update", req.body.data);
         const query = `
           UPDATE cliente
           SET estado_encuesta = true
@@ -352,9 +352,12 @@ const authenticate = (req, res, next) => {
 
 app.get('/profile', authenticate, async (req, res) => {
   try {
-    const users = await pool.query('SELECT * FROM usuario WHERE id_usuario = $1', [req.id_usuario]);
-    // const users = await pool.query('SELECT * FROM usuario');
-    res.json({ user: users.rows });
+    const { id_usuario } = req.body;
+    console.log("id_usuario", id_usuario);
+    const user = await pool.query('SELECT * FROM usuario WHERE id_usuario = $1',
+      [id_usuario]);
+    console.log("user", user)
+    res.json({ user: user.rows });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
