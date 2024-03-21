@@ -117,7 +117,7 @@ app.get("/cliente/lista", async (req, res) => {
 //Lista clientes Antioquia
 app.get("/cliente/lista/antioquia", async (req, res) => {
   try {
-    const allTodos = await pool.query("SELECT * FROM cliente WHERE codigo_proyecto = 2");
+    const allTodos = await pool.query("SELECT * FROM cliente WHERE codigo_proyecto = 2 AND estado_encuesta = false");
     res.json(allTodos.rows);
   } catch (err) {
     console.error(err.message);
@@ -127,7 +127,7 @@ app.get("/cliente/lista/antioquia", async (req, res) => {
 //Lista clientes Valle
 app.get("/cliente/lista/valle", async (req, res) => {
   try {
-    const allTodos = await pool.query("SELECT * FROM cliente WHERE codigo_proyecto = 1");
+    const allTodos = await pool.query("SELECT * FROM cliente WHERE codigo_proyecto = 1 AND estado_encuesta = false");
     res.json(allTodos.rows);
   } catch (err) {
     console.error(err.message);
