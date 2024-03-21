@@ -325,7 +325,7 @@ app.post("/login", async (req, res) => {
       const serviceToken = jwt.sign({ id_usuario: users.rows[0].id }, 'my_secret_key', { expiresIn: '12h' });
       // console.log("serviceToken", serviceToken);
       // res.json(serviceToken )
-       res.json({ user: users.rows[0], serviceToken, })
+       res.json({ user: users.rows[0], serviceToken })
     } else {
       res.status(401).json({ message: 'Invalid Password' })
     }
