@@ -352,7 +352,7 @@ const authenticate = (req, res, next) => {
 
 app.get('/profile', authenticate, async (req, res) => {
   try {
-    const users = await pool.query('SELECT * FROM usuario WHERE id = $1', [req.id_usuario]);
+    const users = await pool.query('SELECT * FROM usuario WHERE id_usuario = $1', [req.id_usuario]);
     // const users = await pool.query('SELECT * FROM usuario');
     res.json({ user: users.rows });
   } catch (error) {
