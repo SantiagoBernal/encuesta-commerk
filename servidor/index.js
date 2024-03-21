@@ -359,7 +359,7 @@ app.get('/profile', authenticate, async (req, res) => {
     const user = await pool.query('SELECT * FROM usuario WHERE id_usuario = $1',
       [id_usuario]);
     //console.log("user", user)
-    res.json({ user: user.rows });
+    res.json({ user: user.rows[0] });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
