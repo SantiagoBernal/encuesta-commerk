@@ -322,7 +322,20 @@ app.post("/login", async (req, res) => {
     const match = await bcrypt.compare(password, users.rows[0].password);
     if (match) {
       //create a jwt token
-      const serviceToken = jwt.sign({ idUsuario: users.rows[0].id_usuario }, 'my_secret_key', { expiresIn: '12h' });
+      const serviceToken = jwt.sign(
+        { idUsuario: users.rows[0].id_usuario,
+          nombreUsuario: users.rows[0].nombre_usuario,
+          apellidosUsuario: users.rows[0].apellidos_usuario,
+          useremail: users.rows[0].useremail,
+          userimg: users.rows[0].userimg,
+          username: users.rows[0].username,
+          telefonoUsuario: users.rows[0].telefono_usuario,
+          documentoUsuario: users.rows[0].documento_usuario,
+          estadoUsuario: users.rows[0].estado_usuario,
+          tipoUsuarioIdTipoUsuario: users.rows[0].tipo_usuario_id_tipo_usuario,
+          proyectoIdProyecto: users.rows[0].proyecto_id_proyecto
+         }
+        , 'my_secret_key', { expiresIn: '12h' });
       // console.log("serviceToken", serviceToken);
       // res.json(serviceToken )
        res.json({ serviceToken })
