@@ -322,10 +322,10 @@ app.post("/login", async (req, res) => {
     const match = await bcrypt.compare(password, users.rows[0].password);
     if (match) {
       //create a jwt token
-      const serviceToken = jwt.sign({ id_usuario: users.rows[0].id_usuario }, 'my_secret_key', { expiresIn: '12h' });
+      const serviceToken = jwt.sign({ idUsuario: users.rows[0].id_usuario }, 'my_secret_key', { expiresIn: '12h' });
       // console.log("serviceToken", serviceToken);
       // res.json(serviceToken )
-       res.json({ user: users.rows[0], serviceToken })
+       res.json({ serviceToken })
     } else {
       res.status(401).json({ message: 'Invalid Password' })
     }
@@ -346,9 +346,6 @@ const authenticate = (req, res, next) => {
   try {
     const decoded = jwt.verify(extractedToken, 'my_secret_key')
     req.user = decoded;
-    console.log("decoded",  decoded);
-    console.log("req",  req);
-    console.log("res",  res);
     next();
 
   } catch (err) {
