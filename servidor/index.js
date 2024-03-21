@@ -352,7 +352,8 @@ const authenticate = (req, res, next) => {
 
 app.get('/profile', authenticate, async (req, res) => {
   try {
-    const users = await pool.query('SELECT * FROM usuario');
+    const users = await pool.query('SELECT * FROM usuario WHERE id = $1', [req.id_usuario]);
+    // const users = await pool.query('SELECT * FROM usuario');
     res.json({ user: users.rows });
   } catch (error) {
     res.status(500).json({ error: error.message });
