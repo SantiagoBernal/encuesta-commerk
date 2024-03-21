@@ -338,7 +338,7 @@ app.post("/login", async (req, res) => {
         , 'my_secret_key', { expiresIn: '12h' });
       // console.log("serviceToken", serviceToken);
       // res.json(serviceToken )
-       res.json({ serviceToken })
+       res.json({ serviceToken, user: users.rows[0]})
     } else {
       res.status(401).json({ message: 'Invalid Password' })
     }
