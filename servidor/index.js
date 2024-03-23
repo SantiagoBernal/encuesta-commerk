@@ -114,6 +114,26 @@ app.get("/cliente/lista", async (req, res) => {
   }
 });
 
+//Lista clientes Antioquia 
+app.get("/cliente/lista/antioquia", async (req, res) => {
+  try {
+    const allTodos = await pool.query("SELECT * FROM cliente WHERE codigo_proyecto = 2");
+    res.json(allTodos.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+//Lista clientes Valle 
+app.get("/cliente/lista/valle", async (req, res) => {
+  try {
+    const allTodos = await pool.query("SELECT * FROM cliente WHERE codigo_proyecto = 1");
+    res.json(allTodos.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
 //Lista clientes Antioquia falso
 app.get("/cliente/lista/antioquiaFalso", async (req, res) => {
   try {
