@@ -114,8 +114,8 @@ app.get("/cliente/lista", async (req, res) => {
   }
 });
 
-//Lista clientes Antioquia
-app.get("/cliente/lista/antioquia", async (req, res) => {
+//Lista clientes Antioquia falso
+app.get("/cliente/lista/antioquiaFalso", async (req, res) => {
   try {
     const allTodos = await pool.query("SELECT * FROM cliente WHERE codigo_proyecto = 2 AND estado_encuesta = false");
     res.json(allTodos.rows);
@@ -124,10 +124,30 @@ app.get("/cliente/lista/antioquia", async (req, res) => {
   }
 });
 
-//Lista clientes Valle
-app.get("/cliente/lista/valle", async (req, res) => {
+//Lista clientes Valle falso
+app.get("/cliente/lista/valleFalso", async (req, res) => {
   try {
     const allTodos = await pool.query("SELECT * FROM cliente WHERE codigo_proyecto = 1 AND estado_encuesta = false");
+    res.json(allTodos.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+//Lista clientes Antioquia verdadero
+app.get("/cliente/lista/antioquiaVerdadero", async (req, res) => {
+  try {
+    const allTodos = await pool.query("SELECT * FROM cliente WHERE codigo_proyecto = 2 AND estado_encuesta = true");
+    res.json(allTodos.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+//Lista clientes Valle verdadero
+app.get("/cliente/lista/valleVerdadero", async (req, res) => {
+  try {
+    const allTodos = await pool.query("SELECT * FROM cliente WHERE codigo_proyecto = 1 AND estado_encuesta = true");
     res.json(allTodos.rows);
   } catch (err) {
     console.error(err.message);
