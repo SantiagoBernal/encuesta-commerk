@@ -48,11 +48,15 @@ app.use('/auth', require('./Routers/auth/passport'));
 
 app.post("/enviar/correo", async (req, res) => {
   try {
+    const {
+      correo_electronico,
+      nombre_sn
+    } = req.body;
     const info = await transporter.sendMail({
-      from: " forgot password <jefedesarrollo@commerk.com.co>",
-      to: "santiagobernalbetancourth@gmail.com",
-      subject: "Forgot Password",
-      html: "<h1>Forgot Password</h1>"
+      from: "Encuesta de satisfacción <jefedesarrollo@commerk.com.co>",
+      to: `${correo_electronico}`,
+      subject: "Encuesta de satisfacción subject",
+      html: `<h1>Hola ${nombre_sn}, responde esta encuesta de satisfacción</h1>`
     });
     console.log("Message sent: %s", info.messageId);
     res.send("Correo enviado");
