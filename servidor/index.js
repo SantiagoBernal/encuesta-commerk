@@ -8,6 +8,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const OAuth2Strategy = require("passport-google-oauth2").Strategy;
 
+import { Transporter } from "../config/mailer";
+
 
 
 const port = process.env.PORT || 5000;
@@ -40,6 +42,24 @@ app.use(passport.session());
 //Adding Route, "/auth" is going to be perfix for all the routes which are in ./router/auth/passport
 app.use('/auth', require('./Routers/auth/passport'));
 
+
+
+// ENVIA CORREO
+
+app.get("/enviar/correo", async (req, res) => {
+  try {
+    await Transporter.sendMail({
+      from: " forgot password <jefedesarrollo@commerk.com.co>",
+      to: "santiagobernalbetancourth@gmail.com",
+      subject: "Forgot Password",
+      html: "<h1>Forgot Password</h1>"
+    });
+    // const allTodos = await pool.query("SELECT * FROM usuario");
+    res.json(allTodos.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
 
 //Agregar cliente
 app.post("/cliente/nuevo", async (req, res) => {
@@ -381,12 +401,13 @@ app.post("/login", async (req, res) => {
     const users = await pool.query('SELECT * FROM usuario WHERE useremail = $1', [useremail]);
     if (users.rows.length === 0) return res.status(401).json({ error: "Email is incorrect" });
     //PASSWORD CHECK
-    console.log(" users.rows[0]",  users.rows[0]);
+    console.log(" users.rows[0]", users.rows[0]);
     const match = await bcrypt.compare(password, users.rows[0].password);
     if (match) {
       //create a jwt token
       const serviceToken = jwt.sign(
-        { idUsuario: users.rows[0].id_usuario,
+        {
+          idUsuario: users.rows[0].id_usuario,
           nombreUsuario: users.rows[0].nombre_usuario,
           apellidosUsuario: users.rows[0].apellidos_usuario,
           useremail: users.rows[0].useremail,
@@ -397,11 +418,11 @@ app.post("/login", async (req, res) => {
           estadoUsuario: users.rows[0].estado_usuario,
           tipoUsuarioIdTipoUsuario: users.rows[0].tipo_usuario_id_tipo_usuario,
           proyectoIdProyecto: users.rows[0].proyecto_id_proyecto
-         }
+        }
         , 'my_secret_key', { expiresIn: '12h' });
       // console.log("serviceToken", serviceToken);
       // res.json(serviceToken )
-       res.json({ serviceToken, user: users.rows[0]})
+      res.json({ serviceToken, user: users.rows[0] })
     } else {
       res.status(401).json({ message: 'Invalid Password' })
     }
@@ -431,12 +452,6 @@ const authenticate = (req, res, next) => {
 
 app.get('/profile', authenticate, async (req, res) => {
   try {
-    // const id_usuario = req.id_usuario;
-    // //console.log("req", req);
-    // console.log("id_usuario", id_usuario);
-    // const user = await pool.query('SELECT * FROM usuario WHERE id_usuario = $1',
-    //   [id_usuario]);
-    // console.log("user.rows[0]", user.rows[0])
     res.json({ user: req.user });
   } catch (error) {
     res.status(500).json({ error: error.message });
