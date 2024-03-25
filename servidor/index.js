@@ -46,15 +46,16 @@ app.use('/auth', require('./Routers/auth/passport'));
 
 // ENVIA CORREO
 
-app.get("/enviar/correo", async (req, res) => {
+app.post("/enviar/correo", async (req, res) => {
   try {
-    await Transporter.sendMail({
+    const info = await Transporter.sendMail({
       from: " forgot password <jefedesarrollo@commerk.com.co>",
       to: "santiagobernalbetancourth@gmail.com",
       subject: "Forgot Password",
       html: "<h1>Forgot Password</h1>"
     });
-    // const allTodos = await pool.query("SELECT * FROM usuario");
+    console.log("Message sent: %s", info.messageId);
+    res.send("Correo enviado");
   } catch (err) {
     console.error(err.message);
   }
