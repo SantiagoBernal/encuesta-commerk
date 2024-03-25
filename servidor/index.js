@@ -55,7 +55,6 @@ app.get("/enviar/correo", async (req, res) => {
       html: "<h1>Forgot Password</h1>"
     });
     // const allTodos = await pool.query("SELECT * FROM usuario");
-    res.json(allTodos.rows);
   } catch (err) {
     console.error(err.message);
   }
