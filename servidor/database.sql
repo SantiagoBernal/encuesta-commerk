@@ -55,3 +55,18 @@ CREATE TABLE IF NOT EXISTS encuesta (
 );
 
 
+
+SELECT 
+cliente.id_cliente,
+cliente.nombre_sn,
+cliente.codigo_sn
+cliente.nombre_grupo,
+encuesta.pregunta_1,
+encuesta.pregunta_2,
+encuesta.pregunta_3,
+encuesta.pregunta_4, 
+encuesta.encuestador,
+encuesta.comentario,
+encuesta.fecha_creacion
+FROM cliente
+JOIN encuesta ON cliente.id_cliente = encuesta.id_cliente;
