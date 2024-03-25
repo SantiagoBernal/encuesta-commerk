@@ -282,7 +282,7 @@ app.get("/encuesta/resultados", async (req, res) => {
     const allTodos = await pool.query(`SELECT 
     cliente.id_cliente,
     cliente.nombre_sn,
-    cliente.codigo_sn
+    cliente.codigo_sn,
     cliente.nombre_grupo,
     encuesta.pregunta_1,
     encuesta.pregunta_2,
