@@ -9,6 +9,7 @@ const jwt = require('jsonwebtoken');
 const OAuth2Strategy = require("passport-google-oauth2").Strategy;
 
 const transporter = require("./config/mailer");
+const email = require("./email/email");
 
 
 
@@ -50,13 +51,14 @@ app.post("/enviar/correo", async (req, res) => {
   try {
     const {
       correo_electronico,
-      nombre_sn
+      // nombre_sn
     } = req.body;
     const info = await transporter.sendMail({
       from: "Encuesta de satisfacción <jefedesarrollo@commerk.com.co>",
       to: `${correo_electronico}`,
       subject: "ENCUESTA DE SATISFACCIÓN COMMERK S.A.S.",
-      html: `<h1>Hola ${nombre_sn}, responde esta encuesta de satisfacción</h1>`
+      // html: `<h1>Hola ${nombre_sn}, responde esta encuesta de satisfacción</h1>`
+      html: email
     });
     console.log("Message sent: %s", info.messageId);
     res.send("Correo enviado");
