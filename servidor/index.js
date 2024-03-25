@@ -51,7 +51,7 @@ app.use('/auth', require('./Routers/auth/passport'));
 
 app.post("/enviar/correo", async (req, res) => {
   try {
-    const source = fs.readFileSync("./email/email.html", "utf-8").toString();
+    const source = fs.readFileSync("email.html", "utf-8").toString();
     const template = handlebars.compile(source);
     const replacements = {
       nombre: "Juan",
