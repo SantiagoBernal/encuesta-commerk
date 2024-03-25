@@ -51,6 +51,10 @@ app.use('/auth', require('./Routers/auth/passport'));
 
 app.post("/enviar/correo", async (req, res) => {
   try {
+    const { correo_electronico } = req.body.data;
+    console.log("correo_electronico", correo_electronico);
+    console.log("req.body.data", req.body.data);
+
     const source = fs.readFileSync("email.html", "utf-8").toString();
     const template = handlebars.compile(source);
     const replacements = {
@@ -58,8 +62,6 @@ app.post("/enviar/correo", async (req, res) => {
       apellido: "Perez",
     };
     const htmlToSend = template(replacements);
-    const { correo_electronico } = req.body.data;
-    console.log("correo_electronico", correo_electronico);
     const info = await transporter.sendMail({
       from: "Commerk sas <jefedesarrollo@commerk.com.co>",
       to: `${correo_electronico}`,
