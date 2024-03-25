@@ -59,6 +59,8 @@ app.post("/enviar/correo", async (req, res) => {
     };
     const htmlToSend = template(replacements);
     const { correo_electronico, } = req.body;
+    console.log("correo_electronico", correo_electronico);
+    console.log("correo_electronico req.body", req.body);
     const info = await transporter.sendMail({
       from: "Commerk sas <jefedesarrollo@commerk.com.co>",
       to: `${correo_electronico}`,
