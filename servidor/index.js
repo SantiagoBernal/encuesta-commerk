@@ -8,7 +8,9 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const OAuth2Strategy = require("passport-google-oauth2").Strategy;
 
-import { Transporter } from "../config/mailer";
+// import { Transporter } from "../config/mailer";
+
+const transporter = require("../config/mailer");
 
 
 
@@ -48,7 +50,7 @@ app.use('/auth', require('./Routers/auth/passport'));
 
 app.post("/enviar/correo", async (req, res) => {
   try {
-    const info = await Transporter.sendMail({
+    const info = await transporter.sendMail({
       from: " forgot password <jefedesarrollo@commerk.com.co>",
       to: "santiagobernalbetancourth@gmail.com",
       subject: "Forgot Password",
