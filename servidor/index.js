@@ -8,9 +8,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const OAuth2Strategy = require("passport-google-oauth2").Strategy;
 
-// import { Transporter } from "../config/mailer";
-
-const transporter = require("../config/mailer");
+const transporter = require("./config/mailer");
 
 
 
