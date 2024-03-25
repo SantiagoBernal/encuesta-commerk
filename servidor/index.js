@@ -66,6 +66,7 @@ app.post("/enviar/correo", async (req, res) => {
       html: htmlToSend
     });
     console.log("Message sent: %s", info.messageId);
+    console.log("Message info: %s", info);
     res.send("Correo enviado");
   } catch (err) {
     console.error(err.message);
