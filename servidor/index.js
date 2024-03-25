@@ -11,7 +11,7 @@ const fs = require("fs");
 const handlebars = require("handlebars");
 
 const transporter = require("./config/mailer");
-const email = require("./email/email");
+// const email = require("./email/email");
 
 
 
