@@ -55,7 +55,7 @@ app.post("/enviar/correo", async (req, res) => {
     const info = await transporter.sendMail({
       from: "Encuesta de satisfacción <jefedesarrollo@commerk.com.co>",
       to: `${correo_electronico}`,
-      subject: "Encuesta de satisfacción subject",
+      subject: "ENCUESTA DE SATISFACCIÓN COMMERK S.A.S.",
       html: `<h1>Hola ${nombre_sn}, responde esta encuesta de satisfacción</h1>`
     });
     console.log("Message sent: %s", info.messageId);
