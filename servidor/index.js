@@ -7,6 +7,8 @@ const cookieSession = require("cookie-session")
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const OAuth2Strategy = require("passport-google-oauth2").Strategy;
+const fs = require("fs");
+const handlebars = require("handlebars");
 
 const transporter = require("./config/mailer");
 const email = require("./email/email");
@@ -49,16 +51,19 @@ app.use('/auth', require('./Routers/auth/passport'));
 
 app.post("/enviar/correo", async (req, res) => {
   try {
-    const {
-      correo_electronico,
-      // nombre_sn
-    } = req.body;
+    const source = fs.readFileSync("./email/email.html", "utf-8").toString();
+    const template = handlebars.compile(source);
+    const replacements = {
+      nombre: "Juan",
+      apellido: "Perez",
+    };
+    const htmlToSend = template(replacements);
+    const { correo_electronico, } = req.body;
     const info = await transporter.sendMail({
       from: "Encuesta de satisfacción <jefedesarrollo@commerk.com.co>",
       to: `${correo_electronico}`,
       subject: "ENCUESTA DE SATISFACCIÓN COMMERK S.A.S.",
-      // html: `<h1>Hola ${nombre_sn}, responde esta encuesta de satisfacción</h1>`
-      html: email
+      html: htmlToSend
     });
     console.log("Message sent: %s", info.messageId);
     res.send("Correo enviado");
