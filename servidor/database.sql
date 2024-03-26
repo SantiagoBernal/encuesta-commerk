@@ -1,5 +1,23 @@
 CREATE DATABASE encuesta;
+-- -----------------------------------------------------
+-- Table `encuesta`.`usuario`
+-- -----------------------------------------------------
 
+CREATE TABLE IF NOT EXISTS usuario (
+  id_usuario SERIAL PRIMARY KEY,
+  password VARCHAR(255),
+  nombre_usuario VARCHAR(45) NOT NULL,
+  apellidos_usuario VARCHAR(45) NOT NULL,
+  googleid VARCHAR(255),
+  useremail VARCHAR(255),
+  userimg VARCHAR(255),
+  username VARCHAR(255),
+  telefono_usuario INT NOT NULL,
+  documento_usuario INT NOT NULL,
+  estado_usuario BOOLEAN NOT NULL,
+  tipo_usuario_id_tipo_usuario INT NOT NULL,
+  proyecto_id_proyecto INT NOT NULL
+);
 -- -----------------------------------------------------
 -- Table `encuesta`.`cliente`
 -- -----------------------------------------------------

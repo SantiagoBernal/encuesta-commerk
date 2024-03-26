@@ -52,14 +52,13 @@ app.use('/auth', require('./Routers/auth/passport'));
 app.post("/enviar/correo", async (req, res) => {
   try {
     const { correo_electronico } = req.body.data;
+    const { nombre_sn } = req.body.data;
     console.log("correo_electronico", correo_electronico);
     console.log("req.body.data", req.body.data);
-
-    const source = fs.readFileSync("email2.html", "utf-8").toString();
+    const source = fs.readFileSync("encuesta.html", "utf-8").toString();
     const template = handlebars.compile(source);
     const replacements = {
-      nombre: "Juan",
-      apellido: "Perez",
+      firstname: nombre_sn
     };
     const htmlToSend = template(replacements);
     const info = await transporter.sendMail({
