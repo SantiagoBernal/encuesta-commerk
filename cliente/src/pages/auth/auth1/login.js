@@ -1,11 +1,11 @@
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 // material-ui
 import { Grid, Stack, Typography } from '@mui/material';
 
 // project-imports
 // import Logo from 'components/logo';
-//import useAuth from 'hooks/useAuth';
+import useAuth from 'hooks/useAuth';
 // import AuthSocButton from 'sections/auth/AuthSocButton';
 // import AuthDivider from 'sections/auth/AuthDivider';
 import AuthWrapper from 'sections/auth/AuthWrapper';
@@ -19,7 +19,7 @@ import AuthLogin from 'sections/auth/auth-forms/AuthLogin';
 // ================================|| LOGIN ||================================ //
 
 const Login = () => {
-  //const { isLoggedIn } = useAuth();
+  const { isLoggedIn } = useAuth();
 //console.log('isLoggedIn', isLoggedIn)
   return (
     <AuthWrapper>
@@ -59,7 +59,7 @@ const Login = () => {
           <Stack direction="row" justifyContent="space-between" alignItems="baseline" sx={{ mb: { xs: -0.5, sm: 0.5 } }}>
             <Typography variant="h3">Inicio de sesión</Typography>
 
-            {/* <Typography
+            <Typography
               component={Link}
               to={isLoggedIn ? '/auth/register' : '/register'}
               variant="body1"
@@ -67,7 +67,7 @@ const Login = () => {
               color="primary"
             >
               No tienes cuenta ?
-            </Typography> */}
+            </Typography>
 
           </Stack>
         </Grid>

@@ -64,7 +64,7 @@ app.post("/enviar/correo", async (req, res) => {
     const info = await transporter.sendMail({
       from: "Commerk sas <jefedesarrollo@commerk.com.co>",
       to: `${correo_electronico}`,
-      subject: "Encuesta de satisfacción Commerk sas",
+      subject: "Encuesta de satisfacción Commerk SAS",
       html: htmlToSend
     });
     console.log("Message sent: %s", info.messageId);
@@ -77,7 +77,7 @@ app.post("/enviar/correo", async (req, res) => {
 
 //Agregar cliente
 app.post("/cliente/nuevo", async (req, res) => {
-  console.log("encuesta req.body", req.body);
+  console.log("cliente/nuevo req.body", req.body);
   //console.log("encuesta req.body.encuesta", req.body.encuesta);
   try {
     const {

@@ -34,7 +34,7 @@ const EXTENSIONS = ['xlsx', 'xls', 'csv']
 
 import {
   dispatch,
-  // useSelector
+  useSelector
 } from 'store';
 // import { getClientesHeinsohn } from 'store/reducers/clientesheisohn';
 import { getClientes } from 'store/reducers/cliente';
@@ -91,7 +91,7 @@ import {
 } from 'iconsax-react';
 import { ThemeMode } from 'config';
 // import dataClientesAntioquia from 'data/clientesAntioquia';
-import dataClientesPrueba from 'data/clientesPrueba';
+//import dataClientesPrueba from 'data/clientesPrueba';
 import { setEmail } from 'store/reducers/email';
 
 
@@ -244,7 +244,7 @@ function ReactTable({ columns, data, renderRowSubComponent,
             dataUsers[i].telefono_1 = (dataUsers[i].telefono_1).toString();
           }
           if (dataUsers[i].telefono_2) {
-            dataUsers[i].telefono_1 = (dataUsers[i].telefono_2).toString();
+            dataUsers[i].telefono_2 = (dataUsers[i].telefono_2).toString();
           }
 
           if (dataUsers[i].telefono_movil) {
@@ -329,7 +329,7 @@ function ReactTable({ columns, data, renderRowSubComponent,
   return (
     <>
       <TableRowSelection selected={Object.keys(selectedRowIds).length}
-       defaultRef={tableRef}
+        defaultRef={tableRef}
       // onClick={handleClickSelect(selectedFlatRows)} 
       />
       <Stack spacing={3}>
@@ -458,7 +458,7 @@ const CustomerListPage = () => {
   // console.log("dataClientesAntioquia", dataClientesAntioquia)
   //console.log("dataClientesPrueba", dataClientesPrueba)
 
-  const [listaclientesPrueba, setListaclientesPrueba] = useState([]);
+  //const [listaclientesPrueba, setListaclientesPrueba] = useState([]);
   // const [listaclientesantioquia, setListaclientesantioquia] = useState([]);
 
   const { user } = useAuth();
@@ -469,9 +469,9 @@ const CustomerListPage = () => {
   // const [clientesNuevos, setClientesNuevos] = useState([]);
 
 
-  // const clientes = useSelector((state) => state.cliente.clientes);
-  // const clientesAntioquia = useSelector((state) => state.cliente.clientesAntioquia);
-  // const clientesValle = useSelector((state) => state.cliente.clientesValle);
+  const clientes = useSelector((state) => state.cliente.clientes);
+  const clientesAntioquia = useSelector((state) => state.cliente.clientesAntioquia);
+  const clientesValle = useSelector((state) => state.cliente.clientesValle);
 
 
   useEffect(() => {
@@ -479,12 +479,12 @@ const CustomerListPage = () => {
   }, [])
 
 
-  useEffect(() => {
-    if (dataClientesPrueba.length > 0) {
-      setListaclientesPrueba(dataClientesPrueba);
-    }
-  }, [])
-  console.log("listaclientesPrueba", listaclientesPrueba)
+  // useEffect(() => {
+  //   if (dataClientesPrueba.length > 0) {
+  //     setListaclientesPrueba(dataClientesPrueba);
+  //   }
+  // }, [])
+  // console.log("listaclientesPrueba", listaclientesPrueba)
 
   const handleAdd = () => {
     setAdd(!add);
@@ -517,9 +517,9 @@ const CustomerListPage = () => {
   // console.log("encuesta", encuesta)
   // console.log("clientes", clientes)
 
-  const data = listaclientesPrueba;
+  // const data = listaclientesPrueba;
 
-  // const data = antioquia ? clientesAntioquia : valle ? clientesValle : clientes;
+  const data = antioquia ? clientesAntioquia : valle ? clientesValle : clientes;
 
   const columns = useMemo(
     () => [
