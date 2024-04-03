@@ -61,7 +61,7 @@ import ScrollX from 'components/ScrollX';
 import IconButton from 'components/@extended/IconButton';
 import { PopupTransition } from 'components/@extended/Transitions';
 import {
-  // CSVExport,
+  //CSVExport,
   HeaderSort,
   IndeterminateCheckbox,
   SortingSelect,
@@ -82,6 +82,7 @@ import { openSnackbar } from 'store/reducers/snackbar';
 import useAuth from 'hooks/useAuth';
 // import  clientesAntioquia from 'data/clientesAntioquia';
 // import  clientesValle from 'data/clientesValle';
+//import dataClientesAntioquiaNueva from 'data/clientesAntioquiaNueva';
 
 import {
   // Add,
@@ -459,7 +460,7 @@ const CustomerListPage = () => {
   //console.log("dataClientesPrueba", dataClientesPrueba)
 
   //const [listaclientesPrueba, setListaclientesPrueba] = useState([]);
-  // const [listaclientesantioquia, setListaclientesantioquia] = useState([]);
+  //const [listaclientesantioquia, setListaclientesantioquia] = useState([]);
 
   const { user } = useAuth();
 
@@ -480,8 +481,8 @@ const CustomerListPage = () => {
 
 
   // useEffect(() => {
-  //   if (dataClientesPrueba.length > 0) {
-  //     setListaclientesPrueba(dataClientesPrueba);
+  //   if (dataClientesAntioquiaNueva.length > 0) {
+  //     setListaclientesPrueba(dataClientesAntioquiaNueva);
   //   }
   // }, [])
   // console.log("listaclientesPrueba", listaclientesPrueba)

@@ -55,7 +55,7 @@ app.post("/enviar/correo", async (req, res) => {
     const { nombre_sn } = req.body.data;
     console.log("correo_electronico", correo_electronico);
     console.log("req.body.data", req.body.data);
-    const source = fs.readFileSync("encuesta.html", "utf-8").toString();
+    const source = fs.readFileSync("encuestati.html", "utf-8").toString();
     const template = handlebars.compile(source);
     const replacements = {
       firstname: nombre_sn

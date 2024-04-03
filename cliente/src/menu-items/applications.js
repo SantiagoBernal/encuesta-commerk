@@ -87,6 +87,12 @@ const applications = {
           title: <FormattedMessage id="Resultados" />,
           type: 'item',
           url: '/apps/customer/customer-list-result'
+        },
+        antioquia && {
+          id: 'customer-list-result',
+          title: <FormattedMessage id="Resultados" />,
+          type: 'item',
+          url: '/apps/customer/customer-list-result'
         }
       ]
     }
