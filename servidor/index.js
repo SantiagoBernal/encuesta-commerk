@@ -318,6 +318,7 @@ app.get("/encuesta/resultados", async (req, res) => {
     cliente.nombre_sn,
     cliente.codigo_sn,
     cliente.nombre_grupo,
+    cliente.codigo_proyecto,
     encuesta.pregunta_1,
     encuesta.pregunta_2,
     encuesta.pregunta_3,

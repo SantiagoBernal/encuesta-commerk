@@ -93,6 +93,12 @@ const applications = {
           title: <FormattedMessage id="Resultados" />,
           type: 'item',
           url: '/apps/customer/customer-list-result'
+        },
+        valle && {
+          id: 'customer-list-result',
+          title: <FormattedMessage id="Resultados" />,
+          type: 'item',
+          url: '/apps/customer/customer-list-result'
         }
       ]
     }
