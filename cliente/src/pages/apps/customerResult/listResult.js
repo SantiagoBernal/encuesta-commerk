@@ -48,6 +48,8 @@ import AddCustomer from 'sections/apps/customer/AddCustomer';
 import CustomerView from 'sections/apps/customer/CustomerView';
 import { renderFilterTypes, GlobalFilter } from 'utils/react-table';
 
+import useAuth from 'hooks/useAuth';
+
 // ==============================|| REACT TABLE ||============================== //
 
 function ReactTable({ columns, data, renderRowSubComponent,
@@ -208,8 +210,35 @@ const CustomerListPage = () => {
   const [customer, setCustomer] = useState(null);
   const [add, setAdd] = useState(false);
 
+  const [listaclientesProyecto, setListaclientesProyecto] = useState([]);
 
   const resultados = useSelector((state) => state.encuesta.resultados);
+  console.log("resultados", resultados)
+
+  const { user } = useAuth();
+
+  let antioquia = user && user.useremail === 'encuesta.antioquia@commerk.com.co';
+  let valle = user && user.useremail === 'encuesta.valle@commerk.com.co';
+  let todos = user && user.useremail === 'encuesta@commerk.com.co';
+
+  useEffect(() => {
+    if (resultados)
+      if (antioquia) {
+        console.log("antioquia", antioquia)
+        return setListaclientesProyecto(resultados.filter((cliente) => cliente.codigo_proyecto === 2));
+      } else if (valle) {
+        console.log("valle", valle)
+        return setListaclientesProyecto(resultados.filter((cliente) => cliente.codigo_proyecto === 1));
+        // dispatch(getClientesValle());
+      } else if (todos) {
+        console.log("todos", todos)
+        return setListaclientesProyecto(resultados);
+      }
+      dispatch(getResultado());
+  }, [])
+
+  console.log("listaclientesProyecto", listaclientesProyecto)
+ 
 
   useEffect(() => {
     dispatch(getResultado());
@@ -221,7 +250,7 @@ const CustomerListPage = () => {
       setCustomer(null);
   };
 
-  const data =  resultados;
+  const data =  listaclientesProyecto;
 
   const columns = useMemo(
     () => [

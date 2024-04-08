@@ -334,6 +334,56 @@ app.get("/encuesta/resultados", async (req, res) => {
   }
 });
 
+//Lista resultados Valle
+app.get("/encuesta/resultadosValle", async (req, res) => {
+  try {
+    const allTodos = await pool.query(`SELECT 
+    cliente.id_cliente,
+    cliente.nombre_sn,
+    cliente.codigo_sn,
+    cliente.nombre_grupo,
+    cliente.codigo_proyecto,
+    encuesta.pregunta_1,
+    encuesta.pregunta_2,
+    encuesta.pregunta_3,
+    encuesta.pregunta_4, 
+    encuesta.encuestador,
+    encuesta.comentario,
+    encuesta.fecha_creacion
+    FROM cliente
+    JOIN encuesta ON cliente.id_cliente = encuesta.id_cliente
+    WHERE cliente.codigo_proyecto = 1`);
+    res.json(allTodos.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+//Lista resultados Antioquia
+app.get("/encuesta/resultadosAntioquia", async (req, res) => {
+  try {
+    const allTodos = await pool.query(`SELECT 
+    cliente.id_cliente,
+    cliente.nombre_sn,
+    cliente.codigo_sn,
+    cliente.nombre_grupo,
+    cliente.codigo_proyecto,
+    encuesta.pregunta_1,
+    encuesta.pregunta_2,
+    encuesta.pregunta_3,
+    encuesta.pregunta_4, 
+    encuesta.encuestador,
+    encuesta.comentario,
+    encuesta.fecha_creacion
+    FROM cliente
+    JOIN encuesta ON cliente.id_cliente = encuesta.id_cliente
+    WHERE cliente.codigo_proyecto = 2`);
+    res.json(allTodos.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
 
 //Borrar encuestas
 app.delete(`/encuesta/eliminar`, async (req, res) => {
