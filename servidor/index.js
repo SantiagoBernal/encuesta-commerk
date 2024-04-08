@@ -62,7 +62,7 @@ app.post("/enviar/correo", async (req, res) => {
     };
     const htmlToSend = template(replacements);
     const info = await transporter.sendMail({
-      from: "Commerk sas <jefedesarrollo@commerk.com.co>",
+      from: "Commerk sas <recepcion.cali@commerk.com.co>",
       to: `${correo_electronico}`,
       subject: "Encuesta de satisfacción Commerk SAS",
       html: htmlToSend
