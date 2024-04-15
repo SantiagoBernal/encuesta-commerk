@@ -13,7 +13,7 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  Tooltip,
+  // Tooltip,
   Typography,
   useMediaQuery
 } from '@mui/material';
@@ -41,7 +41,7 @@ import { getClientesEmail } from 'store/reducers/cliente';
 // import { getClientes } from 'store/reducers/cliente';
 // import { getClientesAntioquia } from 'store/reducers/cliente';
 // import { getClientesValle } from 'store/reducers/cliente';
-// import { createdCliente } from 'store/reducers/cliente';
+import { createdClienteEmail } from 'store/reducers/cliente';
 //import { deleteCliente } from 'store/reducers/cliente';
 import { getEncuesta } from 'store/reducers/encuesta';
 //import { setEmail } from 'store/reducers/email';
@@ -59,7 +59,7 @@ import { useFilters, useExpanded, useGlobalFilter, useRowSelect, useSortBy, useT
 import MainCard from 'components/MainCard';
 import ScrollX from 'components/ScrollX';
 // import Avatar from 'components/@extended/Avatar';
-import IconButton from 'components/@extended/IconButton';
+// import IconButton from 'components/@extended/IconButton';
 import { PopupTransition } from 'components/@extended/Transitions';
 import {
   CSVExport,
@@ -86,13 +86,13 @@ import { openSnackbar } from 'store/reducers/snackbar';
 // import dataClientesAntioquiaNueva from 'data/clientesAntioquiaNueva';
 // import dataClientesAntioquiaNueva2 from 'data/clientesAntioquiaNueva2';
 
-import {
-  // Add,
-  Edit,
-  //  Eye,
-  // Trash 
-} from 'iconsax-react';
-import { ThemeMode } from 'config';
+// import {
+//   // Add,
+//   Edit,
+//   //  Eye,
+//   // Trash 
+// } from 'iconsax-react';
+// import { ThemeMode } from 'config';
 // import dataClientesAntioquia from 'data/clientesAntioquia';
 // import dataClientesPrueba from 'data/clientesPrueba';
 import { setEmail } from 'store/reducers/email';
@@ -289,7 +289,7 @@ function ReactTable({ columns, data, renderRowSubComponent,
     e.preventDefault();
     for (let i = 0; i < clientesCargados.length; i++) {
       console.log(clientesCargados[i])
-      dispatch(createdCliente(clientesCargados[i]));
+      dispatch(createdClienteEmail(clientesCargados[i]));
       dispatch(
         openSnackbar({
           open: true,
@@ -456,7 +456,7 @@ ReactTable.propTypes = {
 
 const CustomerListPage = () => {
   const theme = useTheme();
-  const mode = theme.palette.mode;
+  // const mode = theme.palette.mode;
   const [customer, setCustomer] = useState(null);
   const [add, setAdd] = useState(false);
 
@@ -560,36 +560,6 @@ const CustomerListPage = () => {
         className: 'cell-center'
       },
       {
-        Header: 'Correo Recepcion',
-        accessor: 'correo_recepcion',
-        className: 'cell-center'
-      },
-      {
-        Header: 'Movil',
-        accessor: 'telefono_movil',
-        className: 'cell-center'
-      },
-      {
-        Header: 'Teléfono 1',
-        accessor: 'telefono_1',
-        className: 'cell-center'
-      },
-      {
-        Header: 'Teléfono 2',
-        accessor: 'telefono_2',
-        className: 'cell-center'
-      },
-      {
-        Header: 'Grupo',
-        accessor: 'nombre_grupo',
-        className: 'cell-center'
-      },
-      {
-        Header: 'Proyecto',
-        accessor: 'codigo_proyecto',
-        className: 'cell-center'
-      },
-      {
         Header: 'Estado',
         accessor: 'estado_encuesta',
         className: 'cell-center',
@@ -603,39 +573,39 @@ const CustomerListPage = () => {
           }
         }
       },
-      {
-        Header: 'Encuesta',
-        className: 'cell-center',
-        disableSortBy: true,
-        Cell: ({ row }) => {
-          return (
-            <Stack direction="row" alignItems="center" justifyContent="center" spacing={0}>
-              <Tooltip
-                componentsProps={{
-                  tooltip: {
-                    sx: {
-                      backgroundColor: mode === ThemeMode.DARK ? theme.palette.grey[50] : theme.palette.grey[700],
-                      opacity: 0.9
-                    }
-                  }
-                }}
-                title="Encuesta"
-              >
-                <IconButton
-                  color="primary"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setCustomer(row.values);
-                    handleAdd();
-                  }}
-                >
-                  <Edit />
-                </IconButton>
-              </Tooltip>
-            </Stack>
-          );
-        }
-      }
+      // {
+      //   Header: 'Encuesta',
+      //   className: 'cell-center',
+      //   disableSortBy: true,
+      //   Cell: ({ row }) => {
+      //     return (
+      //       <Stack direction="row" alignItems="center" justifyContent="center" spacing={0}>
+      //         <Tooltip
+      //           componentsProps={{
+      //             tooltip: {
+      //               sx: {
+      //                 backgroundColor: mode === ThemeMode.DARK ? theme.palette.grey[50] : theme.palette.grey[700],
+      //                 opacity: 0.9
+      //               }
+      //             }
+      //           }}
+      //           title="Encuesta"
+      //         >
+      //           <IconButton
+      //             color="primary"
+      //             onClick={(e) => {
+      //               e.stopPropagation();
+      //               setCustomer(row.values);
+      //               handleAdd();
+      //             }}
+      //           >
+      //             <Edit />
+      //           </IconButton>
+      //         </Tooltip>
+      //       </Stack>
+      //     );
+      //   }
+      // }
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [theme]

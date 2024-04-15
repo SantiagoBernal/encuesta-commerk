@@ -48,32 +48,142 @@ app.use('/auth', require('./Routers/auth/passport'));
 
 
 // ENVIA CORREO
-
 app.post("/enviar/correo", async (req, res) => {
   try {
-    const { correo_electronico } = req.body.data;
+    const { correos } = req.body; // Array de correos electrónicos
     const { nombre_sn } = req.body.data;
-    console.log("correo_electronico", correo_electronico);
-    console.log("req.body.data", req.body.data);
+    console.log("correos", correos);
+    console.log("nombre_sn", nombre_sn);
+
     const source = fs.readFileSync("encuestati.html", "utf-8").toString();
     const template = handlebars.compile(source);
     const replacements = {
       firstname: nombre_sn
     };
     const htmlToSend = template(replacements);
-    const info = await transporter.sendMail({
-      from: "Commerk sas <recepcion.cali@commerk.com.co>",
-      to: `${correo_electronico}`,
-      subject: "Encuesta de satisfacción Commerk SAS",
-      html: htmlToSend
-    });
-    console.log("Message sent: %s", info.messageId);
-    console.log("Message info: %s", info);
-    res.send("Correo enviado");
+
+    const batchSize = 1; // Tamaño del lote de correos electrónicos
+    const intervalTime = 10 * 60 * 1000; // Intervalo de tiempo entre cada lote (10 minutos en milisegundos)
+    let batchIndex = 0;
+
+    // Función para enviar un lote de correos electrónicos
+    const sendEmailBatch = async () => {
+      const start = batchIndex * batchSize;
+      const end = Math.min((batchIndex + 1) * batchSize, correos.length);
+      
+      for (let i = start; i < end; i++) {
+        const correo_electronico = correos[i];
+        const attachments = [{
+          filename: 'FORMATO_VINCULACIÓN_CLIENTES_V10.pdf',
+          path: path.join(__dirname, 'FORMATO_VINCULACIÓN_CLIENTES_V10.pdf')
+        }];
+        const info = await transporter.sendMail({
+          from: "Commerk sas <jefedesarrollo@commerk.com.co>",
+          to: correo_electronico,
+          subject: "ACTUALIZACIÓN DE DATOS COMMERK SAS",
+          html: htmlToSend,
+          attachments: attachments
+        });
+        console.log(`Correo enviado a ${correo_electronico}: ${info.messageId}`);
+      }
+
+      batchIndex++;
+
+      if (batchIndex * batchSize < correos.length) {
+        setTimeout(sendEmailBatch, intervalTime); // Envía el próximo lote después del intervalo de tiempo
+      } else {
+        console.log("Todos los correos electrónicos han sido enviados");
+        res.send("Todos los correos electrónicos han sido enviados");
+      }
+    };
+
+    // Inicia el envío del primer lote de correos electrónicos
+    sendEmailBatch();
   } catch (err) {
     console.error(err.message);
+    res.status(500).send("Error al enviar correos electrónicos");
   }
 });
+
+// app.post("/enviar/correo", async (req, res) => {
+//   try {
+//     const { correos } = req.body; // Array de correos electrónicos
+//     const { nombre_sn } = req.body.data;
+//     console.log("correos", correos);
+//     console.log("nombre_sn", nombre_sn);
+
+//     const source = fs.readFileSync("encuestati.html", "utf-8").toString();
+//     const template = handlebars.compile(source);
+//     const replacements = {
+//       firstname: nombre_sn
+//     };
+//     const htmlToSend = template(replacements);
+
+//     const batchSize = 1; // Tamaño del lote de correos electrónicos
+//     const intervalTime = 10 * 60 * 1000; // Intervalo de tiempo entre cada lote (10 minutos en milisegundos)
+//     let batchIndex = 0;
+
+//     // Función para enviar un lote de correos electrónicos
+//     const sendEmailBatch = async () => {
+//       const start = batchIndex * batchSize;
+//       const end = Math.min((batchIndex + 1) * batchSize, correos.length);
+      
+//       for (let i = start; i < end; i++) {
+//         const correo_electronico = correos[i];
+//         const info = await transporter.sendMail({
+//           from: "Commerk sas <jefedesarrollo@commerk.com.co>",
+//           to: correo_electronico,
+//           subject: "Encuesta de satisfacción Commerk SAS",
+//           html: htmlToSend
+//         });
+//         console.log(`Correo enviado a ${correo_electronico}: ${info.messageId}`);
+//       }
+
+//       batchIndex++;
+
+//       if (batchIndex * batchSize < correos.length) {
+//         setTimeout(sendEmailBatch, intervalTime); // Envía el próximo lote después del intervalo de tiempo
+//       } else {
+//         console.log("Todos los correos electrónicos han sido enviados");
+//         res.send("Todos los correos electrónicos han sido enviados");
+//       }
+//     };
+
+//     // Inicia el envío del primer lote de correos electrónicos
+//     sendEmailBatch();
+//   } catch (err) {
+//     console.error(err.message);
+//     res.status(500).send("Error al enviar correos electrónicos");
+//   }
+// });
+
+
+
+// app.post("/enviar/correo", async (req, res) => {
+//   try {
+//     const { correo_electronico } = req.body.data;
+//     const { nombre_sn } = req.body.data;
+//     console.log("correo_electronico", correo_electronico);
+//     console.log("req.body.data", req.body.data);
+//     const source = fs.readFileSync("encuestati.html", "utf-8").toString();
+//     const template = handlebars.compile(source);
+//     const replacements = {
+//       firstname: nombre_sn
+//     };
+//     const htmlToSend = template(replacements);
+//     const info = await transporter.sendMail({
+//       from: "Commerk sas <recepcion.cali@commerk.com.co>",
+//       to: `${correo_electronico}`,
+//       subject: "Encuesta de satisfacción Commerk SAS",
+//       html: htmlToSend
+//     });
+//     console.log("Message sent: %s", info.messageId);
+//     console.log("Message info: %s", info);
+//     res.send("Correo enviado");
+//   } catch (err) {
+//     console.error(err.message);
+//   }
+// });
 
 //Agregar cliente
 app.post("/cliente/nuevo_email", async (req, res) => {
