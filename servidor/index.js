@@ -102,7 +102,7 @@ app.post("/cliente/nuevo_email", async (req, res) => {
 
 app.get("/cliente/lista_email", async (req, res) => {
   try {
-    const allTodos = await pool.query("SELECT * FROM nuevo_email");
+    const allTodos = await pool.query("SELECT * FROM cliente_email");
     res.json(allTodos.rows);
   } catch (err) {
     console.error(err.message);

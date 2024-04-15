@@ -18,7 +18,7 @@ import {
   useMediaQuery
 } from '@mui/material';
 
-// import SaveIcon from '@mui/icons-material/Save';
+import SaveIcon from '@mui/icons-material/Save';
 // import SyntaxHighlight from 'utils/SyntaxHighlight';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 // import Alert from '@mui/material/Alert';
@@ -37,9 +37,10 @@ import {
   useSelector
 } from 'store';
 // import { getClientesHeinsohn } from 'store/reducers/clientesheisohn';
-import { getClientes } from 'store/reducers/cliente';
-import { getClientesAntioquia } from 'store/reducers/cliente';
-import { getClientesValle } from 'store/reducers/cliente';
+import { getClientesEmail } from 'store/reducers/cliente';
+// import { getClientes } from 'store/reducers/cliente';
+// import { getClientesAntioquia } from 'store/reducers/cliente';
+// import { getClientesValle } from 'store/reducers/cliente';
 // import { createdCliente } from 'store/reducers/cliente';
 //import { deleteCliente } from 'store/reducers/cliente';
 import { getEncuesta } from 'store/reducers/encuesta';
@@ -79,7 +80,7 @@ import { renderFilterTypes, GlobalFilter } from 'utils/react-table';
 import { openSnackbar } from 'store/reducers/snackbar';
 
 // import { UseAuth } from 'hooks/useAuth';
-import useAuth from 'hooks/useAuth';
+// import useAuth from 'hooks/useAuth';
 // import  clientesAntioquia from 'data/clientesAntioquia';
 // import  clientesValle from 'data/clientesValle';
 // import dataClientesAntioquiaNueva from 'data/clientesAntioquiaNueva';
@@ -283,7 +284,27 @@ function ReactTable({ columns, data, renderRowSubComponent,
   }
   console.log("clientesCargados", clientesCargados)
 
- 
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    for (let i = 0; i < clientesCargados.length; i++) {
+      console.log(clientesCargados[i])
+      dispatch(createdCliente(clientesCargados[i]));
+      dispatch(
+        openSnackbar({
+          open: true,
+          message: 'Clientes cargados con èxito!.',
+          variant: 'alert',
+          alert: {
+            color: 'success'
+          },
+          close: false
+        })
+      );
+      // setLoading(false);
+    }
+  };
+
 
 
   const handleSubmitEmail = async (e) => {
@@ -308,7 +329,7 @@ function ReactTable({ columns, data, renderRowSubComponent,
     }
     // return <Loader />;
   };
-console.log("selectedFlatRows", selectedFlatRows)
+  console.log("selectedFlatRows", selectedFlatRows)
 
   return (
     <>
@@ -359,11 +380,11 @@ console.log("selectedFlatRows", selectedFlatRows)
                         variant="outlined" size="large" startIcon={<FileUploadIcon />}>
                         Cargar
                       </Button>
-                      {/* <Button
+                      <Button
                         onClick={handleSubmit}
                         variant="contained" size="large" endIcon={<SaveIcon />}>
                         Guardar
-                      </Button> */}
+                      </Button>
                     </Stack>
                   </label>
                 </div>
@@ -445,17 +466,21 @@ const CustomerListPage = () => {
   // const [listaclientesPrueba, setListaclientesPrueba] = useState([]);
   //const [listaclientesantioquia, setListaclientesantioquia] = useState([]);
 
-  const { user } = useAuth();
+  // const { user } = useAuth();
 
-  let antioquia = user && user.useremail === 'encuesta.antioquia@commerk.com.co';
-  let valle = user && user.useremail === 'encuesta.valle@commerk.com.co';
-  let todos = user && user.useremail === 'encuesta@commerk.com.co';
+  // let antioquia = user && user.useremail === 'encuesta.antioquia@commerk.com.co';
+  // let valle = user && user.useremail === 'encuesta.valle@commerk.com.co';
+  // let todos = user && user.useremail === 'encuesta@commerk.com.co';
   // const [clientesNuevos, setClientesNuevos] = useState([]);
 
 
-  const clientes = useSelector((state) => state.cliente.clientes);
-  const clientesAntioquia = useSelector((state) => state.cliente.clientesAntioquia);
-  const clientesValle = useSelector((state) => state.cliente.clientesValle);
+  // const clientes = useSelector((state) => state.cliente.clientes);
+  // const clientesAntioquia = useSelector((state) => state.cliente.clientesAntioquia);
+  // const clientesValle = useSelector((state) => state.cliente.clientesValle);
+
+  const clientesEmail = useSelector((state) => state.cliente.clientesEmail);
+
+  console.log("clientesEmail", clientesEmail)
 
 
   useEffect(() => {
@@ -470,28 +495,31 @@ const CustomerListPage = () => {
       setCustomer(null);
   };
 
-
-
   useEffect(() => {
-    setTimeout(() => {
-      if (antioquia) {
-        dispatch(getClientesAntioquia());
-      } else if (valle) {
-        dispatch(getClientesValle());
-      } else if (todos) {
-        dispatch(getClientes());
-      }
-    }, 1000);
+    dispatch(getClientesEmail());
   }, [])
+
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     if (antioquia) {
+  //       dispatch(getClientesAntioquia());
+  //     } else if (valle) {
+  //       dispatch(getClientesValle());
+  //     } else if (todos) {
+  //       dispatch(getClientes());
+  //     }
+  //   }, 1000);
+  // }, [])
 
 
   //console.log("clientesHeinsohn", clientesHeinsohn)
   // console.log("encuesta", encuesta)
-  console.log("clientes", clientes)
+  // console.log("clientes", clientes)
 
   // const data = clientes;
 
-  const data = antioquia ? clientesAntioquia : valle ? clientesValle : clientes;
+  const data = clientesEmail;
 
   const columns = useMemo(
     () => [
