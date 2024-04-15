@@ -54,7 +54,7 @@ app.post("/enviar/correo", async (req, res) => {
     const data = req.body; // Array de objetos
     console.log("req.body", req.body);
 
-    const source = fs.readFileSync("encuestati.html", "utf-8").toString();
+    const source = fs.readFileSync("actualizacion_datos.html", "utf-8").toString();
     const template = handlebars.compile(source);
 
     const batchSize = 1; // Tamaño del lote de correos electrónicos
