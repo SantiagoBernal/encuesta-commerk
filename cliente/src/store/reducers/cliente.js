@@ -19,7 +19,8 @@ const initialState = {
   clientesAntioquiaVerdader: [],
   clientesValleFalso: [],
   clientesAntioquiaFalso: [],
-  clientesEmail: [],
+  clientesEmailT: [],
+  clientesEmailF: [],
 };
 
 const cliente = createSlice({
@@ -39,12 +40,12 @@ const cliente = createSlice({
 
      // GET CLIENTES
      getClientesEmailTSuccess(state, action) {
-      state.clientesEmail = action.payload;
+      state.clientesEmailT = action.payload;
     },
 
       // GET CLIENTES
       getClientesEmailFSuccess(state, action) {
-        state.clientesEmail = action.payload;
+        state.clientesEmailF = action.payload;
       },
 
      // GET CLIENTES antioquia

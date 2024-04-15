@@ -37,7 +37,7 @@ import {
   useSelector
 } from 'store';
 // import { getClientesHeinsohn } from 'store/reducers/clientesheisohn';
-import { getClientesEmail } from 'store/reducers/cliente';
+import { getClientesEmailF } from 'store/reducers/cliente';
 // import { getClientes } from 'store/reducers/cliente';
 // import { getClientesAntioquia } from 'store/reducers/cliente';
 // import { getClientesValle } from 'store/reducers/cliente';
@@ -482,9 +482,9 @@ const CustomerListPage = () => {
   // const clientesAntioquia = useSelector((state) => state.cliente.clientesAntioquia);
   // const clientesValle = useSelector((state) => state.cliente.clientesValle);
 
-  const clientesEmail = useSelector((state) => state.cliente.clientesEmail);
+  const clientesEmailF = useSelector((state) => state.cliente.clientesEmailF);
 
-  console.log("clientesEmail", clientesEmail)
+  console.log("clientesEmailF", clientesEmailF)
 
   console.log("dataClientesPrueba", dataClientesPrueba)
 
@@ -502,13 +502,13 @@ const CustomerListPage = () => {
   };
 
   useEffect(() => {
-    dispatch(getClientesEmail());
+    dispatch(getClientesEmailF());
   }, [])
 
 
   // const data = dataClientesPrueba;
 
-  const data = clientesEmail;
+  const data = clientesEmailF;
 
   const columns = useMemo(
     () => [
