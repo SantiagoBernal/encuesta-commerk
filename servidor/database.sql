@@ -35,6 +35,13 @@ CREATE TABLE IF NOT EXISTS cliente (
   codigo_proyecto INT NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS cliente_email (
+  id_cliente SERIAL PRIMARY KEY,
+  codigo_sn VARCHAR(255) NOT NULL,
+  nombre_sn VARCHAR(255) NOT NULL,
+  correo_electronico VARCHAR(255)
+);
+
 -- -----------------------------------------------------
 -- Table `encuesta`.`pregunta`
 -- -----------------------------------------------------

@@ -11,7 +11,9 @@ import axios from 'axios';
 const initialState = {
     error: null,
     encuestas: [],
-    resultados: []
+    resultados: [],
+    resultadosValle: [],
+    resultadosAntioquia: [],
 };
 
 const encuesta = createSlice({
@@ -38,6 +40,15 @@ const encuesta = createSlice({
             state.resultados = action.payload;
         },
 
+         // ADD COLUMN
+         getResultadosValleSuccess(state, action) {
+            state.resultadosValle = action.payload;
+        },
+
+        getResultadosAntioquiaSuccess(state, action) {
+            state.resultadosAntioquia = action.payload;
+        },
+
     }
 });
 
@@ -62,6 +73,30 @@ export function getResultado() {
             const response = await axios.get('https://encuesta-commerk.onrender.com/encuesta/resultados');
             //console.log("response".response)
             dispatch(encuesta.actions.getResultadosSuccess(response.data));
+        } catch (error) {
+            dispatch(encuesta.actions.hasError(error));
+        }
+    };
+}
+
+export function getResultadoValle() {
+    return async () => {
+        try {
+            const response = await axios.get('https://encuesta-commerk.onrender.com/encuesta/resultadosValle');
+            //console.log("response".response)
+            dispatch(encuesta.actions.getResultadosValleSuccess(response.data));
+        } catch (error) {
+            dispatch(encuesta.actions.hasError(error));
+        }
+    };
+}
+
+export function getResultadoAntioquia() {
+    return async () => {
+        try {
+            const response = await axios.get('https://encuesta-commerk.onrender.com/encuesta/resultadosAntioquia');
+            //console.log("response".response)
+            dispatch(encuesta.actions.getResultadosAntiquiaSuccess(response.data));
         } catch (error) {
             dispatch(encuesta.actions.hasError(error));
         }

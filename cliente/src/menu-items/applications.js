@@ -99,6 +99,18 @@ const applications = {
           title: <FormattedMessage id="Resultados" />,
           type: 'item',
           url: '/apps/customer/customer-list-result'
+        },
+        antioquia && {
+          id: 'customer-customer-email',
+          title: <FormattedMessage id="Email" />,
+          type: 'item',
+          url: '/apps/customer/customer-email'
+        },
+        valle && {
+          id: 'customer-list-result',
+          title: <FormattedMessage id="Email" />,
+          type: 'item',
+          url: '/apps/customer/customer-email'
         }
       ]
     }

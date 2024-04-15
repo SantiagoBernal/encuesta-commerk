@@ -19,6 +19,11 @@ import { getClientesAntioquia } from 'store/reducers/cliente';
 import { getClientesValle } from 'store/reducers/cliente';
 
 
+import { getResultado } from 'store/reducers/encuesta';
+import { getResultadoValle } from 'store/reducers/encuesta';
+import { getResultadoAntioquia } from 'store/reducers/encuesta';
+
+
 const chance = new Chance();
 
 // constant
@@ -127,9 +132,12 @@ export const JWTProvider = ({ children }) => {
 
     if (antioquia) {
       dispatch(getClientesAntioquia());
+      dispatch(getResultadoAntioquia());
     } else if (valle) {
       dispatch(getClientesValle());
+      dispatch(getResultadoValle());
     } else if (todos) {
+      dispatch(getResultado());
       dispatch(getClientes());
     }
 

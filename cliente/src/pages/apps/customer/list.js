@@ -34,7 +34,7 @@ const EXTENSIONS = ['xlsx', 'xls', 'csv']
 
 import {
   dispatch,
-  // useSelector
+  useSelector
 } from 'store';
 // import { getClientesHeinsohn } from 'store/reducers/clientesheisohn';
 import { getClientes } from 'store/reducers/cliente';
@@ -61,7 +61,7 @@ import ScrollX from 'components/ScrollX';
 import IconButton from 'components/@extended/IconButton';
 import { PopupTransition } from 'components/@extended/Transitions';
 import {
-  //CSVExport,
+  CSVExport,
   HeaderSort,
   IndeterminateCheckbox,
   SortingSelect,
@@ -82,7 +82,8 @@ import { openSnackbar } from 'store/reducers/snackbar';
 import useAuth from 'hooks/useAuth';
 // import  clientesAntioquia from 'data/clientesAntioquia';
 // import  clientesValle from 'data/clientesValle';
-//import dataClientesAntioquiaNueva from 'data/clientesAntioquiaNueva';
+// import dataClientesAntioquiaNueva from 'data/clientesAntioquiaNueva';
+// import dataClientesAntioquiaNueva2 from 'data/clientesAntioquiaNueva2';
 
 import {
   // Add,
@@ -92,7 +93,7 @@ import {
 } from 'iconsax-react';
 import { ThemeMode } from 'config';
 // import dataClientesAntioquia from 'data/clientesAntioquia';
-import dataClientesPrueba from 'data/clientesPrueba';
+// import dataClientesPrueba from 'data/clientesPrueba';
 import { setEmail } from 'store/reducers/email';
 
 
@@ -216,10 +217,10 @@ function ReactTable({ columns, data, renderRowSubComponent,
   };
 
   const clearSelection = () => {
-    console.log("tableRef.current", tableRef.current)
-    console.log("tableRef", tableRef)
+    // console.log("tableRef.current", tableRef.current)
+    // console.log("tableRef", tableRef)
     if (tableRef.current) {
-      console.log("tableRef.current", tableRef.current)
+      // console.log("tableRef.current", tableRef.current)
       tableRef.current.onAllSelected(false)
     }
   }
@@ -388,7 +389,7 @@ function ReactTable({ columns, data, renderRowSubComponent,
             </Card>
 
             <SortingSelect sortBy={sortBy.id_cliente} setSortBy={setSortBy} allColumns={allColumns} />
-            {/* <CSVExport data={selectedFlatRows.length > 0 ? selectedFlatRows.map((d) => d.original) : data} filename={'customer-list.csv'} /> */}
+            <CSVExport data={selectedFlatRows.length > 0 ? selectedFlatRows.map((d) => d.original) : data} filename={'customer-list.csv'} />
           </Stack>
         </Stack>
 
@@ -456,10 +457,10 @@ const CustomerListPage = () => {
   const [customer, setCustomer] = useState(null);
   const [add, setAdd] = useState(false);
 
-  // console.log("dataClientesAntioquia", dataClientesAntioquia)
-  console.log("dataClientesPrueba", dataClientesPrueba)
+  // console.log("dataClientesAntioquia2", dataClientesAntioquiaNueva2)
+  // console.log("dataClientesPrueba", dataClientesPrueba)
 
-  const [listaclientesPrueba, setListaclientesPrueba] = useState([]);
+  // const [listaclientesPrueba, setListaclientesPrueba] = useState([]);
   //const [listaclientesantioquia, setListaclientesantioquia] = useState([]);
 
   const { user } = useAuth();
@@ -470,9 +471,9 @@ const CustomerListPage = () => {
   // const [clientesNuevos, setClientesNuevos] = useState([]);
 
 
-  // const clientes = useSelector((state) => state.cliente.clientes);
-  // const clientesAntioquia = useSelector((state) => state.cliente.clientesAntioquia);
-  // const clientesValle = useSelector((state) => state.cliente.clientesValle);
+  const clientes = useSelector((state) => state.cliente.clientes);
+  const clientesAntioquia = useSelector((state) => state.cliente.clientesAntioquia);
+  const clientesValle = useSelector((state) => state.cliente.clientesValle);
 
 
   useEffect(() => {
@@ -480,12 +481,12 @@ const CustomerListPage = () => {
   }, [])
 
 
-  useEffect(() => {
-    if (dataClientesPrueba.length > 0) {
-      setListaclientesPrueba(dataClientesPrueba);
-    }
-  }, [])
-  console.log("listaclientesPrueba", listaclientesPrueba)
+  // useEffect(() => {
+  //   if (dataClientesAntioquiaNueva2.length > 0) {
+  //     setListaclientesPrueba(dataClientesAntioquiaNueva2);
+  //   }
+  // }, [])
+  // console.log("listaclientesPrueba", listaclientesPrueba)
 
   const handleAdd = () => {
     setAdd(!add);
@@ -516,11 +517,11 @@ const CustomerListPage = () => {
 
   //console.log("clientesHeinsohn", clientesHeinsohn)
   // console.log("encuesta", encuesta)
-  // console.log("clientes", clientes)
+  console.log("clientes", clientes)
 
-  const data = listaclientesPrueba;
+  // const data = clientes;
 
-  // const data = antioquia ? clientesAntioquia : valle ? clientesValle : clientes;
+  const data = antioquia ? clientesAntioquia : valle ? clientesValle : clientes;
 
   const columns = useMemo(
     () => [

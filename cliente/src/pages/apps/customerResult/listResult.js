@@ -24,6 +24,8 @@ import {
 } from 'store';
 
 import { getResultado } from 'store/reducers/encuesta';
+import { getResultadoValle } from 'store/reducers/encuesta';
+import { getResultadoAntioquia } from 'store/reducers/encuesta';
 
 
 
@@ -210,37 +212,29 @@ const CustomerListPage = () => {
   const [customer, setCustomer] = useState(null);
   const [add, setAdd] = useState(false);
 
-  const [listaclientesProyecto, setListaclientesProyecto] = useState([]);
 
   const resultados = useSelector((state) => state.encuesta.resultados);
-  console.log("resultados", resultados)
+  const resultadosAntioquia = useSelector((state) => state.encuesta.resultadosAntioquia);
+  const resultadosValle = useSelector((state) => state.encuesta.resultadosValle);
+
+  // console.log("resultados", resultados)
+  // console.log("resultadosAntioquia", resultadosAntioquia)
+  // console.log("resultadosValle", resultadosValle)
 
   const { user } = useAuth();
+
+  //console.log("user", user)
 
   let antioquia = user && user.useremail === 'encuesta.antioquia@commerk.com.co';
   let valle = user && user.useremail === 'encuesta.valle@commerk.com.co';
   let todos = user && user.useremail === 'encuesta@commerk.com.co';
 
-  useEffect(() => {
-    if (resultados)
-      if (antioquia) {
-        console.log("antioquia", antioquia)
-        return setListaclientesProyecto(resultados.filter((cliente) => cliente.codigo_proyecto === 2));
-      } else if (valle) {
-        console.log("valle", valle)
-        return setListaclientesProyecto(resultados.filter((cliente) => cliente.codigo_proyecto === 1));
-        // dispatch(getClientesValle());
-      } else if (todos) {
-        console.log("todos", todos)
-        return setListaclientesProyecto(resultados);
-      }
-      dispatch(getResultado());
-  }, [])
 
-  console.log("listaclientesProyecto", listaclientesProyecto)
- 
+
 
   useEffect(() => {
+    dispatch(getResultadoValle());
+    dispatch(getResultadoAntioquia());
     dispatch(getResultado());
   }, [])
 
@@ -250,7 +244,7 @@ const CustomerListPage = () => {
       setCustomer(null);
   };
 
-  const data =  listaclientesProyecto;
+  const data = antioquia ? resultadosAntioquia : valle ? resultadosValle : todos ? resultados : [];
 
   const columns = useMemo(
     () => [

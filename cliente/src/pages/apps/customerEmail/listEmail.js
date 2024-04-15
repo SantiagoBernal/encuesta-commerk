@@ -1,8 +1,5 @@
 import PropTypes from 'prop-types';
-import {
-  useCallback, useEffect, useMemo, useState, Fragment
-  , useRef
-} from 'react';
+import { useCallback, useEffect, useMemo, useState, Fragment, useRef } from 'react';
 
 // material-ui
 import { alpha, useTheme } from '@mui/material/styles';
@@ -22,23 +19,33 @@ import {
 } from '@mui/material';
 
 // import SaveIcon from '@mui/icons-material/Save';
-// import FileUploadIcon from '@mui/icons-material/FileUpload';
-// // import Alert from '@mui/material/Alert';
-// // import AlertTitle from '@mui/material/AlertTitle';
+// import SyntaxHighlight from 'utils/SyntaxHighlight';
+import FileUploadIcon from '@mui/icons-material/FileUpload';
+// import Alert from '@mui/material/Alert';
+// import AlertTitle from '@mui/material/AlertTitle';
 import CardActions from '@mui/material/CardActions';
-// // import CardContent from '@mui/material/CardContent';
-import Card from '@mui/material/Card';
-// import * as XLSX from 'xlsx/xlsx.mjs';
-// //import axios from 'axios';
+// import CardContent from '@mui/material/CardContent';
 import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
+import Card from '@mui/material/Card';
+import * as XLSX from 'xlsx/xlsx.mjs';
+//import axios from 'axios';
 
-// const EXTENSIONS = ['xlsx', 'xls', 'csv']
+const EXTENSIONS = ['xlsx', 'xls', 'csv']
 
-import { dispatch, useSelector } from 'store';
-import { getClientesHeinsohn } from 'store/reducers/clientesheisohn';
+import {
+  dispatch,
+  useSelector
+} from 'store';
+// import { getClientesHeinsohn } from 'store/reducers/clientesheisohn';
+import { getClientes } from 'store/reducers/cliente';
+import { getClientesAntioquia } from 'store/reducers/cliente';
 import { getClientesValle } from 'store/reducers/cliente';
 // import { createdCliente } from 'store/reducers/cliente';
 //import { deleteCliente } from 'store/reducers/cliente';
+import { getEncuesta } from 'store/reducers/encuesta';
+//import { setEmail } from 'store/reducers/email';
+// import Loader from 'components/Loader';
+
 
 
 // import axios from 'utils/axios';
@@ -54,7 +61,7 @@ import ScrollX from 'components/ScrollX';
 import IconButton from 'components/@extended/IconButton';
 import { PopupTransition } from 'components/@extended/Transitions';
 import {
-  // CSVExport,
+  CSVExport,
   HeaderSort,
   IndeterminateCheckbox,
   SortingSelect,
@@ -69,9 +76,15 @@ import CustomerView from 'sections/apps/customer/CustomerView';
 
 // import makeData from 'data/react-table';
 import { renderFilterTypes, GlobalFilter } from 'utils/react-table';
-// import { openSnackbar } from 'store/reducers/snackbar';
+import { openSnackbar } from 'store/reducers/snackbar';
 
-// assets
+// import { UseAuth } from 'hooks/useAuth';
+import useAuth from 'hooks/useAuth';
+// import  clientesAntioquia from 'data/clientesAntioquia';
+// import  clientesValle from 'data/clientesValle';
+// import dataClientesAntioquiaNueva from 'data/clientesAntioquiaNueva';
+// import dataClientesAntioquiaNueva2 from 'data/clientesAntioquiaNueva2';
+
 import {
   // Add,
   Edit,
@@ -79,10 +92,10 @@ import {
   // Trash 
 } from 'iconsax-react';
 import { ThemeMode } from 'config';
-
+// import dataClientesAntioquia from 'data/clientesAntioquia';
 // import dataClientesPrueba from 'data/clientesPrueba';
 import { setEmail } from 'store/reducers/email';
-import { openSnackbar } from 'store/reducers/snackbar';
+
 
 // const avatarImage = require.context('assets/images/users', true);
 
@@ -94,16 +107,10 @@ function ReactTable({ columns, data, renderRowSubComponent,
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
 
-  // const clientesValle = useSelector((state) => state.cliente.clientesValle);
-
-  // useEffect(() => {
-  //   dispatch(getClientesValle());
-  // }, [])
-
-  //console.log("clientes arriba", clientes)
-
   const filterTypes = useMemo(() => renderFilterTypes, []);
   const sortBy = { id: 'nombre_sn', desc: false };
+
+
 
   const {
     getTableProps,
@@ -127,7 +134,21 @@ function ReactTable({ columns, data, renderRowSubComponent,
       columns,
       data,
       filterTypes,
-      initialState: { pageIndex: 0, pageSize: 5, hiddenColumns: ['avatar', 'email'], sortBy: [sortBy] }
+      initialState: {
+        pageIndex: 0, pageSize: 5, hiddenColumns: [
+          'id_cliente',
+          'codigo_sn',
+          'nombre_sn',
+          'codigo_sn',
+          'correo_electronico',
+          'correo_recepcion',
+          'telefono_movil',
+          'telefono_1',
+          'telefono_2',
+          'nombre_grupo',
+          'codigo_proyecto',
+        ], sortBy: [sortBy]
+      }
     },
     useGlobalFilter,
     useFilters,
@@ -137,18 +158,63 @@ function ReactTable({ columns, data, renderRowSubComponent,
     useRowSelect
   );
 
+  // console.log("setSortBy", setSortBy)
+  // console.log("rows", rows)
+  // console.log("setSortBy", setSortBy)
+  // console.log("selectedRowIds", selectedRowIds)
 
 
   useEffect(() => {
     if (matchDownSM) {
-      (['age', 'contact', 'visits', 'correo_recepcion', 'status', 'avatar']);
+      (['id_cliente',
+        'codigo_sn',
+        'nombre_sn',
+        'codigo_sn',
+        'correo_electronico',
+        'correo_recepcion',
+        'telefono_movil',
+        'telefono_1',
+        'telefono_2',
+        'nombre_grupo',
+        'codigo_proyecto',]);
     } else {
       setHiddenColumns(['avatar', 'email']);
     }
     // eslint-disable-next-line
   }, [matchDownSM]);
 
+
+  const [clientesCargados, setClientesCargados] = useState([]);
+  // const [loading, setLoading] = useState(false);
+  // const [clientesSeleccionados, setClientesSeleccionados] = useState([]);
+  // const [total, setTotal] = useState(0);
+
+
+
+  const getExention = (file) => {
+    const parts = file.name.split('.')
+    const extension = parts[parts.length - 1]
+    return EXTENSIONS.includes(extension) // return boolean
+  }
+
+  const convertToJson = (headers, data) => {
+    const rows = []
+    data.forEach(row => {
+      let rowData = {}
+      row.forEach((element, index) => {
+        rowData[headers[index]] = element
+      })
+      rows.push(rowData)
+    });
+    return rows
+  }
+
+  const hiddenFileInput = useRef(null);
   const tableRef = useRef(null)
+
+  const handleClick = () => {
+    hiddenFileInput.current.click();
+  };
 
   const clearSelection = () => {
     // console.log("tableRef.current", tableRef.current)
@@ -158,6 +224,67 @@ function ReactTable({ columns, data, renderRowSubComponent,
       tableRef.current.onAllSelected(false)
     }
   }
+
+  const importExcel = (e) => {
+    const file = e.target.files[0]
+    const reader = new FileReader()
+    reader.onload = (event) => {
+      const bstr = event.target.result
+      const workBook = XLSX.read(bstr, { type: "binary" })
+      const workSheetName = workBook.SheetNames[0]
+      const workSheet = workBook.Sheets[workSheetName]
+      const fileData = XLSX.utils.sheet_to_json(workSheet, { header: 1 })
+      //console.log(fileData)
+      const headers = fileData[0]
+      fileData.splice(0, 1)
+      const dataUsers = convertToJson(headers, fileData)
+      const users = [];
+      if (dataUsers.length > 0) {
+
+        for (let i = 0; i < dataUsers.length; i++) {
+          if (dataUsers[i].telefono_1) {
+            dataUsers[i].telefono_1 = (dataUsers[i].telefono_1).toString();
+          }
+          if (dataUsers[i].telefono_2) {
+            dataUsers[i].telefono_2 = (dataUsers[i].telefono_2).toString();
+          }
+
+          if (dataUsers[i].telefono_movil) {
+            dataUsers[i].telefono_movil = (dataUsers[i].telefono_movil).toString();
+          }
+
+          if (!dataUsers[i].correo_recepcion) {
+            dataUsers[i].telefono_1 = "0";
+          }
+          if (!dataUsers[i].correo_electronico) {
+            dataUsers[i].telefono_1 = "0";
+          }
+          if (!dataUsers[i].telefono_1) {
+            dataUsers[i].telefono_1 = "0";
+          }
+          if (!dataUsers[i].telefono_2) {
+            dataUsers[i].telefono_2 = "0";
+          }
+          const estado_encuesta = false;
+          dataUsers[i].estado_encuesta = estado_encuesta;
+          users.push(dataUsers[i])
+        }
+        setClientesCargados(dataUsers)
+      }
+    }
+    if (file) {
+      if (getExention(file)) {
+        reader.readAsBinaryString(file)
+      }
+      else {
+        alert("Invalid file input, Select Excel, CSV file")
+      }
+    }
+  }
+  console.log("clientesCargados", clientesCargados)
+
+ 
+
 
   const handleSubmitEmail = async (e) => {
     e.preventDefault();
@@ -181,10 +308,14 @@ function ReactTable({ columns, data, renderRowSubComponent,
     }
     // return <Loader />;
   };
+console.log("selectedFlatRows", selectedFlatRows)
 
   return (
     <>
-      <TableRowSelection selected={Object.keys(selectedRowIds).length} />
+      <TableRowSelection selected={Object.keys(selectedRowIds).length}
+        defaultRef={tableRef}
+      // onClick={handleClickSelect(selectedFlatRows)} 
+      />
       <Stack spacing={3}>
 
         <Stack
@@ -203,7 +334,6 @@ function ReactTable({ columns, data, renderRowSubComponent,
                 <Stack
                   alignContent="contained" direction="row" spacing={2}>
                   <Button
-                    disabled={selectedFlatRows.length === 0}
                     onClick={handleSubmitEmail}
                     variant="contained" size="large" endIcon={<MarkEmailReadIcon />}>
                     Enviar correos
@@ -213,9 +343,35 @@ function ReactTable({ columns, data, renderRowSubComponent,
               </CardActions>
             </Card>
 
-            <SortingSelect sortBy={sortBy.id_cliente} setSortBy={setSortBy} allColumns={allColumns} />
+            <Card sx={{ maxWidth: 345, maxHeight: 200, direction: "column", alignItems: "center", display: "flex" }}>
+              <CardActions>
+                <div className="button-group">
+                  <label>
+                    <input
+                      type="file"
+                      style={{ display: 'none' }}
+                      onChange={importExcel}
+                      ref={hiddenFileInput}
+                    />
+                    <Stack alignContent="contained" direction="row" spacing={2}>
+                      <Button
+                        onClick={handleClick}
+                        variant="outlined" size="large" startIcon={<FileUploadIcon />}>
+                        Cargar
+                      </Button>
+                      {/* <Button
+                        onClick={handleSubmit}
+                        variant="contained" size="large" endIcon={<SaveIcon />}>
+                        Guardar
+                      </Button> */}
+                    </Stack>
+                  </label>
+                </div>
+              </CardActions>
+            </Card>
 
-            {/* <CSVExport data={selectedFlatRows.length > 0 ? selectedFlatRows.map((d) => d.original) : data} filename={'customer-list.csv'} /> */}
+            <SortingSelect sortBy={sortBy.id_cliente} setSortBy={setSortBy} allColumns={allColumns} />
+            <CSVExport data={selectedFlatRows.length > 0 ? selectedFlatRows.map((d) => d.original) : data} filename={'customer-list.csv'} />
           </Stack>
         </Stack>
 
@@ -235,7 +391,6 @@ function ReactTable({ columns, data, renderRowSubComponent,
             {page.map((row, i) => {
               prepareRow(row);
               const rowProps = row.getRowProps();
-
               return (
                 <Fragment key={i}>
                   <TableRow
@@ -262,7 +417,7 @@ function ReactTable({ columns, data, renderRowSubComponent,
             </TableRow>
           </TableBody>
         </Table>
-      </Stack>
+      </Stack >
     </>
   );
 }
@@ -281,28 +436,33 @@ ReactTable.propTypes = {
 const CustomerListPage = () => {
   const theme = useTheme();
   const mode = theme.palette.mode;
-  // const data = useMemo(() => makeData(200), []);
-  //console.log("data", data)
-  // const [open, setOpen] = useState(false);
   const [customer, setCustomer] = useState(null);
-  //console.log("customer", customer)
-  // const [rows, setRowse] = useState([]);
-  // const [customerDeleteId, setCustomerDeleteId] = useState('');
   const [add, setAdd] = useState(false);
 
-  const clientesValle = useSelector((state) => state.cliente.clientesValle);
-  //const clientesHeinsohn = useSelector((state) => state.cliente.clientesHeinsohn);
-  // console.log("clientesValle", clientesValle)
+  // console.log("dataClientesAntioquia2", dataClientesAntioquiaNueva2)
   // console.log("dataClientesPrueba", dataClientesPrueba)
 
   // const [listaclientesPrueba, setListaclientesPrueba] = useState([]);
+  //const [listaclientesantioquia, setListaclientesantioquia] = useState([]);
 
-  // useEffect(() => {
-  //   if (dataClientesPrueba.length > 0) {
-  //     setListaclientesPrueba(dataClientesPrueba);
-  //   }
-  // }, [])
-  // console.log("listaclientesPrueba", listaclientesPrueba)
+  const { user } = useAuth();
+
+  let antioquia = user && user.useremail === 'encuesta.antioquia@commerk.com.co';
+  let valle = user && user.useremail === 'encuesta.valle@commerk.com.co';
+  let todos = user && user.useremail === 'encuesta@commerk.com.co';
+  // const [clientesNuevos, setClientesNuevos] = useState([]);
+
+
+  const clientes = useSelector((state) => state.cliente.clientes);
+  const clientesAntioquia = useSelector((state) => state.cliente.clientesAntioquia);
+  const clientesValle = useSelector((state) => state.cliente.clientesValle);
+
+
+  useEffect(() => {
+    dispatch(getEncuesta());
+  }, [])
+
+
 
   const handleAdd = () => {
     setAdd(!add);
@@ -310,19 +470,28 @@ const CustomerListPage = () => {
       setCustomer(null);
   };
 
-  useEffect(() => {
-    dispatch(getClientesValle());
-  }, [])
+
 
   useEffect(() => {
-    dispatch(getClientesHeinsohn());
+    setTimeout(() => {
+      if (antioquia) {
+        dispatch(getClientesAntioquia());
+      } else if (valle) {
+        dispatch(getClientesValle());
+      } else if (todos) {
+        dispatch(getClientes());
+      }
+    }, 1000);
   }, [])
+
 
   //console.log("clientesHeinsohn", clientesHeinsohn)
-  //console.log("clientes", clientes)
-  // console.log("rows", rows)
+  // console.log("encuesta", encuesta)
+  console.log("clientes", clientes)
 
-  const data = clientesValle;
+  // const data = clientes;
+
+  const data = antioquia ? clientesAntioquia : valle ? clientesValle : clientes;
 
   const columns = useMemo(
     () => [
@@ -339,7 +508,7 @@ const CustomerListPage = () => {
         className: 'cell-center'
       },
       {
-        Header: 'SN',
+        Header: 'Código SN',
         accessor: 'codigo_sn',
         className: 'cell-center'
       },
@@ -348,11 +517,8 @@ const CustomerListPage = () => {
         accessor: 'nombre_sn',
         Cell: ({ row }) => {
           const { values } = row;
-          //const { valuesData } = rows;
-          //console.log("values", values)
           return (
             <Stack direction="row" spacing={1.5} alignItems="center">
-              {/* <Avatar alt="Avatar 1" size="sm" src={avatarImage(`./avatar-${!values.avatar ? 1 : values.avatar}.png`)} /> */}
               <Stack spacing={0}>
                 <Typography variant="subtitle1">{values.nombre_sn}</Typography>
               </Stack>
@@ -363,39 +529,42 @@ const CustomerListPage = () => {
       {
         Header: 'Correo Electronico',
         accessor: 'correo_electronico',
-        // disableSortBy: true
+        className: 'cell-center'
       },
       {
         Header: 'Correo Recepcion',
-        accessor: 'correo_recepcion'
+        accessor: 'correo_recepcion',
+        className: 'cell-center'
       },
       {
         Header: 'Movil',
         accessor: 'telefono_movil',
-        // Cell: ({ value }) => <PatternFormat displayType="text" format="+57 (###) ###-####" mask="_" defaultValue={value} />
+        className: 'cell-center'
       },
       {
         Header: 'Teléfono 1',
-        accessor: 'telefono_',
-        // Cell: ({ value }) => <PatternFormat displayType="text" format="+57 (###) ###-####" mask="_" defaultValue={value != "0" ? value : ""} />
+        accessor: 'telefono_1',
+        className: 'cell-center'
       },
       {
         Header: 'Teléfono 2',
         accessor: 'telefono_2',
-        // Cell: ({ value }) => <PatternFormat displayType="text" format="+57 (###) ###-####" mask="_" defaultValue={value != "0" ? value : ""} />
+        className: 'cell-center'
       },
       {
         Header: 'Grupo',
         accessor: 'nombre_grupo',
-        className: 'cell-right'
+        className: 'cell-center'
       },
       {
         Header: 'Proyecto',
-        accessor: 'codigo_proyecto'
+        accessor: 'codigo_proyecto',
+        className: 'cell-center'
       },
       {
         Header: 'Estado',
         accessor: 'estado_encuesta',
+        className: 'cell-center',
         Cell: ({ value }) => {
           switch (value) {
             case false:
@@ -411,10 +580,8 @@ const CustomerListPage = () => {
         className: 'cell-center',
         disableSortBy: true,
         Cell: ({ row }) => {
-          //const collapseIcon = row.isExpanded ? <Add style={{ color: theme.palette.error.main, transform: 'rotate(45deg)' }} /> : <Eye />;
           return (
             <Stack direction="row" alignItems="center" justifyContent="center" spacing={0}>
-
               <Tooltip
                 componentsProps={{
                   tooltip: {
@@ -437,30 +604,6 @@ const CustomerListPage = () => {
                   <Edit />
                 </IconButton>
               </Tooltip>
-
-              {/* <Tooltip
-                componentsProps={{
-                  tooltip: {
-                    sx: {
-                      backgroundColor: mode === ThemeMode.DARK ? theme.palette.grey[50] : theme.palette.grey[700],
-                      opacity: 0.9
-                    }
-                  }
-                }}
-                title="Delete"
-              >
-                <IconButton
-                  color="error"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleClose();
-                    setCustomerDeleteId(row.values.id);
-                  }}
-                >
-                  <Trash />
-                </IconButton>
-              </Tooltip> */}
-
             </Stack>
           );
         }
@@ -471,6 +614,7 @@ const CustomerListPage = () => {
   );
 
   const renderRowSubComponent = useCallback(({ row }) => <CustomerView data={data[Number(row.id_cliente)]} />, [data]);
+
 
   return (
     <MainCard content={false}>
@@ -497,7 +641,6 @@ const CustomerListPage = () => {
 
 CustomerListPage.propTypes = {
   row: PropTypes.object,
-  values: PropTypes.object,
   avatar: PropTypes.object,
   message: PropTypes.string,
   nombre_sn: PropTypes.string,

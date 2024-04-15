@@ -76,6 +76,40 @@ app.post("/enviar/correo", async (req, res) => {
 });
 
 //Agregar cliente
+app.post("/cliente/nuevo_email", async (req, res) => {
+  console.log("cliente/nuevo_email req.body", req.body);
+  //console.log("encuesta req.body.encuesta", req.body.encuesta);
+  try {
+    const {
+      codigo_sn,
+      nombre_sn,
+      correo_electronico
+    } = req.body.data;
+    const newTodo = await pool.query(
+      'INSERT INTO cliente_email (codigo_sn, nombre_sn, correo_electronico) VALUES ($1, $2, $3) RETURNING *',
+      [
+        codigo_sn,
+        nombre_sn,
+        correo_electronico
+      ],
+    );
+
+    res.json(newTodo.rows[0]);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+app.get("/cliente/lista_email", async (req, res) => {
+  try {
+    const allTodos = await pool.query("SELECT * FROM nuevo_email");
+    res.json(allTodos.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+//Agregar cliente
 app.post("/cliente/nuevo", async (req, res) => {
   console.log("cliente/nuevo req.body", req.body);
   //console.log("encuesta req.body.encuesta", req.body.encuesta);
