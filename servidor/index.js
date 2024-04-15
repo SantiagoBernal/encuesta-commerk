@@ -233,9 +233,18 @@ app.post("/cliente/nuevo_email", async (req, res) => {
   }
 });
 
-app.get("/cliente/lista_email", async (req, res) => {
+app.get("/cliente/lista_emailT", async (req, res) => {
   try {
-    const allTodos = await pool.query("SELECT * FROM cliente_email");
+    const allTodos = await pool.query("SELECT * FROM cliente_email WHERE estado_email = true");
+    res.json(allTodos.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+app.get("/cliente/lista_emailF", async (req, res) => {
+  try {
+    const allTodos = await pool.query("SELECT * FROM cliente_email WHERE estado_email = false");
     res.json(allTodos.rows);
   } catch (err) {
     console.error(err.message);

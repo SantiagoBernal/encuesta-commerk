@@ -39,7 +39,8 @@ CREATE TABLE IF NOT EXISTS cliente_email (
   id_cliente SERIAL PRIMARY KEY,
   codigo_sn VARCHAR(255) NOT NULL,
   nombre_sn VARCHAR(255) NOT NULL,
-  correo_electronico VARCHAR(255)
+  correo_electronico VARCHAR(255),
+  estado_email BOOLEAN NOT NULL DEFAULT FALSE;
 );
 
 -- -----------------------------------------------------

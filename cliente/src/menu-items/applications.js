@@ -102,9 +102,15 @@ const applications = {
         },
         antioquia && {
           id: 'customer-customer-email',
-          title: <FormattedMessage id="Email" />,
+          title: <FormattedMessage id="Email por enviar" />,
           type: 'item',
           url: '/apps/customer/customer-email'
+        },
+        antioquia && {
+          id: 'customer-send-email',
+          title: <FormattedMessage id="Email enviados" />,
+          type: 'item',
+          url: '/apps/customer/customer-send-email'
         },
         valle && {
           id: 'customer-list-result',

@@ -38,9 +38,14 @@ const cliente = createSlice({
     },
 
      // GET CLIENTES
-     getClientesEmailSuccess(state, action) {
+     getClientesEmailTSuccess(state, action) {
       state.clientesEmail = action.payload;
     },
+
+      // GET CLIENTES
+      getClientesEmailFSuccess(state, action) {
+        state.clientesEmail = action.payload;
+      },
 
      // GET CLIENTES antioquia
      getClientesAntioquiaSuccess(state, action) {
@@ -142,12 +147,24 @@ export function getClientes() {
   };
 }
 
-export function getClientesEmail() {
+export function getClientesEmailT() {
   return async () => {
     try {
-      const response = await axios.get(`https://encuesta-commerk.onrender.com/cliente/lista_email`);
+      const response = await axios.get(`https://encuesta-commerk.onrender.com/cliente/lista_emailT`);
       //console.log("response".response)
-      dispatch(cliente.actions.getClientesEmailSuccess(response.data));
+      dispatch(cliente.actions.getClientesEmailTSuccess(response.data));
+    } catch (error) {
+      dispatch(cliente.actions.hasError(error));
+    }
+  };
+}
+
+export function getClientesEmailF() {
+  return async () => {
+    try {
+      const response = await axios.get(`https://encuesta-commerk.onrender.com/cliente/lista_emailF`);
+      //console.log("response".response)
+      dispatch(cliente.actions.getClientesEmailFSuccess(response.data));
     } catch (error) {
       dispatch(cliente.actions.hasError(error));
     }

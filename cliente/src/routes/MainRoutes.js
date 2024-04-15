@@ -28,6 +28,7 @@ const AppCustomerValle = Loadable(lazy(() => import('pages/apps/customerValle/li
 const AppCustomerAntioquia = Loadable(lazy(() => import('pages/apps/customerAntioquia/listAntioquia')));
 const AppCustomerResult = Loadable(lazy(() => import('pages/apps/customerResult/listResult')));
 const AppCustomerEmail = Loadable(lazy(() => import('pages/apps/customerEmail/listEmail')));
+const AppCustomerSendEmail = Loadable(lazy(() => import('pages/apps/customerEmail/listEmailSend')));
 // const AppCustomerCard = Loadable(lazy(() => import('pages/apps/customer/card')));
 
 const AppInvoiceCreate = Loadable(lazy(() => import('pages/apps/invoice/create')));
@@ -220,6 +221,10 @@ const MainRoutes = {
                 {
                   path: 'customer-email',
                   element: <AppCustomerEmail />
+                },
+                {
+                  path: 'customer-send-email',
+                  element: <AppCustomerSendEmail />
                 }
               ]
             },
