@@ -47,7 +47,6 @@ app.use(passport.session());
 app.use('/auth', require('./Routers/auth/passport'));
 
 
-
 // ENVIA CORREO
 app.post("/enviar/correo", async (req, res) => {
   try {
@@ -68,7 +67,7 @@ app.post("/enviar/correo", async (req, res) => {
       const end = Math.min((batchIndex + 1) * batchSize, data.length);
       
       for (let i = start; i < end; i++) {
-        const { correo_electronico, nombre_sn } = data[i];
+        const { id_cliente, correo_electronico, nombre_sn } = data[i];
         console.log("Enviando correo a:", correo_electronico);
         
         const replacements = {
@@ -89,6 +88,17 @@ app.post("/enviar/correo", async (req, res) => {
           attachments: attachments
         });
         console.log(`Correo enviado a ${correo_electronico}: ${info.messageId}`);
+
+        // Actualizar el estado_email a true si el correo se envió correctamente
+        if (info.messageId) {
+          await pool.query(
+            `UPDATE cliente_email
+             SET estado_email = true
+             WHERE id_cliente = $1`,
+            [id_cliente]
+          );
+          console.log(`Estado de correo actualizado para cliente ${id_cliente}`);
+        }
       }
 
       batchIndex++;
@@ -109,43 +119,52 @@ app.post("/enviar/correo", async (req, res) => {
   }
 });
 
+
 // app.post("/enviar/correo", async (req, res) => {
 //   try {
-//     const { correos } = req.body; // Array de correos electrónicos
-//     const { nombre_sn } = req.body.data;
-//     console.log("correos", correos);
-//     console.log("nombre_sn", nombre_sn);
+//     const data = req.body; // Array de objetos
+//     console.log("req.body", req.body);
 
-//     const source = fs.readFileSync("encuestati.html", "utf-8").toString();
+//     const source = fs.readFileSync("actualizacion.html", "utf-8").toString();
 //     const template = handlebars.compile(source);
-//     const replacements = {
-//       firstname: nombre_sn
-//     };
-//     const htmlToSend = template(replacements);
 
 //     const batchSize = 1; // Tamaño del lote de correos electrónicos
-//     const intervalTime = 10 * 60 * 1000; // Intervalo de tiempo entre cada lote (10 minutos en milisegundos)
+//     // const intervalTime = 10 * 60 * 1000; // Intervalo de tiempo entre cada lote (10 minutos en milisegundos)
+//     const intervalTime = 5 * 60 * 1000; // Intervalo de tiempo entre cada lote (5 minutos en milisegundos)
 //     let batchIndex = 0;
 
 //     // Función para enviar un lote de correos electrónicos
 //     const sendEmailBatch = async () => {
 //       const start = batchIndex * batchSize;
-//       const end = Math.min((batchIndex + 1) * batchSize, correos.length);
+//       const end = Math.min((batchIndex + 1) * batchSize, data.length);
       
 //       for (let i = start; i < end; i++) {
-//         const correo_electronico = correos[i];
+//         const { correo_electronico, nombre_sn } = data[i];
+//         console.log("Enviando correo a:", correo_electronico);
+        
+//         const replacements = {
+//           firstname: nombre_sn
+//         };
+//         const htmlToSend = template(replacements);
+        
+//         const attachments = [{
+//           filename: 'FORMATO_VINCULACIÓN_CLIENTES_V10.pdf',
+//           path: path.join(__dirname, 'FORMATO_VINCULACIÓN_CLIENTES_V10.pdf')
+//         }];
+
 //         const info = await transporter.sendMail({
 //           from: "Commerk sas <jefedesarrollo@commerk.com.co>",
 //           to: correo_electronico,
-//           subject: "Encuesta de satisfacción Commerk SAS",
-//           html: htmlToSend
+//           subject: "ACTUALIZACIÓN DE DATOS COMMERK SAS",
+//           html: htmlToSend,
+//           attachments: attachments
 //         });
 //         console.log(`Correo enviado a ${correo_electronico}: ${info.messageId}`);
 //       }
 
 //       batchIndex++;
 
-//       if (batchIndex * batchSize < correos.length) {
+//       if (batchIndex * batchSize < data.length) {
 //         setTimeout(sendEmailBatch, intervalTime); // Envía el próximo lote después del intervalo de tiempo
 //       } else {
 //         console.log("Todos los correos electrónicos han sido enviados");
@@ -160,8 +179,6 @@ app.post("/enviar/correo", async (req, res) => {
 //     res.status(500).send("Error al enviar correos electrónicos");
 //   }
 // });
-
-
 
 // app.post("/enviar/correo", async (req, res) => {
 //   try {

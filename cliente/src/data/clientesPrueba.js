@@ -72,7 +72,7 @@ const dataClientesPrueba = [
         id__: 5
     },  {
         codigo_sn: "CN89010748711",
-        nombre_sn: "SUPERTIENDAS OLIMPICA SA",
+        nombre_sn: "WILSON GIRALDO",
         correo_electronico: "director.sistemas@commerk.com.co",
         correo_recepcion: "director.sistemas@commerk.com.co",
         telefono_movil: "3114120708",
