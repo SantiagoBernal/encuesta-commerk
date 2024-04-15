@@ -81,9 +81,9 @@ app.post("/enviar/correo", async (req, res) => {
         }];
 
         const info = await transporter.sendMail({
-          from: "Commerk sas <jefedesarrollo@commerk.com.co>",
+          from: "Commerk sas <asistente.comercialant@commerk.com.co>",
           to: correo_electronico,
-          subject: "ACTUALIZACIÓN DE DATOS COMMERK SAS",
+          subject: "ACTUALIZACIÓN DE DATOS - COMMERK SAS",
           html: htmlToSend,
           attachments: attachments
         });
