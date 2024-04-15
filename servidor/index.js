@@ -50,19 +50,11 @@ app.use('/auth', require('./Routers/auth/passport'));
 // ENVIA CORREO
 app.post("/enviar/correo", async (req, res) => {
   try {
-    // const { correos } = req.body;
-    // const { nombre_sn } = req.body;
-    // console.log("correos", correos);
-    // console.log("nombre_sn", nombre_sn);
+    const data = req.body; // Array de objetos
     console.log("req.body", req.body);
-    console.log("req.body.data", req.body.data);
 
     const source = fs.readFileSync("encuestati.html", "utf-8").toString();
     const template = handlebars.compile(source);
-    const replacements = {
-      firstname: nombre_sn
-    };
-    const htmlToSend = template(replacements);
 
     const batchSize = 1; // Tamaño del lote de correos electrónicos
     const intervalTime = 10 * 60 * 1000; // Intervalo de tiempo entre cada lote (10 minutos en milisegundos)
@@ -71,14 +63,22 @@ app.post("/enviar/correo", async (req, res) => {
     // Función para enviar un lote de correos electrónicos
     const sendEmailBatch = async () => {
       const start = batchIndex * batchSize;
-      const end = Math.min((batchIndex + 1) * batchSize, correos.length);
+      const end = Math.min((batchIndex + 1) * batchSize, data.length);
       
       for (let i = start; i < end; i++) {
-        const correo_electronico = correos[i];
+        const { correo_electronico, nombre_sn } = data[i];
+        console.log("Enviando correo a:", correo_electronico);
+        
+        const replacements = {
+          firstname: nombre_sn
+        };
+        const htmlToSend = template(replacements);
+        
         const attachments = [{
           filename: 'FORMATO_VINCULACIÓN_CLIENTES_V10.pdf',
           path: path.join(__dirname, 'FORMATO_VINCULACIÓN_CLIENTES_V10.pdf')
         }];
+
         const info = await transporter.sendMail({
           from: "Commerk sas <jefedesarrollo@commerk.com.co>",
           to: correo_electronico,
@@ -91,7 +91,7 @@ app.post("/enviar/correo", async (req, res) => {
 
       batchIndex++;
 
-      if (batchIndex * batchSize < correos.length) {
+      if (batchIndex * batchSize < data.length) {
         setTimeout(sendEmailBatch, intervalTime); // Envía el próximo lote después del intervalo de tiempo
       } else {
         console.log("Todos los correos electrónicos han sido enviados");
