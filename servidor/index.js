@@ -9,6 +9,7 @@ const jwt = require('jsonwebtoken');
 const OAuth2Strategy = require("passport-google-oauth2").Strategy;
 const fs = require("fs");
 const handlebars = require("handlebars");
+const path = require('path');
 
 const transporter = require("./config/mailer");
 // const email = require("./email/email");
@@ -57,7 +58,8 @@ app.post("/enviar/correo", async (req, res) => {
     const template = handlebars.compile(source);
 
     const batchSize = 1; // Tamaño del lote de correos electrónicos
-    const intervalTime = 10 * 60 * 1000; // Intervalo de tiempo entre cada lote (10 minutos en milisegundos)
+    // const intervalTime = 10 * 60 * 1000; // Intervalo de tiempo entre cada lote (10 minutos en milisegundos)
+    const intervalTime = 5 * 60 * 1000; // Intervalo de tiempo entre cada lote (5 minutos en milisegundos)
     let batchIndex = 0;
 
     // Función para enviar un lote de correos electrónicos
