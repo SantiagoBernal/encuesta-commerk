@@ -51,7 +51,7 @@ app.use('/auth', require('./Routers/auth/passport'));
 app.post("/enviar/correo", async (req, res) => {
   try {
     const { correos } = req.body; // Array de correos electrónicos
-    const { nombre_sn } = req.body.data;
+    const { nombre_sn } = req.body;
     console.log("correos", correos);
     console.log("nombre_sn", nombre_sn);
     console.log("req.body", req.body);
