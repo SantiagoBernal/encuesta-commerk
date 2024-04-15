@@ -94,7 +94,7 @@ import { openSnackbar } from 'store/reducers/snackbar';
 // } from 'iconsax-react';
 // import { ThemeMode } from 'config';
 // import dataClientesAntioquia from 'data/clientesAntioquia';
-// import dataClientesPrueba from 'data/clientesPrueba';
+import dataClientesPrueba from 'data/clientesPrueba';
 import { setEmail } from 'store/reducers/email';
 
 
@@ -309,9 +309,12 @@ function ReactTable({ columns, data, renderRowSubComponent,
 
   const handleSubmitEmail = async (e) => {
     e.preventDefault();
+    let clientes = [];
     if (selectedFlatRows.length > 0) {
       for (let i = 0; i < selectedFlatRows.length; i++) {
-        dispatch(setEmail(selectedFlatRows[i].original));
+        clientes.push(selectedFlatRows[i].original);
+        // dispatch(setEmail(selectedFlatRows[i].original));
+        dispatch(setEmail(clientes))
         console.log("selectedFlatRows[i].original", selectedFlatRows[i].original)
         dispatch(
           openSnackbar({
@@ -327,6 +330,7 @@ function ReactTable({ columns, data, renderRowSubComponent,
       }
       clearSelection(selectedFlatRows);
     }
+    console.log("clientes", clientes)
     // return <Loader />;
   };
   console.log("selectedFlatRows", selectedFlatRows)
@@ -461,7 +465,7 @@ const CustomerListPage = () => {
   const [add, setAdd] = useState(false);
 
   // console.log("dataClientesAntioquia2", dataClientesAntioquiaNueva2)
-  // console.log("dataClientesPrueba", dataClientesPrueba)
+   console.log("dataClientesPrueba", dataClientesPrueba)
 
   // const [listaclientesPrueba, setListaclientesPrueba] = useState([]);
   //const [listaclientesantioquia, setListaclientesantioquia] = useState([]);
@@ -500,26 +504,9 @@ const CustomerListPage = () => {
   }, [])
 
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     if (antioquia) {
-  //       dispatch(getClientesAntioquia());
-  //     } else if (valle) {
-  //       dispatch(getClientesValle());
-  //     } else if (todos) {
-  //       dispatch(getClientes());
-  //     }
-  //   }, 1000);
-  // }, [])
+  const data = dataClientesPrueba;
 
-
-  //console.log("clientesHeinsohn", clientesHeinsohn)
-  // console.log("encuesta", encuesta)
-  // console.log("clientes", clientes)
-
-  // const data = clientes;
-
-  const data = clientesEmail;
+  // const data = clientesEmail;
 
   const columns = useMemo(
     () => [

@@ -36,8 +36,9 @@ export default email.reducer;
 export function setEmail(data) {
     return async () => {
         try {
-            const response = await axios.post('https://encuesta-commerk.onrender.com/enviar/correo', { data });
-            //console.log("response".response)
+            console.log("data", data)
+            const response = await axios.post('https://encuesta-commerk.onrender.com/enviar/correo', data );
+            console.log("response".response)
             dispatch(email.actions.setEmailSuccess(response.data));
         } catch (error) {
             dispatch(email.actions.hasError(error));

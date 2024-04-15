@@ -31,8 +31,8 @@ const dataClientesPrueba = [
     },
     {
         codigo_sn: "CN8901074877",
-        nombre_sn: "SUPERTIENDAS OLIMPICA SA",
-        correo_electronico: "santiagobernalbetancourth@gmail.com",
+        nombre_sn: "WINNER ANDRES",
+        correo_electronico: "sistemasval1@commerk.co",
         correo_recepcion: "santiagobernalbetancourth@gmail.com",
         telefono_movil: "3114120708",
         telefono_1: "3114120708",
@@ -59,8 +59,8 @@ const dataClientesPrueba = [
     },
     {
         codigo_sn: "CN89010748711",
-        nombre_sn: "SUPERTIENDAS OLIMPICA SA",
-        correo_electronico: "anpihori@gmail.com",
+        nombre_sn: "RUBEN MANCILLA",
+        correo_electronico: "analista.sistemas@commerk.com.co",
         correo_recepcion: "anpihori@gmail.com",
         telefono_movil: "3114120708",
         telefono_1: "3114120708",
