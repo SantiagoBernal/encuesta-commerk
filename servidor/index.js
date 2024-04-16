@@ -48,6 +48,77 @@ app.use('/auth', require('./Routers/auth/passport'));
 
 
 // ENVIA CORREO
+// app.post("/enviar/correo", async (req, res) => {
+//   try {
+//     const data = req.body; // Array de objetos
+//     console.log("req.body", req.body);
+
+//     const source = fs.readFileSync("actualizacion.html", "utf-8").toString();
+//     const template = handlebars.compile(source);
+
+//     const batchSize = 10; // Tamaño del lote de correos electrónicos
+//     // const intervalTime = 10 * 60 * 1000; // Intervalo de tiempo entre cada lote (10 minutos en milisegundos)
+//     const intervalTime = 5 * 60 * 1000; // Intervalo de tiempo entre cada lote (5 minutos en milisegundos)
+//     let batchIndex = 0;
+
+//     // Función para enviar un lote de correos electrónicos
+//     const sendEmailBatch = async () => {
+//       const start = batchIndex * batchSize;
+//       const end = Math.min((batchIndex + 1) * batchSize, data.length);
+
+//       for (let i = start; i < end; i++) {
+//         const { id_cliente, correo_electronico, nombre_sn } = data[i];
+//         console.log("Enviando correo a:", correo_electronico);
+
+//         const replacements = {
+//           firstname: nombre_sn
+//         };
+//         const htmlToSend = template(replacements);
+
+//         const attachments = [{
+//           filename: 'FORMATO_VINCULACIÓN_CLIENTES_V10.pdf',
+//           path: path.join(__dirname, 'FORMATO_VINCULACIÓN_CLIENTES_V10.pdf')
+//         }];
+
+//         const info = await transporter.sendMail({
+//           from: "Commerk sas <asistente.comercialant@commerk.com.co>",
+//           to: correo_electronico,
+//           subject: "ACTUALIZACIÓN DE DATOS - COMMERK SAS",
+//           html: htmlToSend,
+//           attachments: attachments
+//         });
+//         console.log(`Correo enviado a ${correo_electronico}: ${info.messageId}`);
+
+//         // Actualizar el estado_email a true si el correo se envió correctamente
+//         if (info.messageId) {
+//           await pool.query(
+//             `UPDATE cliente_email
+//              SET estado_email = true
+//              WHERE id_cliente = $1`,
+//             [id_cliente]
+//           );
+//           console.log(`Estado de correo actualizado para cliente ${id_cliente}`);
+//         }
+//       }
+
+//       batchIndex++;
+
+//       if (batchIndex * batchSize < data.length) {
+//         setTimeout(sendEmailBatch, intervalTime); // Envía el próximo lote después del intervalo de tiempo
+//       } else {
+//         console.log("Todos los correos electrónicos han sido enviados");
+//         res.send("Todos los correos electrónicos han sido enviados");
+//       }
+//     };
+
+//     // Inicia el envío del primer lote de correos electrónicos
+//     sendEmailBatch();
+//   } catch (err) {
+//     console.error(err.message);
+//     res.status(500).send("Error al enviar correos electrónicos");
+//   }
+// });
+
 app.post("/enviar/correo", async (req, res) => {
   try {
     const data = req.body; // Array de objetos
@@ -65,39 +136,43 @@ app.post("/enviar/correo", async (req, res) => {
     const sendEmailBatch = async () => {
       const start = batchIndex * batchSize;
       const end = Math.min((batchIndex + 1) * batchSize, data.length);
-      
+
       for (let i = start; i < end; i++) {
         const { id_cliente, correo_electronico, nombre_sn } = data[i];
         console.log("Enviando correo a:", correo_electronico);
-        
+
         const replacements = {
           firstname: nombre_sn
         };
         const htmlToSend = template(replacements);
-        
+
         const attachments = [{
           filename: 'FORMATO_VINCULACIÓN_CLIENTES_V10.pdf',
           path: path.join(__dirname, 'FORMATO_VINCULACIÓN_CLIENTES_V10.pdf')
         }];
 
-        const info = await transporter.sendMail({
-          from: "Commerk sas <asistente.comercialant@commerk.com.co>",
-          to: correo_electronico,
-          subject: "ACTUALIZACIÓN DE DATOS - COMMERK SAS",
-          html: htmlToSend,
-          attachments: attachments
-        });
-        console.log(`Correo enviado a ${correo_electronico}: ${info.messageId}`);
+        try {
+          const info = await transporter.sendMail({
+            from: "Commerk sas <asistente.comercialant@commerk.com.co>",
+            to: correo_electronico,
+            subject: "ACTUALIZACIÓN DE DATOS - COMMERK SAS",
+            html: htmlToSend,
+            attachments: attachments
+          });
+          console.log(`Correo enviado a ${correo_electronico}: ${info.messageId}`);
 
-        // Actualizar el estado_email a true si el correo se envió correctamente
-        if (info.messageId) {
-          await pool.query(
-            `UPDATE cliente_email
-             SET estado_email = true
-             WHERE id_cliente = $1`,
-            [id_cliente]
-          );
-          console.log(`Estado de correo actualizado para cliente ${id_cliente}`);
+          // Actualizar el estado_email a true si el correo se envió correctamente
+          if (info.messageId) {
+            await pool.query(
+              `UPDATE cliente_email
+               SET estado_email = true
+               WHERE id_cliente = $1`,
+              [id_cliente]
+            );
+            console.log(`Estado de correo actualizado para cliente ${id_cliente}`);
+          }
+        } catch (error) {
+          console.error(`Error al enviar correo a ${correo_electronico}: ${error.message}`);
         }
       }
 
@@ -119,7 +194,6 @@ app.post("/enviar/correo", async (req, res) => {
   }
 });
 
-
 // app.post("/enviar/correo", async (req, res) => {
 //   try {
 //     const data = req.body; // Array de objetos
@@ -137,16 +211,16 @@ app.post("/enviar/correo", async (req, res) => {
 //     const sendEmailBatch = async () => {
 //       const start = batchIndex * batchSize;
 //       const end = Math.min((batchIndex + 1) * batchSize, data.length);
-      
+
 //       for (let i = start; i < end; i++) {
 //         const { correo_electronico, nombre_sn } = data[i];
 //         console.log("Enviando correo a:", correo_electronico);
-        
+
 //         const replacements = {
 //           firstname: nombre_sn
 //         };
 //         const htmlToSend = template(replacements);
-        
+
 //         const attachments = [{
 //           filename: 'FORMATO_VINCULACIÓN_CLIENTES_V10.pdf',
 //           path: path.join(__dirname, 'FORMATO_VINCULACIÓN_CLIENTES_V10.pdf')
