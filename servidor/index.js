@@ -56,7 +56,7 @@ app.post("/enviar/correo", async (req, res) => {
     const source = fs.readFileSync("actualizacion.html", "utf-8").toString();
     const template = handlebars.compile(source);
 
-    const batchSize = 1; // Tamaño del lote de correos electrónicos
+    const batchSize = 10; // Tamaño del lote de correos electrónicos
     // const intervalTime = 10 * 60 * 1000; // Intervalo de tiempo entre cada lote (10 minutos en milisegundos)
     const intervalTime = 5 * 60 * 1000; // Intervalo de tiempo entre cada lote (5 minutos en milisegundos)
     let batchIndex = 0;
