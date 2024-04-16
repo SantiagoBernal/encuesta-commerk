@@ -347,7 +347,7 @@ const CustomerListPage = () => {
       },
       {
         Header: 'Teléfono 1',
-        accessor: 'telefono_',
+        accessor: 'telefono_1',
         // Cell: ({ value }) => <PatternFormat displayType="text" format="+57 (###) ###-####" mask="_" defaultValue={value != "0" ? value : ""} />
       },
       {

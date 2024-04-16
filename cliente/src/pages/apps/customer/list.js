@@ -84,6 +84,7 @@ import useAuth from 'hooks/useAuth';
 // import  clientesValle from 'data/clientesValle';
 // import dataClientesAntioquiaNueva from 'data/clientesAntioquiaNueva';
 // import dataClientesAntioquiaNueva2 from 'data/clientesAntioquiaNueva2';
+import dataClientesRevisionAntioquia from 'data/clientesRevisionAntioquia';
 
 import {
   // Add,
@@ -242,29 +243,30 @@ function ReactTable({ columns, data, renderRowSubComponent,
       if (dataUsers.length > 0) {
 
         for (let i = 0; i < dataUsers.length; i++) {
-          if (dataUsers[i].telefono_1) {
-            dataUsers[i].telefono_1 = (dataUsers[i].telefono_1).toString();
-          }
-          if (dataUsers[i].telefono_2) {
-            dataUsers[i].telefono_2 = (dataUsers[i].telefono_2).toString();
-          }
 
-          if (dataUsers[i].telefono_movil) {
-            dataUsers[i].telefono_movil = (dataUsers[i].telefono_movil).toString();
-          }
+          // if (dataUsers[i].telefono_1) {
+          //   dataUsers[i].telefono_1 = (dataUsers[i].telefono_1).toString();
+          // }
+          // if (dataUsers[i].telefono_2) {
+          //   dataUsers[i].telefono_2 = (dataUsers[i].telefono_2).toString();
+          // }
 
-          if (!dataUsers[i].correo_recepcion) {
-            dataUsers[i].telefono_1 = "0";
-          }
-          if (!dataUsers[i].correo_electronico) {
-            dataUsers[i].telefono_1 = "0";
-          }
-          if (!dataUsers[i].telefono_1) {
-            dataUsers[i].telefono_1 = "0";
-          }
-          if (!dataUsers[i].telefono_2) {
-            dataUsers[i].telefono_2 = "0";
-          }
+          // if (dataUsers[i].telefono_movil) {
+          //   dataUsers[i].telefono_movil = (dataUsers[i].telefono_movil).toString();
+          // }
+
+          // if (!dataUsers[i].correo_recepcion) {
+          //   dataUsers[i].telefono_1 = "0";
+          // }
+          // if (!dataUsers[i].correo_electronico) {
+          //   dataUsers[i].telefono_1 = "0";
+          // }
+          // if (!dataUsers[i].telefono_1) {
+          //   dataUsers[i].telefono_1 = "0";
+          // }
+          // if (!dataUsers[i].telefono_2) {
+          //   dataUsers[i].telefono_2 = "0";
+          // }
           const estado_encuesta = false;
           dataUsers[i].estado_encuesta = estado_encuesta;
           users.push(dataUsers[i])
@@ -459,6 +461,7 @@ const CustomerListPage = () => {
 
   // console.log("dataClientesAntioquia2", dataClientesAntioquiaNueva2)
   // console.log("dataClientesPrueba", dataClientesPrueba)
+  console.log("dataClientesRevisionAntioquia", dataClientesRevisionAntioquia)
 
   // const [listaclientesPrueba, setListaclientesPrueba] = useState([]);
   //const [listaclientesantioquia, setListaclientesantioquia] = useState([]);
@@ -518,8 +521,10 @@ const CustomerListPage = () => {
   //console.log("clientesHeinsohn", clientesHeinsohn)
   // console.log("encuesta", encuesta)
   console.log("clientes", clientes)
+  console.log("clientesAntioquia", clientesAntioquia)
+  console.log("clientesValle", clientesValle)
 
-  // const data = clientes;
+  //const data = dataClientesRevisionAntioquia;
 
   const data = antioquia ? clientesAntioquia : valle ? clientesValle : clientes;
 
