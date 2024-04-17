@@ -43,7 +43,7 @@ import { dispatch } from 'store';
 import { openSnackbar } from 'store/reducers/snackbar';
 import { ThemeMode } from 'config';
 
-// import { createdSinRespuesta } from 'store/reducers/encuesta';
+import { createdSinRespuesta } from 'store/reducers/encuesta';
 import { createdEncuesta } from 'store/reducers/encuesta';
 import { getClientes } from 'store/reducers/cliente';
 
@@ -106,7 +106,7 @@ const pregunta4 = [
 
 // ==============================|| CUSTOMER - ADD / EDIT ||============================== //
 
-const AddCustomer = ({ customer, encuesta, onCancel, onGuardar, onSinRespuesta }) => {
+const AddCustomer = ({ customer, encuesta, onCancel, onGuardar }) => {
   const theme = useTheme();
   const isCreating = !customer;
 
@@ -114,7 +114,7 @@ const AddCustomer = ({ customer, encuesta, onCancel, onGuardar, onSinRespuesta }
   // console.log("encuesta", encuesta)
   // console.log("onCancel", onCancel)
   // console.log("onGuardar", onGuardar)
-  console.log("onSinRespuesta", onSinRespuesta)
+  // console.log("onSinRespuesta", onSinRespuesta)
 
   const [selectedImage, setSelectedImage] = useState(undefined);
   // const [avatar, setAvatar] = useState(avatarImage(`./avatar-${isCreating && !customer?.avatar ? 1 : customer.avatar}.png`));
@@ -164,7 +164,7 @@ const AddCustomer = ({ customer, encuesta, onCancel, onGuardar, onSinRespuesta }
         };
         //console.log("newCustomer",newCustomer)
         if (newCustomer) {
-
+          console.log("newCustomer", newCustomer)
           // setEncuestado(newCustomer)
           // handleSubmitEncuesta(encuestado)
           dispatch(createdEncuesta(newCustomer));
@@ -184,7 +184,7 @@ const AddCustomer = ({ customer, encuesta, onCancel, onGuardar, onSinRespuesta }
             window.location.reload();
           }, 1000);
         }
-        
+
         setSubmitting(false);
         onCancel();
       } catch (error) {
@@ -192,6 +192,12 @@ const AddCustomer = ({ customer, encuesta, onCancel, onGuardar, onSinRespuesta }
       }
     }
   });
+
+  const handleSinRespuesta = (newCustomer) => {
+    dispatch(createdSinRespuesta(newCustomer));
+    dispatch(getClientes());
+    onCancel(); // Cierra la ventana
+  };
 
   //console.log("encuestado", encuestado)
   //console.log("customer",customer)
@@ -424,27 +430,6 @@ const AddCustomer = ({ customer, encuesta, onCancel, onGuardar, onSinRespuesta }
                       </Stack>
                     </Grid>
 
-                    {/* <Grid item xs={12}>
-                      <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
-                        <Stack spacing={0.5}>
-                          <Typography variant="subtitle1">Make Contact Info Public</Typography>
-                          <Typography variant="caption" color="textSecondary">
-                            Means that anyone viewing your profile will be able to see your contacts details
-                          </Typography>
-                        </Stack>
-                        <FormControlLabel control={<Switch defaultChecked sx={{ mt: 0 }} />} label="" labelPlacement="start" />
-                      </Stack>
-                      <Divider sx={{ my: 2 }} />
-                      <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
-                        <Stack spacing={0.5}>
-                          <Typography variant="subtitle1">Available to hire</Typography>
-                          <Typography variant="caption" color="textSecondary">
-                            Toggling this will let your teammates know that you are available for acquiring new projects
-                          </Typography>
-                        </Stack>
-                        <FormControlLabel control={<Switch sx={{ mt: 0 }} />} label="" labelPlacement="start" />
-                      </Stack>
-                    </Grid> */}
 
                   </Grid>
                 </Grid>
@@ -479,9 +464,9 @@ const AddCustomer = ({ customer, encuesta, onCancel, onGuardar, onSinRespuesta }
                     </Button>
 
                     <Button
-                      onClick={onSinRespuesta}
-                      type="submit" variant="contained" disabled={isSubmitting}>
-                      {customer ? 'Sin respuesta' : 'Add'}
+                     onClick={() => handleSinRespuesta(customer)}
+                      type="submit" variant="contained">
+                      Sin respuesta
                     </Button>
 
                   </Stack>
@@ -500,8 +485,7 @@ const AddCustomer = ({ customer, encuesta, onCancel, onGuardar, onSinRespuesta }
 AddCustomer.propTypes = {
   customer: PropTypes.any,
   onCancel: PropTypes.func,
-  onGuardar: PropTypes.func,
-  onSinRespuesta: PropTypes.func
+  onGuardar: PropTypes.func
 };
 
 export default AddCustomer;

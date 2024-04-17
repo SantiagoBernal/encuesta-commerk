@@ -315,7 +315,16 @@ app.get("/cliente/lista", async (req, res) => {
 //Lista clientes Antioquia 
 app.get("/cliente/lista/antioquia", async (req, res) => {
   try {
-    const allTodos = await pool.query("SELECT * FROM cliente WHERE codigo_proyecto = 2");
+    const allTodos = await pool.query("SELECT * FROM cliente WHERE codigo_proyecto = 2 AND estado_respuesta = 'pendiente'");
+    res.json(allTodos.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+app.get("/cliente/lista/antioquiaSinRespuesta", async (req, res) => {
+  try {
+    const allTodos = await pool.query("SELECT * FROM cliente WHERE codigo_proyecto = 2 AND estado_respuesta = 'sin respuesta'");
     res.json(allTodos.rows);
   } catch (err) {
     console.error(err.message);
