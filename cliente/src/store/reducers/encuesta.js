@@ -36,6 +36,11 @@ const encuesta = createSlice({
         },
 
          // ADD COLUMN
+         addSinRespuestaSuccess(state, action) {
+            state.encuestas = action.payload;
+        },
+
+         // ADD COLUMN
          getResultadosSuccess(state, action) {
             state.resultados = action.payload;
         },
@@ -108,6 +113,17 @@ export function createdEncuesta(data) {
         try {
             const response = await axios.post('https://encuesta-commerk.onrender.com/encuesta', { data });
             dispatch(encuesta.actions.addEncuestaSuccess(response.data));
+        } catch (error) {
+            dispatch(encuesta.actions.hasError(error));
+        }
+    };
+}
+
+export function createdSinRespuesta(data) {
+    return async () => {
+        try {
+            const response = await axios.post('https://encuesta-commerk.onrender.com/sinRespuesta', { data });
+            dispatch(encuesta.actions.addSinRespuestaSuccess(response.data));
         } catch (error) {
             dispatch(encuesta.actions.hasError(error));
         }

@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS cliente (
   telefono_1 VARCHAR(255),
   telefono_2 VARCHAR(255),
   estado_encuesta BOOLEAN NOT NULL,
+  estado_respuesta VARCHAR(255) DEFAULT 'pendiente',
   nombre_grupo VARCHAR(255) NOT NULL,
   codigo_proyecto INT NOT NULL
 );

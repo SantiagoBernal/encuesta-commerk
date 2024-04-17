@@ -43,6 +43,7 @@ import { dispatch } from 'store';
 import { openSnackbar } from 'store/reducers/snackbar';
 import { ThemeMode } from 'config';
 
+// import { createdSinRespuesta } from 'store/reducers/encuesta';
 import { createdEncuesta } from 'store/reducers/encuesta';
 import { getClientes } from 'store/reducers/cliente';
 
@@ -105,14 +106,15 @@ const pregunta4 = [
 
 // ==============================|| CUSTOMER - ADD / EDIT ||============================== //
 
-const AddCustomer = ({ customer, encuesta, onCancel, onGuardar }) => {
+const AddCustomer = ({ customer, encuesta, onCancel, onGuardar, onSinRespuesta }) => {
   const theme = useTheme();
   const isCreating = !customer;
 
-
+  console.log("customer", customer)
   // console.log("encuesta", encuesta)
   // console.log("onCancel", onCancel)
   // console.log("onGuardar", onGuardar)
+  console.log("onSinRespuesta", onSinRespuesta)
 
   const [selectedImage, setSelectedImage] = useState(undefined);
   // const [avatar, setAvatar] = useState(avatarImage(`./avatar-${isCreating && !customer?.avatar ? 1 : customer.avatar}.png`));
@@ -207,7 +209,7 @@ const AddCustomer = ({ customer, encuesta, onCancel, onGuardar }) => {
       <FormikProvider value={formik}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-            <DialogTitle>{customer ? `${customer.nombre_sn} - ${customer.codigo_sn} - ${customer.telefono_movil}  ` : 'New Customer'}</DialogTitle>
+            <DialogTitle>{customer ? `${customer.nombre_sn} - ${customer.codigo_sn}  ` : 'New Customer'}</DialogTitle>
             <Divider />
             <DialogContent sx={{ p: 2.5 }}>
               <Grid container spacing={3}>
@@ -465,14 +467,23 @@ const AddCustomer = ({ customer, encuesta, onCancel, onGuardar }) => {
 
                 <Grid item>
                   <Stack direction="row" spacing={5} alignItems="center">
+
                     <Button color="error" onClick={onCancel}>
                       Cancelar encuesta
                     </Button>
+
                     <Button
                       onClick={onGuardar}
                       type="submit" variant="contained" disabled={isSubmitting}>
                       {customer ? 'Guardar Encuesta' : 'Add'}
                     </Button>
+
+                    <Button
+                      onClick={onSinRespuesta}
+                      type="submit" variant="contained" disabled={isSubmitting}>
+                      {customer ? 'Sin respuesta' : 'Add'}
+                    </Button>
+
                   </Stack>
                 </Grid>
 
@@ -489,7 +500,8 @@ const AddCustomer = ({ customer, encuesta, onCancel, onGuardar }) => {
 AddCustomer.propTypes = {
   customer: PropTypes.any,
   onCancel: PropTypes.func,
-  onGuardar: PropTypes.func
+  onGuardar: PropTypes.func,
+  onSinRespuesta: PropTypes.func
 };
 
 export default AddCustomer;

@@ -194,92 +194,6 @@ app.post("/enviar/correo", async (req, res) => {
   }
 });
 
-// app.post("/enviar/correo", async (req, res) => {
-//   try {
-//     const data = req.body; // Array de objetos
-//     console.log("req.body", req.body);
-
-//     const source = fs.readFileSync("actualizacion.html", "utf-8").toString();
-//     const template = handlebars.compile(source);
-
-//     const batchSize = 1; // Tamaño del lote de correos electrónicos
-//     // const intervalTime = 10 * 60 * 1000; // Intervalo de tiempo entre cada lote (10 minutos en milisegundos)
-//     const intervalTime = 5 * 60 * 1000; // Intervalo de tiempo entre cada lote (5 minutos en milisegundos)
-//     let batchIndex = 0;
-
-//     // Función para enviar un lote de correos electrónicos
-//     const sendEmailBatch = async () => {
-//       const start = batchIndex * batchSize;
-//       const end = Math.min((batchIndex + 1) * batchSize, data.length);
-
-//       for (let i = start; i < end; i++) {
-//         const { correo_electronico, nombre_sn } = data[i];
-//         console.log("Enviando correo a:", correo_electronico);
-
-//         const replacements = {
-//           firstname: nombre_sn
-//         };
-//         const htmlToSend = template(replacements);
-
-//         const attachments = [{
-//           filename: 'FORMATO_VINCULACIÓN_CLIENTES_V10.pdf',
-//           path: path.join(__dirname, 'FORMATO_VINCULACIÓN_CLIENTES_V10.pdf')
-//         }];
-
-//         const info = await transporter.sendMail({
-//           from: "Commerk sas <jefedesarrollo@commerk.com.co>",
-//           to: correo_electronico,
-//           subject: "ACTUALIZACIÓN DE DATOS COMMERK SAS",
-//           html: htmlToSend,
-//           attachments: attachments
-//         });
-//         console.log(`Correo enviado a ${correo_electronico}: ${info.messageId}`);
-//       }
-
-//       batchIndex++;
-
-//       if (batchIndex * batchSize < data.length) {
-//         setTimeout(sendEmailBatch, intervalTime); // Envía el próximo lote después del intervalo de tiempo
-//       } else {
-//         console.log("Todos los correos electrónicos han sido enviados");
-//         res.send("Todos los correos electrónicos han sido enviados");
-//       }
-//     };
-
-//     // Inicia el envío del primer lote de correos electrónicos
-//     sendEmailBatch();
-//   } catch (err) {
-//     console.error(err.message);
-//     res.status(500).send("Error al enviar correos electrónicos");
-//   }
-// });
-
-// app.post("/enviar/correo", async (req, res) => {
-//   try {
-//     const { correo_electronico } = req.body.data;
-//     const { nombre_sn } = req.body.data;
-//     console.log("correo_electronico", correo_electronico);
-//     console.log("req.body.data", req.body.data);
-//     const source = fs.readFileSync("encuestati.html", "utf-8").toString();
-//     const template = handlebars.compile(source);
-//     const replacements = {
-//       firstname: nombre_sn
-//     };
-//     const htmlToSend = template(replacements);
-//     const info = await transporter.sendMail({
-//       from: "Commerk sas <recepcion.cali@commerk.com.co>",
-//       to: `${correo_electronico}`,
-//       subject: "Encuesta de satisfacción Commerk SAS",
-//       html: htmlToSend
-//     });
-//     console.log("Message sent: %s", info.messageId);
-//     console.log("Message info: %s", info);
-//     res.send("Correo enviado");
-//   } catch (err) {
-//     console.error(err.message);
-//   }
-// });
-
 
 
 //Agregar cliente
@@ -499,7 +413,23 @@ app.put("/cliente/editar", async (req, res) => {
   }
 });
 
-
+// Actualizar estado_respuesta a 'sin respuesta'
+app.post("/sinRespuesta", async (req, res) => {
+  try {
+    const { id_cliente } = req.body;
+    console.log("id_cliente", id_cliente);
+    const updateEstadoQuery = `
+      UPDATE cliente
+      SET estado_respuesta = 'sin respuesta'
+      WHERE id_cliente = ${id_cliente};
+    `;
+    const updatedCliente = await pool.query(updateEstadoQuery);
+    res.json(updatedCliente.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Some error has occured failed');
+  }
+});
 
 //Agregar encuesta
 app.post("/encuesta", async (req, res) => {
@@ -532,13 +462,14 @@ app.post("/encuesta", async (req, res) => {
       try {
         const { id_cliente } = req.body.data;
         console.log(" req.body update", req.body.data);
-        const query = `
+        const updateEstadoQuery = `
           UPDATE cliente
-          SET estado_encuesta = true
+          SET estado_encuesta = true,
+              estado_respuesta = 'con respuesta'
           WHERE id_cliente = ${id_cliente};
         `;
-        const allEstado = await pool.query(query);
-        res.json(allEstado.rows);
+        const updatedCliente = await pool.query(updateEstadoQuery);
+        res.json(updatedCliente.rows);
       } catch (err) {
         console.error(err);
         res.status(500).send('Some error has occured failed');
