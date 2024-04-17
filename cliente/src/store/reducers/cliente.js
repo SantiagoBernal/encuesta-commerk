@@ -53,6 +53,10 @@ const cliente = createSlice({
       state.clientesAntioquia = action.payload;
     },
 
+    getClientesAntioquiaSinRespuestaSuccess(state, action) {
+      state.clientesAntioquia = action.payload;
+    },
+
      // GET CLIENTES valle
      getClientesValleSuccess(state, action) {
       state.clientesValle = action.payload;
@@ -190,6 +194,18 @@ export function getClientesAntioquia() {
       const response = await axios.get(`https://encuesta-commerk.onrender.com/cliente/lista/antioquia`);
       //console.log("response".response)
       dispatch(cliente.actions.getClientesAntioquiaSuccess(response.data));
+    } catch (error) {
+      dispatch(cliente.actions.hasError(error));
+    }
+  };
+}
+
+export function getClientesAntioquiaSinRespuesta() {
+  return async () => {
+    try {
+      const response = await axios.get(`https://encuesta-commerk.onrender.com/cliente/lista/antioquiaSinRespuesta`);
+      //console.log("response".response)
+      dispatch(cliente.actions.getClientesAntioquiaSinRespuestaSuccess(response.data));
     } catch (error) {
       dispatch(cliente.actions.hasError(error));
     }

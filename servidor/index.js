@@ -425,7 +425,7 @@ app.put("/cliente/editar", async (req, res) => {
 // Actualizar estado_respuesta a 'sin respuesta'
 app.post("/sinRespuesta", async (req, res) => {
   try {
-    const { id_cliente } = req.body;
+    const { id_cliente } = req.body.data;
     console.log("id_cliente", id_cliente);
     const updateEstadoQuery = `
       UPDATE cliente

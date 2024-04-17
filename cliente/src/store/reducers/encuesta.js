@@ -123,8 +123,8 @@ export function createdSinRespuesta(data) {
     return async () => {
         try {
             console.log("data", data)
-            // const response = await axios.post('https://encuesta-commerk.onrender.com/sinRespuesta', { data });
-            // dispatch(encuesta.actions.addSinRespuestaSuccess(response.data));
+            const response = await axios.post('https://encuesta-commerk.onrender.com/sinRespuesta', { data });
+            dispatch(encuesta.actions.addSinRespuestaSuccess(response.data));
         } catch (error) {
             dispatch(encuesta.actions.hasError(error));
         }
