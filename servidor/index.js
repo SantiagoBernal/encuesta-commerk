@@ -324,7 +324,7 @@ app.get("/cliente/lista/antioquia", async (req, res) => {
 
 app.get("/cliente/lista/antioquiaSinRespuesta", async (req, res) => {
   try {
-    const allTodos = await pool.query("SELECT * FROM cliente WHERE codigo_proyecto = 2 AND estado_respuesta = 'sin respuesta'");
+    const allTodos = await pool.query("SELECT * FROM cliente WHERE codigo_proyecto = 2 AND (estado_respuesta = 'sin respuesta' OR estado_respuesta = 'con respuesta')");
     res.json(allTodos.rows);
   } catch (err) {
     console.error(err.message);

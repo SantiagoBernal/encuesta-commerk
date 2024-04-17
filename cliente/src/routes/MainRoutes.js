@@ -26,6 +26,7 @@ const AppKanbanBoard = Loadable(lazy(() => import('sections/apps/kanban/Board'))
 const AppCustomerList = Loadable(lazy(() => import('pages/apps/customer/list')));
 const AppCustomerValle = Loadable(lazy(() => import('pages/apps/customerValle/listValle')));
 const AppCustomerAntioquia = Loadable(lazy(() => import('pages/apps/customerAntioquia/listAntioquia')));
+const AppCustomerSinRespuestaAntioquia = Loadable(lazy(() => import('pages/apps/customerAntioquia/sinRespuestaAntioquia')));
 const AppCustomerResult = Loadable(lazy(() => import('pages/apps/customerResult/listResult')));
 const AppCustomerEmail = Loadable(lazy(() => import('pages/apps/customerEmail/listEmail')));
 const AppCustomerSendEmail = Loadable(lazy(() => import('pages/apps/customerEmail/listEmailSend')));
@@ -209,6 +210,10 @@ const MainRoutes = {
                 {
                   path: 'customer-list-antioquia',
                   element: <AppCustomerAntioquia />
+                },
+                {
+                  path: 'customer-list-antioquia-sin-respuesta',
+                  element: <AppCustomerSinRespuestaAntioquia />
                 },
                 {
                   path: 'customer-list-valle',

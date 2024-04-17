@@ -196,7 +196,21 @@ const AddCustomer = ({ customer, encuesta, onCancel, onGuardar }) => {
   const handleSinRespuesta = (newCustomer) => {
     dispatch(createdSinRespuesta(newCustomer));
     dispatch(getClientes());
-    onCancel(); // Cierra la ventana
+    onCancel(); 
+    dispatch(
+      openSnackbar({
+        open: true,
+        message: 'Cliente actualizado!.',
+        variant: 'alert',
+        alert: {
+          color: 'success'
+        },
+        close: false
+      })
+    );
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);// Cierra la ventana
   };
 
   //console.log("encuestado", encuestado)

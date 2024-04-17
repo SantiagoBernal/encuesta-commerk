@@ -64,6 +64,12 @@ const applications = {
           type: 'item',
           url: '/apps/customer/customer-list-antioquia',
         },
+        antioquia && {
+          id: 'customer-list-antioquia-sin-respuesta',
+          title: <FormattedMessage id="sin-Respuesta" />,
+          type: 'item',
+          url: '/apps/customer/customer-list-antioquia-sin-respuesta',
+        },
         valle && {
           id: 'customer-list-valle',
           title: <FormattedMessage id="Valle" />,
