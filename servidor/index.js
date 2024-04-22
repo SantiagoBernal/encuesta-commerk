@@ -312,6 +312,15 @@ app.get("/cliente/lista", async (req, res) => {
   }
 });
 
+app.get("/cliente/lista/total_antioquia", async (req, res) => {
+  try {
+    const allTodos = await pool.query("SELECT * FROM cliente WHERE codigo_proyecto = 2 ");
+    res.json(allTodos.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
 //Lista clientes Antioquia 
 app.get("/cliente/lista/antioquia", async (req, res) => {
   try {

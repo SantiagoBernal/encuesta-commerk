@@ -39,6 +39,7 @@ const encuesta = createSlice({
          addSinRespuestaSuccess(state, action) {
             state.encuestas = action.payload;
         },
+        
 
          // ADD COLUMN
          getResultadosSuccess(state, action) {
@@ -50,7 +51,7 @@ const encuesta = createSlice({
             state.resultadosValle = action.payload;
         },
 
-        getResultadosAntioquiaSuccess(state, action) {
+        getResultadosAntiquiaSuccess(state, action) {
             state.resultadosAntioquia = action.payload;
         },
 

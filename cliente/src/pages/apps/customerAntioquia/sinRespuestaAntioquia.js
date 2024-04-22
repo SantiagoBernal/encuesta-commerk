@@ -371,9 +371,9 @@ const CustomerListPage = () => {
           switch (value) {
             case "sin respuesta":
               return <Chip color="error" label="Sin respuesta" size="small" variant="light" />;
-            case true:
+            case "con respuesta":
             default:
-              return <Chip color="info" label="Con encuesta" size="small" variant="light" />;
+              return <Chip color="info" label="Con respuesta" size="small" variant="light" />;
           }
         }
       },

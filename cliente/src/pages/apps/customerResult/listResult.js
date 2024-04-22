@@ -216,10 +216,15 @@ const CustomerListPage = () => {
   const resultados = useSelector((state) => state.encuesta.resultados);
   const resultadosAntioquia = useSelector((state) => state.encuesta.resultadosAntioquia);
   const resultadosValle = useSelector((state) => state.encuesta.resultadosValle);
+  const sinRespuesta = useSelector((state) => state.encuesta.sinRespuesta);
+
 
   // console.log("resultados", resultados)
-  // console.log("resultadosAntioquia", resultadosAntioquia)
+  console.log("resultadosAntioquia", resultadosAntioquia)
   // console.log("resultadosValle", resultadosValle)
+
+
+  console.log("sinRespuesta", sinRespuesta)
 
   const { user } = useAuth();
 
