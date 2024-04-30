@@ -518,13 +518,13 @@ app.get("/encuesta/resultados", async (req, res) => {
     cliente.codigo_sn,
     cliente.nombre_grupo,
     cliente.codigo_proyecto,
+    encuesta.fecha_creacion,
     encuesta.pregunta_1,
     encuesta.pregunta_2,
     encuesta.pregunta_3,
     encuesta.pregunta_4, 
     encuesta.encuestador,
-    encuesta.comentario,
-    encuesta.fecha_creacion
+    encuesta.comentario
     FROM cliente
     JOIN encuesta ON cliente.id_cliente = encuesta.id_cliente`);
     res.json(allTodos.rows);

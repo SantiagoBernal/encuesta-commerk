@@ -72,7 +72,7 @@ HeaderSort.propTypes = {
 
 export const TablePagination = ({ gotoPage, rows, setPageSize, pageSize, pageIndex, initialPageSize }) => {
   const [open, setOpen] = useState(false);
-  let options = [5, 10, 25, 50, 100];
+  let options = [5, 10, 25, 50, 100, 200, 300, 400];
 
   if (initialPageSize) {
     options = [...options, initialPageSize]
@@ -488,7 +488,7 @@ SortingSelect.propTypes = {
 
 export const CSVExport = ({ data, filename, headers }) => {
   return (
-    <CSVLink data={data} filename={filename} headers={headers}>
+    <CSVLink data={data} filename={filename} headers={headers}  separator={";"}>
       <Tooltip title="CSV Export">
         <DocumentDownload size={28} style={{ color: 'gray', marginTop: 4 }} />
       </Tooltip>

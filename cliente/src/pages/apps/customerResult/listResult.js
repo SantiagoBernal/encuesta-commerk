@@ -13,7 +13,7 @@ import {
   TableHead,
   TableRow,
   // Tooltip,
-  Typography,
+  // Typography,
   useMediaQuery
 } from '@mui/material';
 
@@ -91,13 +91,13 @@ function ReactTable({ columns, data, renderRowSubComponent,
           'codigo_sn',
           'nombre_sn',
           'codigo_sn',
-          'correo_electronico',
-          'correo_recepcion',
-          'telefono_movil',
-          'telefono_1',
-          'telefono_2',
           'nombre_grupo',
-          'codigo_proyecto',
+          'pregunta_1',
+          'pregunta_2',
+          'pregunta_3',
+          'pregunta_4',
+          'encuestador',
+          'fecha_creacion'
         ], sortBy: [sortBy]
       }
     },
@@ -113,17 +113,19 @@ function ReactTable({ columns, data, renderRowSubComponent,
 
   useEffect(() => {
     if (matchDownSM) {
-      (['id_cliente',
+      ([
+        'id_cliente',
         'codigo_sn',
         'nombre_sn',
         'codigo_sn',
-        'correo_electronico',
-        'correo_recepcion',
-        'telefono_movil',
-        'telefono_1',
-        'telefono_2',
         'nombre_grupo',
-        'codigo_proyecto',]);
+        'pregunta_1',
+        'pregunta_2',
+        'pregunta_3',
+        'pregunta_4',
+        'encuestador',
+        'fecha_creacion'
+      ]);
     } else {
       setHiddenColumns(['avatar', 'email']);
     }
@@ -146,7 +148,7 @@ function ReactTable({ columns, data, renderRowSubComponent,
           <GlobalFilter preGlobalFilteredRows={preGlobalFilteredRows} globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
           <Stack direction={matchDownSM ? 'column' : 'row'} alignItems="center" spacing={2}>
             <SortingSelect sortBy={sortBy.id_cliente} setSortBy={setSortBy} allColumns={allColumns} />
-            <CSVExport data={selectedFlatRows.length > 0 ? selectedFlatRows.map((d) => d.original) : data} filename={'resultados.csv'} />
+            <CSVExport data={selectedFlatRows.length > 0 ? selectedFlatRows.map((d) => d.original) : data} filename={'customer-list.csv'} />
           </Stack>
         </Stack>
         <Table {...getTableProps()}>
@@ -233,7 +235,8 @@ const CustomerListPage = () => {
   let antioquia = user && user.useremail === 'encuesta.antioquia@commerk.com.co';
   let valle = user && user.useremail === 'encuesta.valle@commerk.com.co';
   let todos = user && user.useremail === 'encuesta@commerk.com.co';
-
+  console.log("antioquia", antioquia)
+  console.log("valle", valle)
 
 
 
@@ -248,11 +251,20 @@ const CustomerListPage = () => {
     if (customer && !add)
       setCustomer(null);
   };
+  console.log("resultadosAntioquia", resultadosValle)
+  console.log("todos", todos)
+  console.log("resultados", resultados)
 
-  const data = antioquia ? resultadosAntioquia : valle ? resultadosValle : todos ? resultados : [];
+  // const data = antioquia ? resultadosAntioquia : valle ? resultadosValle : todos ? resultados : [];
+  const data =resultados;
 
   const columns = useMemo(
     () => [
+      {
+        Header: 'Fecha',
+        accessor: 'fecha_creacion',
+        className: 'cell-center'
+      },
       {
         Header: 'Id Cliente',
         accessor: 'id_cliente',
@@ -266,16 +278,7 @@ const CustomerListPage = () => {
       {
         Header: 'Cliente',
         accessor: 'nombre_sn',
-        Cell: ({ row }) => {
-          const { values } = row;
-          return (
-            <Stack direction="row" spacing={1.5} alignItems="center">
-              <Stack spacing={0}>
-                <Typography variant="subtitle1">{values.nombre_sn}</Typography>
-              </Stack>
-            </Stack>
-          );
-        }
+        className: 'cell-center'
       },
       {
         Header: 'Grupo',
@@ -311,12 +314,8 @@ const CustomerListPage = () => {
         Header: 'Encuestador',
         accessor: 'encuestador',
         className: 'cell-center'
-      },
-      {
-        Header: 'Fecha',
-        accessor: 'fecha_creacion',
-        className: 'cell-center'
       }
+     
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [theme]

@@ -19,9 +19,10 @@ import { getClientesFalso } from 'store/reducers/cliente';
 import { getClientes } from 'store/reducers/cliente';
 
 
-import { getClientesAntioquia } from 'store/reducers/cliente';
+// import { getClientesAntioquia } from 'store/reducers/cliente';
 import { getClientesAntioquiaVerdadero } from 'store/reducers/cliente';
 import { getClientesAntioquiaFalso } from 'store/reducers/cliente';
+import { getClientesAntioquiaSinRespuesta } from 'store/reducers/cliente';
 
 
 import { getClientesValle } from 'store/reducers/cliente';
@@ -76,9 +77,10 @@ const DashboardDefault = () => {
     dispatch(getClientesFalso());
     dispatch(getClientes());
 
-    dispatch(getClientesAntioquia());
+    // dispatch(getClientesAntioquia());
     dispatch(getClientesAntioquiaFalso());
     dispatch(getClientesAntioquiaVerdadero());
+    dispatch(getClientesAntioquiaSinRespuesta());
 
     dispatch(getClientesValle());
     dispatch(getClientesValleFalso());
@@ -144,7 +146,7 @@ const DashboardDefault = () => {
       {/* row 1 */}
       <Grid item xs={4} >
         <EcommerceDataCard
-          title="Total Encuestas"
+          title="Clientes Procesados"
           count={todos ? (clientes.length).toString() : antioquia ? (clientesAntioquia.length).toString() : valle ? (clientesValle.length).toString() : ""}
           // count={ (clientes.length).toString()}
           iconPrimary={<Wallet3 />}
@@ -179,7 +181,7 @@ const DashboardDefault = () => {
 
       <Grid item xs={4} >
         <EcommerceDataCard
-          title="Encuestas por hacer"
+          title="Clientes sin respuesta"
           // count={ "ya va"}
           count={todos ? (clientesF.length).toString() : antioquia ? (clientesAntioquiaFalso.length).toString() : valle ? (clientesValleFalso.length).toString() : ""}
           color="success"

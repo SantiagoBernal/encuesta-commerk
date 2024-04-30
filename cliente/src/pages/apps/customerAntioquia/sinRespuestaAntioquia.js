@@ -52,7 +52,7 @@ import ScrollX from 'components/ScrollX';
 import IconButton from 'components/@extended/IconButton';
 import { PopupTransition } from 'components/@extended/Transitions';
 import {
-  // CSVExport,
+  CSVExport,
   HeaderSort,
   IndeterminateCheckbox,
   SortingSelect,
@@ -115,7 +115,7 @@ function ReactTable({ columns, data, renderRowSubComponent,
     preGlobalFilteredRows,
     setGlobalFilter,
     setSortBy,
-    // selectedFlatRows
+    selectedFlatRows
   } = useTable(
     {
       columns,
@@ -157,47 +157,8 @@ function ReactTable({ columns, data, renderRowSubComponent,
         >
           <GlobalFilter preGlobalFilteredRows={preGlobalFilteredRows} globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
           <Stack direction={matchDownSM ? 'column' : 'row'} alignItems="center" spacing={2}>
-
-            {/* <Card sx={{ maxWidth: 345, maxHeight: 200, direction: "column", alignItems: "center", display: "flex" }}>
-              <CardActions>
-                <div className="button-group">
-                  <label>
-                    <input
-                      type="file"
-                      style={{ display: 'none' }}
-                      onChange={importExcel}
-                      ref={hiddenFileInput}
-                    />
-                    <Stack alignContent="contained" direction="row" spacing={2}>
-                      <Button
-                        onClick={handleClick}
-                        variant="outlined" size="large" startIcon={<FileUploadIcon />}>
-                        Cargar
-                      </Button>
-                      <Button
-                        onClick={handleSubmit}
-                        variant="contained" size="large" endIcon={<SaveIcon />}>
-                        Guardar
-                      </Button>
-                    </Stack>
-                  </label>
-                </div>
-              </CardActions>
-            </Card> */}
-
-            {/* <Card sx={{ maxWidth: 345, maxHeight: 200, direction: "column", alignItems: "center", display: "flex" }}>
-              <CardActions>
-                    <Stack alignContent="contained" direction="row" spacing={2}>
-                      <Button
-                        onClick={handleDelete}
-                        variant="contained" size="large" endIcon={<SaveIcon />}>
-                        Borrar todos los usuarios
-                      </Button>
-                    </Stack>
-              </CardActions>
-            </Card> */}
             <SortingSelect sortBy={sortBy.estado_encuesta} setSortBy={setSortBy} allColumns={allColumns} />
-            {/* <CSVExport data={selectedFlatRows.length > 0 ? selectedFlatRows.map((d) => d.original) : data} filename={'customer-list.csv'} /> */}
+            <CSVExport data={selectedFlatRows.length > 0 ? selectedFlatRows.map((d) => d.original) : data} filename={'customer-list.csv'} />
           </Stack>
         </Stack>
 

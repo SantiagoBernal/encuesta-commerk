@@ -85,6 +85,7 @@ import useAuth from 'hooks/useAuth';
 // import dataClientesAntioquiaNueva from 'data/clientesAntioquiaNueva';
 // import dataClientesAntioquiaNueva2 from 'data/clientesAntioquiaNueva2';
 import dataClientesRevisionAntioquia from 'data/clientesRevisionAntioquia';
+import dataClientesAntioquiaNueva3 from 'data/clientesAntioquiaNueva3';
 
 import {
   // Add,
@@ -462,7 +463,7 @@ const CustomerListPage = () => {
   // console.log("dataClientesAntioquia2", dataClientesAntioquiaNueva2)
   // console.log("dataClientesPrueba", dataClientesPrueba)
   console.log("dataClientesRevisionAntioquia", dataClientesRevisionAntioquia)
-
+  console.log("dataClientesAntioquia3", dataClientesAntioquiaNueva3)
   // const [listaclientesPrueba, setListaclientesPrueba] = useState([]);
   //const [listaclientesantioquia, setListaclientesantioquia] = useState([]);
 
@@ -523,8 +524,9 @@ const CustomerListPage = () => {
   console.log("clientes", clientes)
   console.log("clientesAntioquia", clientesAntioquia)
   console.log("clientesValle", clientesValle)
+  console.log("dataClientesAntioquiaNueva3", dataClientesAntioquiaNueva3)
 
-  //const data = dataClientesRevisionAntioquia;
+  // const data = dataClientesAntioquiaNueva3;
 
   const data = antioquia ? clientesAntioquia : valle ? clientesValle : clientes;
 
